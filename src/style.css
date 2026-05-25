@@ -417,25 +417,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   color: var(--text-mute);
 }
 
-.hero-title {
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-weight: 500;
-  font-size: clamp(56px, 9.4vw, 168px);
-  line-height: .92;
-  letter-spacing: -0.03em;
-  margin: 0;
-  color: var(--text);
-}
-@media (max-width: 520px) {
-  .hero-title { font-size: clamp(40px, 11.5vw, 56px); }
-}
 .hero-title-line {
   display: block;
-}
-.hero-title-line--accent {
-  color: var(--accent);
-  text-shadow: 0 0 60px rgba(0, 122, 255, .35);
-  white-space: nowrap;
 }
 
 .hero-sub {
