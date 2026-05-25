@@ -159,11 +159,10 @@ export function setupActivitiesScroll() {
 export function setupParallax() {
   if (prefersReduce) return;
 
-  const heroCanvas = document.getElementById('hero-canvas');
-  if (heroCanvas) {
-    gsap.to(heroCanvas, {
-      yPercent: 30,
-      scale: 1.08,
+  const heroGrid = document.getElementById('hero-grid');
+  if (heroGrid) {
+    gsap.to(heroGrid, {
+      yPercent: 14,
       ease: 'none',
       scrollTrigger: {
         trigger: '.hero',

@@ -44,9 +44,9 @@ const boot = () => {
   setupActivitiesScroll();
   setupAnchorScroll(lenis);
 
-  // 3D scenes
-  const heroCanvas = document.getElementById('hero-canvas');
-  if (heroCanvas) initHeroScene(heroCanvas);
+  // Hero alive grid
+  const heroGrid = document.getElementById('hero-grid');
+  if (heroGrid) initHeroScene(heroGrid);
 
   const sobreCanvas = document.getElementById('sobre-canvas');
   if (sobreCanvas) {
