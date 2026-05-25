@@ -1,7 +1,7 @@
 :root {
   /* Colors */
   --color-midnight-ink: #001011;
-  --color-goldenrod-orange: #fd5321;
+  --color-goldenrod-orange: #007aff;
   --color-storm-gray: #0f1e1f;
   --color-accent-blue: #007aff;
   --color-vanilla-cream: #fcfbf8;
@@ -80,6 +80,6 @@
   /* Surfaces */
   --surface-vanilla-cream: #fcfbf8;
   --surface-parchment: #ededea;
-  --surface-goldenrod-orange: #fd5321;
+  --surface-goldenrod-orange: #007aff;
   --surface-midnight-ink: #001011;
 }

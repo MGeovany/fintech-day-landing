@@ -38,7 +38,7 @@ export function initEcosystemScene(canvas) {
   /* ── Edges of the core, glowing orange ────────────────────────────── */
   const edgesGeo = new THREE.EdgesGeometry(coreGeo);
   const edgesMat = new THREE.LineBasicMaterial({
-    color: 0xfd5321,
+    color: 0x007aff,
     transparent: true,
     opacity: 0.7,
   });
@@ -82,9 +82,9 @@ export function initEcosystemScene(canvas) {
     c.width = c.height = s;
     const x = c.getContext('2d');
     const g = x.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
-    g.addColorStop(0.0, 'rgba(255, 220, 180, 1)');
-    g.addColorStop(0.25, 'rgba(253, 83, 33, 0.55)');
-    g.addColorStop(1.0, 'rgba(253, 83, 33, 0)');
+    g.addColorStop(0.0, 'rgba(200, 230, 255, 1)');
+    g.addColorStop(0.25, 'rgba(0, 122, 255, 0.55)');
+    g.addColorStop(1.0, 'rgba(0, 122, 255, 0)');
     x.fillStyle = g;
     x.fillRect(0, 0, s, s);
     const tex = new THREE.CanvasTexture(c);
@@ -126,7 +126,7 @@ export function initEcosystemScene(canvas) {
     const g = new THREE.BufferGeometry();
     g.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
     const m = new THREE.LineBasicMaterial({
-      color: 0xfd5321,
+      color: 0x007aff,
       transparent: true,
       opacity: 0.22,
     });
@@ -167,7 +167,7 @@ export function initEcosystemScene(canvas) {
   /* ── Subtle outer orbital ring ────────────────────────────────────── */
   const ringGeo = new THREE.TorusGeometry(2.75, 0.003, 6, 140);
   const ringMat = new THREE.MeshBasicMaterial({
-    color: 0xfd5321,
+    color: 0x007aff,
     transparent: true,
     opacity: 0.18,
   });
@@ -177,7 +177,7 @@ export function initEcosystemScene(canvas) {
 
   /* ── Lighting ─────────────────────────────────────────────────────── */
   scene.add(new THREE.AmbientLight(0xffffff, 0.22));
-  const key = new THREE.DirectionalLight(0xfd5321, 1.6);
+  const key = new THREE.DirectionalLight(0x007aff, 1.6);
   key.position.set(3.5, 2.5, 4);
   scene.add(key);
   const fill = new THREE.DirectionalLight(0x6688ff, 0.32);

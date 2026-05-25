@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-accent: #fd5321;
-  --color-accent-soft: rgba(253, 83, 33, 0.12);
+  --color-accent: #007aff;
+  --color-accent-soft: rgba(0, 122, 255, 0.12);
   --color-bg: #050505;
   --color-bg-1: #0a0a0a;
   --color-text: #f5f4f1;
@@ -39,9 +39,9 @@ html { scroll-behavior: auto; }
   --text: #f5f4f1;
   --text-mute: rgba(245, 244, 241, .6);
   --text-dim: rgba(245, 244, 241, .42);
-  --accent: #fd5321;      /* goldenrod-orange */
-  --accent-soft: rgba(253, 83, 33, .12);
-  --accent-glow: rgba(253, 83, 33, .55);
+  --accent: #007aff;      /* accent-blue */
+  --accent-soft: rgba(0, 122, 255, .12);
+  --accent-glow: rgba(0, 122, 255, .55);
   --ease: cubic-bezier(.4, 0, .2, 1);
   --ease-out: cubic-bezier(.16, 1, .3, 1);
 }
@@ -78,7 +78,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .cursor { width: 28px; height: 28px; border: 1px solid #fff; }
 .cursor-dot { width: 5px; height: 5px; background: #fff; }
-.cursor.is-hover { width: 56px; height: 56px; background: rgba(253, 83, 33, .35); border-color: transparent; }
+.cursor.is-hover { width: 56px; height: 56px; background: rgba(0, 122, 255, .35); border-color: transparent; }
 @media (hover: none) { .cursor, .cursor-dot { display: none; } }
 
 /* ====== Noise overlay ====== */
@@ -217,8 +217,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   box-shadow: 0 8px 30px -8px var(--accent-glow);
 }
 .btn-primary:hover {
-  background: #ff6738;
-  box-shadow: 0 12px 40px -8px var(--accent-glow), 0 0 0 2px rgba(253, 83, 33, .25);
+  background: #3395ff;
+  box-shadow: 0 12px 40px -8px var(--accent-glow), 0 0 0 2px rgba(0, 122, 255, .25);
 }
 .btn-ghost {
   background: rgba(255, 255, 255, .04);
@@ -363,8 +363,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   height: 70%;
   background: conic-gradient(from 220deg at 0% 0%,
     transparent 0deg,
-    rgba(253, 83, 33, .35) 18deg,
-    rgba(253, 83, 33, .14) 30deg,
+    rgba(0, 122, 255, .35) 18deg,
+    rgba(0, 122, 255, .14) 30deg,
     transparent 42deg);
   filter: blur(60px);
   transform: rotate(-12deg);
@@ -375,7 +375,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   left: -20%;
   width: 65%;
   height: 90%;
-  background: radial-gradient(ellipse 60% 50% at 18% 18%, rgba(253, 83, 33, .25), transparent 65%);
+  background: radial-gradient(ellipse 60% 50% at 18% 18%, rgba(0, 122, 255, .25), transparent 65%);
   filter: blur(40px);
 }
 .hero-corner--br {
@@ -383,7 +383,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   right: -10%;
   width: 35%;
   height: 70%;
-  background: radial-gradient(ellipse 50% 60% at 100% 50%, rgba(253, 83, 33, .18), transparent 70%);
+  background: radial-gradient(ellipse 50% 60% at 100% 50%, rgba(0, 122, 255, .18), transparent 70%);
   filter: blur(50px);
 }
 .hero-vignette {
@@ -434,7 +434,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .hero-title-line--accent {
   color: var(--accent);
-  text-shadow: 0 0 60px rgba(253, 83, 33, .35);
+  text-shadow: 0 0 60px rgba(0, 122, 255, .35);
   white-space: nowrap;
 }
 
@@ -483,14 +483,14 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .btn-pill-cta--accent {
   color: var(--accent);
-  border-color: rgba(253, 83, 33, .45);
-  background: rgba(253, 83, 33, .04);
-  box-shadow: 0 0 0 1px rgba(253, 83, 33, .15) inset, 0 0 24px -8px var(--accent-glow);
+  border-color: rgba(0, 122, 255, .45);
+  background: rgba(0, 122, 255, .04);
+  box-shadow: 0 0 0 1px rgba(0, 122, 255, .15) inset, 0 0 24px -8px var(--accent-glow);
 }
 .btn-pill-cta--accent:hover {
-  background: rgba(253, 83, 33, .12);
-  border-color: rgba(253, 83, 33, .7);
-  box-shadow: 0 0 0 1px rgba(253, 83, 33, .35) inset, 0 0 32px -6px var(--accent-glow);
+  background: rgba(0, 122, 255, .12);
+  border-color: rgba(0, 122, 255, .7);
+  box-shadow: 0 0 0 1px rgba(0, 122, 255, .35) inset, 0 0 32px -6px var(--accent-glow);
 }
 
 .btn-arrow {
@@ -507,8 +507,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   transition: background .25s var(--ease), border-color .25s var(--ease), transform .3s var(--ease-out), color .25s var(--ease);
 }
 .btn-arrow:hover {
-  background: rgba(253, 83, 33, .12);
-  border-color: rgba(253, 83, 33, .55);
+  background: rgba(0, 122, 255, .12);
+  border-color: rgba(0, 122, 255, .55);
   color: var(--accent);
   transform: rotate(45deg);
 }
@@ -581,7 +581,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   width: 100%; height: 100%;
   border-radius: 20px;
   background:
-    radial-gradient(circle at 50% 50%, rgba(253, 83, 33, 0.06), transparent 58%),
+    radial-gradient(circle at 50% 50%, rgba(0, 122, 255, 0.06), transparent 58%),
     rgba(255, 255, 255, 0.015);
   box-shadow: 0 0 0 1px var(--line) inset;
 }
@@ -620,18 +620,33 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .section-head .eyebrow { margin-bottom: 16px; }
 
 /* ====== Card glow (shared) ====== */
+.card-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+  opacity: 0.7;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-position: center;
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 15%, transparent 72%);
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 45%, #000 15%, transparent 72%);
+}
 .card-glow::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(253, 83, 33, .18), transparent 62%);
+  z-index: 1;
+  background: radial-gradient(circle 220px at var(--mx, 50%) var(--my, 50%), rgba(0, 122, 255, .18), transparent 62%);
   opacity: 0;
   transition: opacity .35s var(--ease);
   pointer-events: none;
 }
 .card-glow:hover::after,
 .card-glow:focus-within::after { opacity: 1; }
-.card-glow > * { position: relative; z-index: 1; }
+.card-glow > * { position: relative; z-index: 2; }
 
 /* ====== Objectives ====== */
 .objs {
@@ -643,7 +658,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(253, 83, 33, .04), transparent 70%);
+  background: radial-gradient(ellipse 50% 50% at 50% 0%, rgba(0, 122, 255, .04), transparent 70%);
   pointer-events: none;
 }
 .objs .section-head {
@@ -671,7 +686,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   overflow: hidden;
 }
 .obj-card:hover,
-.obj-card:focus-within { border-color: rgba(253, 83, 33, .45); background: var(--bg-card-strong); }
+.obj-card:focus-within { border-color: rgba(0, 122, 255, .45); background: var(--bg-card-strong); }
 .obj-card > * { position: relative; z-index: 1; }
 .obj-card-num {
   font-family: 'Space Grotesk', var(--font-aeonikpro);
@@ -752,7 +767,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .act-card:hover {
   background: var(--bg-card-strong);
-  border-color: rgba(253, 83, 33, .35);
+  border-color: rgba(0, 122, 255, .35);
 }
 .act-card:hover::before { opacity: .4; transform: translateY(-30%); }
 .act-card-num {
@@ -885,7 +900,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   position: relative;
   margin-top: 20px;
   transform: rotate(-8deg);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, .5), 0 0 60px rgba(253, 83, 33, .08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .5), 0 0 60px rgba(0, 122, 255, .08);
   animation: phone-bob 6s var(--ease) infinite;
 }
 @keyframes phone-bob {
@@ -977,8 +992,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   animation: node-pulse 2.4s var(--ease) infinite;
 }
 @keyframes node-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(253, 83, 33, .45); }
-  50%      { box-shadow: 0 0 0 16px rgba(253, 83, 33, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 122, 255, .45); }
+  50%      { box-shadow: 0 0 0 16px rgba(0, 122, 255, 0); }
 }
 .net-node--1 { top: 30%; left: 15%; }
 .net-node--2 { top: 25%; left: 85%; }
@@ -991,7 +1006,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   position: relative;
   aspect-ratio: 4 / 3;
   background:
-    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(253, 83, 33, .12), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 122, 255, .12), transparent 70%),
     linear-gradient(160deg, #161616, #0c0c0c);
   perspective: 900px;
   overflow: hidden;
@@ -1000,7 +1015,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 50%;
-  background: linear-gradient(180deg, transparent, rgba(253, 83, 33, .08));
+  background: linear-gradient(180deg, transparent, rgba(0, 122, 255, .08));
 }
 .stand-3d {
   position: absolute;
@@ -1031,8 +1046,8 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .stand-screen {
   flex: 1;
-  background: linear-gradient(180deg, rgba(253, 83, 33, .25), rgba(253, 83, 33, .05));
-  border: 1px solid rgba(253, 83, 33, .3);
+  background: linear-gradient(180deg, rgba(0, 122, 255, .25), rgba(0, 122, 255, .05));
+  border: 1px solid rgba(0, 122, 255, .3);
   border-radius: 3px;
 }
 .stand-totem {
@@ -1041,9 +1056,9 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   left: 30%;
   width: 14%;
   height: 50%;
-  background: linear-gradient(180deg, var(--accent), rgba(253, 83, 33, .4));
+  background: linear-gradient(180deg, var(--accent), rgba(0, 122, 255, .4));
   border-radius: 4px;
-  box-shadow: 0 0 20px rgba(253, 83, 33, .35);
+  box-shadow: 0 0 20px rgba(0, 122, 255, .35);
 }
 .stand-table {
   position: absolute;
@@ -1054,7 +1069,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   height: 22%;
   background: var(--accent);
   border-radius: 50% 50% 8px 8px;
-  box-shadow: 0 0 16px rgba(253, 83, 33, .4);
+  box-shadow: 0 0 16px rgba(0, 122, 255, .4);
 }
 .stand-stool {
   position: absolute;
@@ -1104,9 +1119,9 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   border-radius: 50%;
   background: var(--bg-1);
   box-shadow:
-    0 -1px 0 1px rgba(253, 83, 33, .9),
-    0 -8px 30px rgba(253, 83, 33, .45),
-    0 -28px 100px rgba(253, 83, 33, .22);
+    0 -1px 0 1px rgba(0, 122, 255, .9),
+    0 -8px 30px rgba(0, 122, 255, .45),
+    0 -28px 100px rgba(0, 122, 255, .22);
   z-index: 0;
 }
 .cta-card > * { position: relative; z-index: 2; }
@@ -1240,12 +1255,12 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .logo-chip--accent {
   color: var(--accent);
-  border-color: rgba(253, 83, 33, .35);
-  background: rgba(253, 83, 33, .06);
+  border-color: rgba(0, 122, 255, .35);
+  background: rgba(0, 122, 255, .06);
   box-shadow: 0 0 24px -8px var(--accent-glow);
 }
 .logo-chip--accent:hover {
   color: var(--accent);
-  background: rgba(253, 83, 33, .12);
-  border-color: rgba(253, 83, 33, .6);
+  background: rgba(0, 122, 255, .12);
+  border-color: rgba(0, 122, 255, .6);
 }

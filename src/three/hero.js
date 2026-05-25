@@ -11,8 +11,8 @@ export function initHeroScene(canvas) {
 
   const CELL = 88;
   const BASE_LINE = 'rgba(255, 255, 255, 0.045)';
-  const PULSE_COLOR = '253, 83, 33';
-  const HEAD_COLOR  = '255, 200, 150';
+  const PULSE_COLOR = '0, 122, 255';
+  const HEAD_COLOR  = '180, 220, 255';
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
