@@ -1,7 +1,8 @@
 import { toPng } from 'html-to-image';
 import { getPassInfo } from './ticket-store.js';
+import { SITE_NAME, OG_IMAGE_URL, HASHTAG, absoluteUrl } from './site.js';
 
-const EVENT_HASHTAG = '#FintechDayHN';
+const EVENT_HASHTAG = HASHTAG;
 
 /** Mismas dimensiones que `.badge-card` en ticket.css */
 const BADGE_W = 260;
@@ -10,25 +11,41 @@ const EXPORT_PIXEL_RATIO = 3;
 
 export function setPageShareMeta(attendee, pageUrl) {
   const pass = getPassInfo(attendee.pass);
-  const title = `${attendee.name} — Honduras Fintech Day 2026`;
+  const title = `${attendee.name} — ${SITE_NAME}`;
   const description = `${pass.label} · 20 ago 2026 · San Pedro Sula, Honduras`;
+  const canonicalUrl = pageUrl || absoluteUrl('/');
+  const ogImage = OG_IMAGE_URL;
 
   document.title = title;
   setMeta('description', description);
+  setMeta('robots', 'noindex, follow');
+
+  setCanonical(canonicalUrl);
+
   setMeta('og:title', title, true);
   setMeta('og:description', description, true);
-  setMeta('og:type', 'website', true);
-  setMeta('og:url', pageUrl, true);
-  setMeta('og:site_name', 'Honduras Fintech Day 2026', true);
-
-  const ogImage = new URL('/og-share.svg', window.location.origin).href;
+  setMeta('og:type', 'profile', true);
+  setMeta('og:url', canonicalUrl, true);
+  setMeta('og:site_name', SITE_NAME, true);
   setMeta('og:image', ogImage, true);
-  setMeta('og:image:alt', 'Badge Honduras Fintech Day 2026', true);
+  setMeta('og:image:alt', `Badge ${SITE_NAME} — ${attendee.name}`, true);
 
   setMeta('twitter:card', 'summary_large_image');
+  setMeta('twitter:url', canonicalUrl);
   setMeta('twitter:title', title);
   setMeta('twitter:description', description);
   setMeta('twitter:image', ogImage);
+  setMeta('twitter:image:alt', `Badge ${SITE_NAME} — ${attendee.name}`);
+}
+
+function setCanonical(href) {
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
 }
 
 function setMeta(key, content, isProperty = false) {

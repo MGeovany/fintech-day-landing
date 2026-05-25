@@ -4,9 +4,11 @@ import {
   encodeTicketId,
   saveTicket,
 } from './lib/ticket-store.js';
+import { SITE_NAME, absoluteUrl } from './lib/site.js';
 
 export function mountRegister() {
-  document.title = 'Registro — Honduras Fintech Day 2026';
+  document.title = `Registro — ${SITE_NAME}`;
+  setRegisterMeta();
   const app = document.getElementById('app');
   if (!app) return;
 
@@ -56,6 +58,37 @@ export function mountRegister() {
     saveTicket(id, data);
     window.location.href = `/ticket/${id}`;
   });
+}
+
+function setRegisterMeta() {
+  const description = `Regístrate al ${SITE_NAME}: 20 de agosto en San Pedro Sula. Expo Pass gratuito o Full Pass con acceso a charlas, workshop y almuerzo.`;
+  setMetaTag('description', description);
+  setMetaTag('robots', 'noindex, follow');
+  setMetaTag('og:title', `Registro — ${SITE_NAME}`, true);
+  setMetaTag('og:description', description, true);
+  setMetaTag('og:url', absoluteUrl('/registro'), true);
+  setCanonicalLink(absoluteUrl('/registro'));
+}
+
+function setMetaTag(key, content, isProperty = false) {
+  const attr = isProperty ? 'property' : 'name';
+  let el = document.querySelector(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+}
+
+function setCanonicalLink(href) {
+  let link = document.querySelector('link[rel="canonical"]');
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'canonical');
+    document.head.appendChild(link);
+  }
+  link.setAttribute('href', href);
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

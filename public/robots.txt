@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /ticket/
+Disallow: /registro
+
+Sitemap: https://fintechday.thefndrs.com/sitemap.xml
