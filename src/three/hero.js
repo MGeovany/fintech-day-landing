@@ -13,6 +13,75 @@ export function initHeroScene(canvas) {
   const BASE_LINE = 'rgba(255, 255, 255, 0.045)';
   const PULSE_COLOR = '0, 122, 255';
   const HEAD_COLOR  = '180, 220, 255';
+  const HOVER_RADIUS = 140;
+  const HOVER_SEGMENT = 100;
+  const HOVER_LERP = 8;
+
+  const hero = canvas.closest('.hero');
+  let pointerX = -9999;
+  let pointerY = -9999;
+  let hoverTarget = 0;
+  let hoverStrength = 0;
+
+  function updatePointer(clientX, clientY) {
+    const rect = canvas.getBoundingClientRect();
+    pointerX = clientX - rect.left;
+    pointerY = clientY - rect.top;
+    hoverTarget = 1;
+  }
+
+  function onPointerMove(e) {
+    updatePointer(e.clientX, e.clientY);
+  }
+
+  function onPointerLeave() {
+    hoverTarget = 0;
+  }
+
+  if (hero) {
+    hero.addEventListener('pointermove', onPointerMove);
+    hero.addEventListener('pointerleave', onPointerLeave);
+  }
+
+  /** Smooth falloff from cursor to a grid line (0–1). */
+  function lineGlow(dist) {
+    const t = 1 - Math.min(1, dist / HOVER_RADIUS);
+    return t * t * (3 - 2 * t);
+  }
+
+  function drawHoverGrid(strength) {
+    if (strength < 0.008 || w === 0) return;
+
+    const seg = HOVER_SEGMENT;
+    const y0 = Math.max(0, pointerY - seg);
+    const y1 = Math.min(h, pointerY + seg);
+    const x0 = Math.max(0, pointerX - seg);
+    const x1 = Math.min(w, pointerX + seg);
+
+    ctx.lineWidth = 1;
+
+    for (let x = CELL; x < w; x += CELL) {
+      const g = lineGlow(Math.abs(pointerX - x)) * strength;
+      if (g < 0.04) continue;
+      const xx = Math.round(x) + 0.5;
+      ctx.strokeStyle = `rgba(${PULSE_COLOR}, ${0.03 + g * 0.05})`;
+      ctx.beginPath();
+      ctx.moveTo(xx, y0);
+      ctx.lineTo(xx, y1);
+      ctx.stroke();
+    }
+
+    for (let y = CELL; y < h; y += CELL) {
+      const g = lineGlow(Math.abs(pointerY - y)) * strength;
+      if (g < 0.04) continue;
+      const yy = Math.round(y) + 0.5;
+      ctx.strokeStyle = `rgba(${PULSE_COLOR}, ${0.03 + g * 0.05})`;
+      ctx.beginPath();
+      ctx.moveTo(x0, yy);
+      ctx.lineTo(x1, yy);
+      ctx.stroke();
+    }
+  }
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -89,6 +158,8 @@ export function initHeroScene(canvas) {
       spawnPulse();
     }
 
+    hoverStrength += (hoverTarget - hoverStrength) * Math.min(1, dt * HOVER_LERP);
+
     ctx.clearRect(0, 0, w, h);
 
     // ─── base grid ─────────────────────────────────────────────────────
@@ -104,6 +175,8 @@ export function initHeroScene(canvas) {
       ctx.lineTo(w, Math.round(y) + 0.5);
     }
     ctx.stroke();
+
+    drawHoverGrid(hoverStrength);
 
     // ─── pulses ────────────────────────────────────────────────────────
     for (let i = pulses.length - 1; i >= 0; i--) {
@@ -190,5 +263,9 @@ export function initHeroScene(canvas) {
     cancelAnimationFrame(rafId);
     ro.disconnect();
     io.disconnect();
+    if (hero) {
+      hero.removeEventListener('pointermove', onPointerMove);
+      hero.removeEventListener('pointerleave', onPointerLeave);
+    }
   };
 }

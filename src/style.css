@@ -421,6 +421,15 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   display: block;
 }
 
+/* bg-clip-text trims descenders (e.g. “y”) without extra padding */
+.hero-title-gradient {
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+.hero-title-line--last {
+  overflow: visible;
+}
+
 .hero-sub {
   font-size: clamp(15px, 1.2vw, 17px);
   line-height: 1.7;
