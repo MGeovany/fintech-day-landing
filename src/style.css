@@ -981,189 +981,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .net-node--4 { top: 85%; left: 20%; }
 .net-node--5 { top: 90%; left: 70%; }
 
-/* ====== Sponsorship ====== */
-.spon {
-  padding: 120px 0;
-  background: var(--bg-1);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-  position: relative;
-}
-.spon-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-@media (max-width: 920px) {
-  .spon-grid { grid-template-columns: 1fr; max-width: 480px; margin-inline: auto; }
-}
-.spon-card {
-  padding: 36px 32px;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 28px;
-  transition: transform .5s var(--ease-out), border-color .3s var(--ease), background .3s var(--ease);
-  position: relative;
-  transform-style: preserve-3d;
-}
-.spon-card:hover { background: var(--bg-card-strong); border-color: var(--line-strong); }
-.spon-card header {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-.spon-tier {
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--text-mute);
-}
-.spon-price {
-  display: inline-flex;
-  align-items: baseline;
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-weight: 500;
-  letter-spacing: -.04em;
-  color: var(--text);
-}
-.spon-price-sym {
-  font-size: clamp(22px, 2vw, 28px);
-  color: var(--accent);
-  margin-right: 2px;
-}
-.spon-price-val {
-  font-size: clamp(44px, 5vw, 72px);
-  line-height: 1;
-}
-.spon-card ul {
-  display: flex; flex-direction: column; gap: 12px;
-}
-.spon-card li {
-  font-size: 15px;
-  color: var(--text-mute);
-  padding-left: 22px;
-  position: relative;
-  line-height: 1.5;
-}
-.spon-card li::before {
-  content: '';
-  position: absolute; left: 0; top: 9px;
-  width: 12px; height: 1px;
-  background: var(--accent);
-}
-.spon-card li strong { color: var(--text); font-weight: 500; }
-.spon-cta { margin-top: auto; align-self: flex-start; }
-
-.spon-card--platinum {
-  background: linear-gradient(180deg, rgba(253, 83, 33, .12), rgba(253, 83, 33, .02));
-  border-color: rgba(253, 83, 33, .35);
-  position: relative;
-}
-.spon-card--platinum::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: 16px;
-  padding: 1px;
-  background: linear-gradient(180deg, rgba(253, 83, 33, .6), transparent);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-          mask-composite: exclude;
-  pointer-events: none;
-}
-.spon-card-flag {
-  position: absolute;
-  top: -12px;
-  right: 24px;
-  background: var(--accent);
-  color: #0a0a0a;
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-size: 11px;
-  letter-spacing: .12em;
-  padding: 5px 12px;
-  border-radius: 999px;
-  text-transform: uppercase;
-  font-weight: 500;
-  box-shadow: 0 6px 20px -4px var(--accent-glow);
-}
-
-.spon-cocktail {
-  margin-top: 16px;
-  padding: 28px 32px;
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 32px;
-  align-items: center;
-}
-@media (max-width: 720px) {
-  .spon-cocktail { grid-template-columns: 1fr; }
-}
-.spon-cocktail-decor {
-  width: 56px; height: 56px;
-  color: var(--accent);
-}
-.spon-cocktail-body h3 {
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-size: 22px;
-  margin: 8px 0 12px;
-  letter-spacing: -.012em;
-  font-weight: 500;
-  color: var(--text);
-}
-.spon-cocktail-body ul {
-  display: flex; flex-wrap: wrap; gap: 16px;
-}
-.spon-cocktail-body li {
-  font-size: 14px;
-  color: var(--text-mute);
-  padding-left: 14px;
-  position: relative;
-}
-.spon-cocktail-body li::before {
-  content: '';
-  position: absolute; left: 0; top: 9px;
-  width: 6px; height: 1px;
-  background: var(--accent);
-}
-.spon-cocktail-price {
-  display: inline-flex;
-  align-items: baseline;
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-weight: 500;
-  letter-spacing: -.04em;
-  color: var(--text);
-}
-.spon-cocktail-price .spon-price-sym { font-size: 22px; color: var(--accent); }
-.spon-cocktail-price .spon-price-val { font-size: 48px; line-height: 1; }
-
-/* ====== Stands ====== */
-.stands { padding: 120px 0; }
-.stands-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-@media (max-width: 920px) {
-  .stands-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
-}
-.stand-card {
-  background: var(--bg-card);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  overflow: hidden;
-  transform-style: preserve-3d;
-  transition: transform .5s var(--ease-out), border-color .3s var(--ease);
-}
-.stand-card:hover { border-color: rgba(253, 83, 33, .35); }
+/* ====== Stands (visuals only — layout uses Tailwind) ====== */
 .stand-visual {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -1248,31 +1066,15 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .stand-stool--c2 { left: 44%; bottom: 6%; }
 .stand-stool--c3 { right: 22%; bottom: 6%; }
 
-.stand-card:hover .stand-3d { transform: rotateX(8deg) rotateY(-6deg) translateY(-4px); transition: transform .6s var(--ease-out); }
-.stand-3d, .stand-wall, .stand-totem, .stand-table, .stand-stool { transition: transform .6s var(--ease-out); }
-
-.stand-body { padding: 28px; }
-.stand-name {
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-size: 12px;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--text-mute);
+.stand-card:hover .stand-3d {
+  transform: rotateX(8deg) rotateY(-6deg) translateY(-4px);
 }
-.stand-price {
-  display: flex;
-  align-items: baseline;
-  margin: 8px 0 12px;
-  font-family: 'Space Grotesk', var(--font-aeonikpro);
-  font-weight: 500;
-}
-.stand-price .spon-price-sym { color: var(--accent); font-size: 20px; }
-.stand-price .spon-price-val { font-size: 44px; line-height: 1; letter-spacing: -.04em; color: var(--text); }
-.stand-body p {
-  margin: 0;
-  color: var(--text-mute);
-  font-size: 14px;
-  line-height: 1.55;
+.stand-3d,
+.stand-wall,
+.stand-totem,
+.stand-table,
+.stand-stool {
+  transition: transform .6s var(--ease-out);
 }
 
 /* ====== Final CTA ====== */
