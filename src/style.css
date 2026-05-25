@@ -7,6 +7,7 @@
   --color-bg-1: #0a0a0a;
   --color-text: #f5f4f1;
   --color-text-mute: rgba(245, 244, 241, 0.6);
+  --color-text-dim: rgba(245, 244, 241, 0.42);
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-body: Inter, ui-sans-serif, system-ui, sans-serif;
 }
@@ -1209,4 +1210,38 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   .hero-word { transform: none; }
   [data-reveal] { opacity: 1; transform: none; }
   [data-split] .split-char { opacity: 1; transform: none; }
+}
+
+/* ====== Logo chip (used by Aliados) ====== */
+.logo-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg-card);
+  font-family: 'Space Grotesk', var(--font-aeonikpro);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -.005em;
+  color: var(--text-mute);
+  transition: color .25s var(--ease), background .25s var(--ease), border-color .25s var(--ease), transform .35s var(--ease-out);
+  user-select: none;
+}
+.logo-chip:hover {
+  color: var(--text);
+  background: var(--bg-card-strong);
+  border-color: var(--line-strong);
+  transform: translateY(-1px);
+}
+.logo-chip--accent {
+  color: var(--accent);
+  border-color: rgba(253, 83, 33, .35);
+  background: rgba(253, 83, 33, .06);
+  box-shadow: 0 0 24px -8px var(--accent-glow);
+}
+.logo-chip--accent:hover {
+  color: var(--accent);
+  background: rgba(253, 83, 33, .12);
+  border-color: rgba(253, 83, 33, .6);
 }
