@@ -1,6 +1,7 @@
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { mountLayout } from './layout.js';
 import { initHeroScene } from './three/hero.js';
 import { initOrbScene } from './three/orb.js';
 import {
@@ -72,6 +73,8 @@ const boot = () => {
     }, 350);
   });
 };
+
+mountLayout();
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', boot);
