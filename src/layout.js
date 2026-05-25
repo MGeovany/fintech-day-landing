@@ -19,8 +19,11 @@ import sponsorship from './components/sponsorship.html?raw';
 import ctaFinalRaw from './components/cta-final.html?raw';
 import ctaImg from './assets/afinh2025_image-277.jpg?url';
 import footer from './components/footer.html?raw';
+import { CONTACT_EMAIL } from './lib/site.js';
 
-const ctaFinal = ctaFinalRaw.replace('__CTA_IMG__', ctaImg);
+const ctaFinal = ctaFinalRaw
+  .replace('__CTA_IMG__', ctaImg)
+  .replaceAll('__CONTACT_EMAIL__', CONTACT_EMAIL);
 
 const activities = activitiesRaw
   .replace('__FERIA_IMG__', feriaImg)
@@ -48,6 +51,6 @@ export function mountLayout(root = document.getElementById('app')) {
     sponsorship,
     ctaFinal,
     '</main>',
-    footer,
+    footer.replaceAll('__CONTACT_EMAIL__', CONTACT_EMAIL),
   ].join('\n');
 }

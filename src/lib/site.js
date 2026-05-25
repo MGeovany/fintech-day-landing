@@ -19,6 +19,8 @@ export const EVENT_COUNTRY_CODE = 'HN';
 export const ORGANIZER_NAME = 'AFINH';
 export const ORGANIZER_LEGAL = 'Asociación Hondureña de Instituciones de Tecnología Financiera';
 
+export const CONTACT_EMAIL = 'direccionejecutiva@hondurasfintech.com';
+
 export const SOCIAL = {
   linkedin: 'https://www.linkedin.com/company/fintechday/',
 };
