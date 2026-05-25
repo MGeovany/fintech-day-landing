@@ -452,23 +452,140 @@ body {
   transform: none;
 }
 
-@media (max-width: 480px) {
-  .badge-card { width: 250px; height: 380px; margin-left: -125px; }
-  .badge-title { font-size: 26px; }
+/* ===== Tablet ===== */
+@media (max-width: 768px) {
+  .ticket-meta { font-size: 10px; letter-spacing: 0.18em; top: 22px; right: 20px; }
+  .ticket-back { top: 20px; left: 20px; }
+}
+
+/* ===== Mobile portrait (≤ 600px wide) ===== */
+@media (max-width: 600px) {
   .ticket-meta { display: none; }
-  .ticket-back { top: 16px; left: 16px; padding: 8px 14px 8px 12px; font-size: 12px; }
-  .ticket-hint { font-size: 9px; bottom: 24px; }
+  .ticket-back {
+    top: 14px;
+    left: 14px;
+    padding: 8px 14px 8px 12px;
+    font-size: 12px;
+  }
+
+  .badge-card {
+    width: 240px;
+    height: 360px;
+    margin-left: -120px;
+    border-radius: 12px;
+  }
+  .badge-inner { padding: 30px 18px 16px; }
+  .badge-holes { padding: 0 18px; top: 11px; }
+  .badge-title { font-size: 23px; margin: 14px 0 12px; }
+  .badge-role-pill { font-size: 14px; padding: 5px 11px 4px; }
+  .badge-attendee { margin-top: 12px; }
+  .badge-name { font-size: 15px; }
+  .badge-role { font-size: 11px; }
+  .badge-meta-row { font-size: 9px; margin-bottom: 8px; }
+  .badge-barcode-code { font-size: 10px; }
+
+  /* Share panel becomes a horizontal pill at bottom-center */
+  .ticket-share {
+    flex-direction: row;
+    right: 50%;
+    transform: translateX(50%);
+    bottom: 16px;
+    padding: 6px;
+    gap: 4px;
+    border-radius: 999px;
+  }
+  .ticket-share-actions,
+  .ticket-share-tools {
+    flex-direction: row;
+    gap: 4px;
+  }
+  .ticket-share-divider {
+    width: 1px;
+    height: 24px;
+    margin: 0 2px;
+  }
+  .ticket-share-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+  }
+  .ticket-share-btn svg { width: 17px; height: 17px; }
+
+  .ticket-hint {
+    bottom: 68px;
+    font-size: 9px;
+    letter-spacing: 0.24em;
+  }
+  .ticket-hint::before,
+  .ticket-hint::after { width: 18px; }
+}
+
+/* ===== Small phones (≤ 380px wide) ===== */
+@media (max-width: 380px) {
+  .badge-card {
+    width: 220px;
+    height: 330px;
+    margin-left: -110px;
+  }
+  .badge-inner { padding: 28px 16px 14px; }
+  .badge-holes { padding: 0 16px; }
+  .badge-title { font-size: 21px; margin: 12px 0 10px; }
+  .badge-role-pill { font-size: 13px; padding: 5px 10px 4px; }
+  .badge-name { font-size: 14px; }
+  .badge-role { font-size: 10.5px; }
+  .badge-meta-row { font-size: 8.5px; }
+  .badge-barcode-bars { height: 22px; }
+  .badge-barcode-code { font-size: 9.5px; }
+
+  .ticket-share-btn { width: 36px; height: 36px; }
+  .ticket-share-btn svg { width: 16px; height: 16px; }
+
+  .ticket-hint { font-size: 8.5px; }
+}
+
+/* ===== Landscape mobile (low height) ===== */
+@media (orientation: landscape) and (max-height: 540px) {
+  .badge-card {
+    width: 220px;
+    height: 320px;
+    margin-left: -110px;
+  }
+  .badge-inner { padding: 26px 18px 14px; }
+  .badge-title { font-size: 20px; margin: 10px 0 8px; }
+  .badge-role-pill { font-size: 12px; padding: 4px 10px 3px; }
+  .badge-attendee { margin-top: 10px; }
+  .badge-name { font-size: 14px; }
+  .badge-barcode-bars { height: 20px; }
+
+  /* In landscape keep share panel on the right edge */
   .ticket-share {
     right: 12px;
     bottom: 12px;
-    padding: 8px;
+    flex-direction: column;
+    transform: none;
+    padding: 6px;
+    border-radius: 14px;
+    gap: 4px;
   }
-  .ticket-share-btn {
-    width: 40px;
-    height: 40px;
+  .ticket-share-actions,
+  .ticket-share-tools { flex-direction: column; gap: 4px; }
+  .ticket-share-divider { width: auto; height: 1px; margin: 2px 4px; }
+  .ticket-share-btn { width: 36px; height: 36px; border-radius: 10px; }
+  .ticket-share-btn svg { width: 16px; height: 16px; }
+
+  .ticket-hint {
+    bottom: auto;
+    top: 12px;
+    transform: translateX(-50%);
+    font-size: 9px;
   }
-  .ticket-share-btn svg {
-    width: 18px;
-    height: 18px;
+  .ticket-meta { display: none; }
+}
+
+/* ===== Touch hover normalization ===== */
+@media (hover: none) {
+  .ticket-back:hover,
+  .ticket-share-btn:hover {
+    transform: none;
   }
 }

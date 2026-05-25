@@ -1281,3 +1281,132 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   background: rgba(0, 122, 255, .12);
   border-color: rgba(0, 122, 255, .6);
 }
+
+/* =========================================================
+   RESPONSIVE — global tablet + mobile refinements
+   ========================================================= */
+
+/* ===== Tablet (≤ 920px) ===== */
+@media (max-width: 920px) {
+  .stats { padding: 80px 0; }
+  .digital { padding: 80px 0; }
+  .acts { padding: 80px 0 100px; }
+}
+
+/* ===== Mobile portrait (≤ 720px) ===== */
+@media (max-width: 720px) {
+  /* Container */
+  .container { padding: 0 20px; }
+
+  /* Nav becomes compact pill */
+  .nav { top: 10px; }
+  .nav-inner {
+    padding: 8px 8px 8px 16px;
+    gap: 10px;
+  }
+  .nav-brand { font-size: 14px; gap: 8px; }
+  .nav-brand-label em { display: none; }
+  .nav-logo { width: 22px; height: 22px; }
+  .nav-cta { padding: 7px 14px; font-size: 12px; }
+
+  /* Hero compact */
+  .hero { padding: 96px 20px 60px; }
+  .hero-meta { font-size: 12px; }
+  .hero-sub { font-size: 14.5px; margin: 18px 0 4px; }
+  .hero-ctas {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+  }
+  .btn-pill-cta {
+    padding: 13px 22px;
+    font-size: 12px;
+    letter-spacing: .12em;
+  }
+
+  /* Stats compact */
+  .stats { padding: 64px 0; }
+  .stat { padding: 32px 24px; }
+  .stat-num { margin-bottom: 18px; }
+  .stat-title { font-size: 19px; }
+  .stat-desc { font-size: 14px; }
+
+  /* Section heads */
+  .section-head { margin-bottom: 36px; }
+
+  /* Activities */
+  .acts { padding: 64px 0 84px; }
+  .acts-track { gap: 12px; padding: 0 20px; }
+  .act-card-inner { padding: 22px 22px 24px; }
+  .act-card { padding: 28px 22px 24px; }
+  .act-card-media { height: 170px; }
+  .act-card h3 { margin: 32px 0 10px; }
+  .act-card p { font-size: 14px; margin-bottom: 16px; }
+  .act-card-meta span { font-size: 10px; padding: 5px 10px; }
+
+  /* Digital */
+  .digital { padding: 64px 0; }
+  .digital-card { padding: 28px 22px; min-height: 380px; }
+  .digital-card h3 { font-size: 24px; }
+  .digital-card p { font-size: 14.5px; }
+
+  /* Objectives */
+  .obj-card { padding: 22px 20px; }
+  .obj-card h3 { font-size: 19px; }
+  .obj-card p { font-size: 14px; }
+
+  /* Sobre */
+  .sobre-visual { max-width: 100%; margin: 28px auto 0; }
+  .sobre-tag { font-size: 10px; padding: 5px 10px; }
+
+  /* Footer wraps clean */
+  .footer { padding: 24px 0; }
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    text-align: left;
+  }
+  .footer-links { flex-wrap: wrap; gap: 14px 18px; }
+  .footer-legal { font-size: 11px; }
+}
+
+/* ===== Small phones (≤ 480px) ===== */
+@media (max-width: 480px) {
+  .container { padding: 0 16px; }
+
+  .nav { top: 8px; }
+  .nav-inner { padding: 6px 6px 6px 14px; gap: 8px; }
+  .nav-brand { font-size: 13px; }
+  .nav-brand-label { display: none; }
+  .nav-cta { padding: 6px 12px; font-size: 11.5px; }
+
+  .hero { padding: 84px 16px 48px; min-height: calc(100vh - 16px); }
+  .hero-sub { font-size: 14px; line-height: 1.6; }
+  .btn-pill-cta { padding: 12px 18px; font-size: 11.5px; letter-spacing: .1em; }
+  .btn-arrow { width: 42px; height: 42px; }
+
+  .stats { padding: 48px 0; }
+  .stat { padding: 28px 18px; }
+
+  .acts { padding: 56px 0 72px; }
+  .act-card { min-height: 380px; }
+  .act-card-media { height: 150px; }
+
+  .digital-card { padding: 24px 18px; min-height: 340px; }
+  .digital-card h3 { font-size: 22px; }
+}
+
+/* ===== Touch normalization ===== */
+@media (hover: none) {
+  .btn-pill-cta:hover,
+  .btn-arrow:hover,
+  .obj-card:hover,
+  .act-card:hover,
+  .digital-card:hover,
+  .stand-card:hover .stand-3d {
+    transform: none;
+  }
+}

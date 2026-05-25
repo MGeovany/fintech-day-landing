@@ -191,6 +191,7 @@ body {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .register-pass-label {
@@ -198,6 +199,8 @@ body {
   font-size: 15px;
   font-weight: 500;
   color: var(--r-text);
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .register-pass-price {
@@ -205,6 +208,8 @@ body {
   font-size: 14px;
   font-weight: 600;
   color: var(--r-accent);
+  flex: 0 0 auto;
+  white-space: nowrap;
 }
 
 .register-pass-hint {
@@ -255,4 +260,23 @@ body {
 }
 .register-submit:active {
   transform: scale(0.98);
+}
+
+@media (max-width: 480px) {
+  .register-page { padding: 18px 16px 40px; }
+  .register-back { margin-bottom: 20px; }
+  .register-head { margin-bottom: 22px; }
+  .register-lead { font-size: 14px; }
+  .register-form { gap: 16px; }
+  .register-field input { padding: 11px 13px; font-size: 14.5px; }
+  .register-pass-card { padding: 13px 14px; }
+  .register-pass-label { font-size: 14px; }
+  .register-pass-price { font-size: 13px; }
+  .register-pass-hint { font-size: 12.5px; }
+  .register-submit { padding: 13px 18px; font-size: 14px; }
+}
+
+@media (max-width: 360px) {
+  .register-page { padding: 16px 14px 36px; }
+  .register-pass-top { flex-wrap: wrap; gap: 6px; }
 }
