@@ -16,8 +16,6 @@ import talleresImg from './assets/afinh2025_image-232.jpg?url';
 import academiaImg from './assets/afinh2025_image-222.jpg?url';
 import coctelImg from './assets/afinh2025_image-274.jpg?url';
 import sponsorship from './components/sponsorship.html?raw';
-import aliadosRaw from './components/aliados.html?raw';
-import { buildSponsorMarqueeHtml } from './sponsors.js';
 import ctaFinalRaw from './components/cta-final.html?raw';
 import ctaImg from './assets/afinh2025_image-277.jpg?url';
 import footer from './components/footer.html?raw';
@@ -30,8 +28,6 @@ const activities = activitiesRaw
   .replace('__TALLERES_IMG__', talleresImg)
   .replace('__ACADEMIA_IMG__', academiaImg)
   .replace('__COCTEL_IMG__', coctelImg);
-
-const aliados = aliadosRaw.replace('__SPONSOR_MARQUEE__', buildSponsorMarqueeHtml());
 
 export function mountLayout(root = document.getElementById('app')) {
   if (!root) return;
@@ -50,7 +46,6 @@ export function mountLayout(root = document.getElementById('app')) {
     buildAgendaSectionHtml(),
     activities,
     sponsorship,
-    aliados,
     ctaFinal,
     '</main>',
     footer,

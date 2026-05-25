@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+
+:root {
+  --r-bg: #050505;
+  --r-text: #f5f4f1;
+  --r-accent: #007aff;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--r-bg);
+  color: var(--r-text);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.register-page {
+  min-height: 100vh;
+  padding: 24px 20px 48px;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0, 122, 255, 0.14), transparent 55%),
+    var(--r-bg);
+}
+
+.register-back {
+  display: inline-flex;
+  margin-bottom: 28px;
+  font-size: 13px;
+  color: rgba(245, 244, 241, 0.55);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.register-back:hover {
+  color: var(--r-text);
+}
+
+.register-shell {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.register-head {
+  margin-bottom: 28px;
+}
+
+.register-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(245, 244, 241, 0.5);
+}
+
+.register-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--r-accent);
+  box-shadow: 0 0 10px rgba(0, 122, 255, 0.65);
+}
+
+.register-title {
+  margin: 0 0 10px;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.register-lead {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(245, 244, 241, 0.58);
+}
+.register-lead strong {
+  color: var(--r-text);
+  font-weight: 500;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.register-field,
+.register-fieldset {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.register-field span,
+.register-fieldset legend {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 244, 241, 0.48);
+}
+
+.register-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--r-text);
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.register-field input:focus {
+  border-color: rgba(0, 122, 255, 0.55);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
+}
+
+.register-pass-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.register-pass {
+  cursor: pointer;
+}
+.register-pass input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.register-pass-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.register-pass input:checked + .register-pass-card {
+  border-color: rgba(0, 122, 255, 0.55);
+  background: rgba(0, 122, 255, 0.08);
+}
+
+.register-pass-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.register-pass-label {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--r-text);
+}
+
+.register-pass-price {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--r-accent);
+}
+
+.register-pass-hint {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(245, 244, 241, 0.5);
+}
+
+.register-stand-fields.hidden {
+  display: none;
+}
+
+.register-note {
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 12px;
+  line-height: 1.55;
+  color: rgba(245, 244, 241, 0.5);
+}
+.register-note p {
+  margin: 0 0 8px;
+}
+.register-note p:last-child {
+  margin-bottom: 0;
+}
+.register-note strong {
+  color: rgba(245, 244, 241, 0.75);
+}
+
+.register-submit {
+  margin-top: 4px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--r-accent);
+  color: #0a0a0a;
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 8px 28px -8px rgba(0, 122, 255, 0.65);
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.register-submit:hover {
+  background: #3395ff;
+}
+.register-submit:active {
+  transform: scale(0.98);
+}

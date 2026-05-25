@@ -1,4 +1,16 @@
 import './ticket.css';
+import {
+  decodeTicketId,
+  loadTicket,
+  getPassInfo,
+  formatDisplayTicketId,
+} from './lib/ticket-store.js';
+import {
+  setPageShareMeta,
+  shareLinks,
+  downloadShareImage,
+  nativeShare,
+} from './lib/ticket-share.js';
 
 const POINTS = 14;
 const GRAVITY = 0.95;
@@ -7,20 +19,35 @@ const ITERATIONS = 20;
 const RIBBON_TEXT = 'HONDURAS FINTECH DAY 2026 · ';
 
 export function mountTicket(ticketId) {
-  document.title = `Ticket #${ticketId} — Honduras Fintech Day 2026`;
+  const attendee =
+    decodeTicketId(ticketId) || loadTicket(ticketId);
+
+  if (!attendee) {
+    window.location.replace('/registro');
+    return;
+  }
+
+  const pageUrl = `${window.location.origin}/ticket/${ticketId}`;
+  setPageShareMeta(attendee, pageUrl);
 
   const app = document.getElementById('app');
   if (!app) return;
 
-  app.innerHTML = renderTicket(ticketId);
+  app.innerHTML = renderTicket(ticketId, attendee);
   document.body.classList.add('on-ticket-page');
 
   initPhysics();
+  initShare(attendee, pageUrl);
 }
 
-function renderTicket(ticketId) {
+function renderTicket(ticketId, attendee) {
+  const pass = getPassInfo(attendee.pass);
   const repeats = 8;
   const ribbonText = RIBBON_TEXT.repeat(repeats);
+  const subtitle = [attendee.role, attendee.company].filter(Boolean).join(' · ');
+  const displayRole = subtitle || pass.label;
+  const links = shareLinks(`${window.location.origin}/ticket/${ticketId}`);
+  const displayId = formatDisplayTicketId(ticketId);
 
   return `
     <div class="ticket-page">
@@ -70,12 +97,12 @@ function renderTicket(ticketId) {
                 <span>DAY <span class="badge-title-year">2026</span></span>
               </h1>
 
-              <div class="badge-role-pill">ASISTENTE</div>
+              <div class="badge-role-pill">${escapeHtml(pass.pill)}</div>
 
               <div class="badge-attendee">
                 <div class="badge-label">Nombre</div>
-                <div class="badge-name">Marlo Castro</div>
-                <div class="badge-role">Fintech Builder · Honduras</div>
+                <div class="badge-name">${escapeHtml(attendee.name)}</div>
+                <div class="badge-role">${escapeHtml(displayRole)}</div>
               </div>
 
               <div class="badge-spacer"></div>
@@ -90,8 +117,8 @@ function renderTicket(ticketId) {
                   ${barcodeBars(ticketId)}
                 </svg>
                 <div class="badge-barcode-id">
-                  <span>TICKET</span>
-                  <strong>#${escapeHtml(ticketId)}</strong>
+                  <span class="badge-barcode-label">No. de entrada</span>
+                  <code class="badge-barcode-code" title="${escapeHtml(ticketId)}">#${escapeHtml(displayId)}</code>
                 </div>
               </div>
             </div>
@@ -102,8 +129,77 @@ function renderTicket(ticketId) {
       <div class="ticket-hint" id="ticket-hint">
         <span>Arrastra el gafete</span>
       </div>
+
+      <aside class="ticket-share" id="ticket-share" aria-label="Compartir badge">
+        <p class="ticket-share-title">Compartir tu badge</p>
+        <div class="ticket-share-actions">
+          <a class="ticket-share-btn" href="${links.x}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">X</a>
+          <a class="ticket-share-btn" href="${links.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn">LinkedIn</a>
+          <a class="ticket-share-btn" href="${links.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">Facebook</a>
+          <a class="ticket-share-btn" href="${links.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">WhatsApp</a>
+          <button type="button" class="ticket-share-btn" id="share-instagram" aria-label="Descargar imagen para Instagram">Instagram</button>
+        </div>
+        <div class="ticket-share-tools">
+          <button type="button" class="ticket-share-tool" id="share-native">Compartir imagen</button>
+          <button type="button" class="ticket-share-tool" id="share-download">Descargar PNG</button>
+          <button type="button" class="ticket-share-tool" id="share-copy">Copiar enlace</button>
+        </div>
+        <p class="ticket-share-tip">Para Instagram, usa <strong>Descargar PNG</strong> o <strong>Instagram</strong>. El enlace funciona en X y LinkedIn.</p>
+      </aside>
     </div>
   `;
+}
+
+function initShare(attendee, pageUrl) {
+  const shareBusyIds = ['share-download', 'share-instagram', 'share-native'];
+
+  const setShareBusy = (busy) => {
+    shareBusyIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.disabled = busy;
+      el.setAttribute('aria-busy', busy ? 'true' : 'false');
+    });
+  };
+
+  const downloadBadgeImage = async () => {
+    setShareBusy(true);
+    try {
+      const slug = attendee.name.replace(/\s+/g, '-').toLowerCase().slice(0, 24);
+      await downloadShareImage(attendee, `fintech-day-${slug}.png`);
+    } finally {
+      setShareBusy(false);
+    }
+  };
+
+  document.getElementById('share-download')?.addEventListener('click', downloadBadgeImage);
+  document.getElementById('share-instagram')?.addEventListener('click', downloadBadgeImage);
+
+  document.getElementById('share-native')?.addEventListener('click', async () => {
+    setShareBusy(true);
+    try {
+      const ok = await nativeShare(attendee, pageUrl);
+      if (!ok) await downloadShareImage(attendee);
+    } finally {
+      setShareBusy(false);
+    }
+  });
+
+  document.getElementById('share-copy')?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(pageUrl);
+      const btn = document.getElementById('share-copy');
+      if (btn) {
+        const prev = btn.textContent;
+        btn.textContent = '¡Copiado!';
+        setTimeout(() => {
+          btn.textContent = prev;
+        }, 2000);
+      }
+    } catch {
+      /* ignore */
+    }
+  });
 }
 
 function initPhysics() {
