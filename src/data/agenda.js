@@ -2,7 +2,6 @@
 
 export const agendaMeta = {
   line: "20 ago 2026 · Hotel Copantl, SPS · 7:00 – 16:00 + cocktail",
-  hint: "Pasa el cursor sobre un bloque para ver los salones en paralelo",
 };
 
 /**
