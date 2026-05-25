@@ -57,12 +57,42 @@ export function decodeTicketId(id) {
   }
 }
 
+export const LAST_TICKET_KEY = 'fd2026_last';
+
 export function saveTicket(id, data) {
   try {
     localStorage.setItem(`fd2026_${id}`, JSON.stringify(data));
+    localStorage.setItem(LAST_TICKET_KEY, id);
   } catch {
     /* quota */
   }
+}
+
+/** ID del último pase reclamado en este dispositivo. */
+export function getLastTicketId() {
+  try {
+    const last = localStorage.getItem(LAST_TICKET_KEY);
+    if (last && decodeTicketId(last)) return last;
+
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (!key?.startsWith('fd2026_') || key === LAST_TICKET_KEY) continue;
+      const id = key.slice(7);
+      if (decodeTicketId(id)) {
+        localStorage.setItem(LAST_TICKET_KEY, id);
+        return id;
+      }
+    }
+  } catch {
+    /* private mode / blocked */
+  }
+  return null;
+}
+
+export function getSavedAttendee() {
+  const id = getLastTicketId();
+  if (!id) return null;
+  return decodeTicketId(id) || loadTicket(id);
 }
 
 export function loadTicket(id) {
