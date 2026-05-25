@@ -21,29 +21,143 @@ export function mountRegister() {
     input.addEventListener('change', () => {
       const isStand = form.querySelector('input[name="pass"]:checked')?.value === 'stand';
       standFields?.classList.toggle('hidden', !isStand);
+      clearFieldError(form, 'pass');
+      if (!isStand) clearFieldError(form, 'company');
     });
+  });
+
+  form.querySelectorAll('input[name="name"], input[name="email"], input[name="company"], input[name="role"]').forEach((input) => {
+    input.addEventListener('input', () => clearFieldError(form, input.name));
   });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(form);
-    const pass = fd.get('pass');
     const data = {
       name: String(fd.get('name') || '').trim(),
       email: String(fd.get('email') || '').trim(),
-      pass,
+      pass: fd.get('pass'),
       company: String(fd.get('company') || '').trim(),
       role: String(fd.get('role') || '').trim(),
     };
 
-    if (!data.name || !data.email || !PASS_TYPES[data.pass]) {
+    const errors = validateRegisterData(data);
+    if (Object.keys(errors).length > 0) {
+      showFormErrors(form, errors);
+      const firstKey = Object.keys(errors)[0];
+      const firstEl = form.querySelector(`[data-field="${firstKey}"] input, [data-field="${firstKey}"]`);
+      const focusTarget = firstEl?.matches('input') ? firstEl : firstEl?.querySelector('input');
+      focusTarget?.focus();
       return;
     }
 
+    clearAllErrors(form);
     const id = encodeTicketId(data);
     saveTicket(id, data);
     window.location.href = `/ticket/${id}`;
   });
+}
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validateRegisterData(data) {
+  const errors = {};
+
+  if (!data.name) {
+    errors.name = 'Ingresa tu nombre completo.';
+  } else if (data.name.length < 2) {
+    errors.name = 'El nombre debe tener al menos 2 caracteres.';
+  }
+
+  if (!data.email) {
+    errors.email = 'Ingresa tu correo electrónico.';
+  } else if (!EMAIL_RE.test(data.email)) {
+    errors.email = 'Ingresa un correo válido (ej. nombre@empresa.com).';
+  }
+
+  if (!data.pass || !PASS_TYPES[data.pass]) {
+    errors.pass = 'Selecciona un tipo de entrada.';
+  }
+
+  if (data.pass === 'stand' && !data.company) {
+    errors.company = 'Indica el nombre de la empresa o stand.';
+  }
+
+  if (!data.role) {
+    errors.role = 'Indica tu rol o cargo.';
+  } else if (data.role.length < 2) {
+    errors.role = 'El rol debe tener al menos 2 caracteres.';
+  }
+
+  return errors;
+}
+
+function showFormErrors(form, errors) {
+  clearAllErrors(form);
+
+  const keys = Object.keys(errors);
+  const summary = form.querySelector('#register-form-summary');
+  if (summary) {
+    summary.hidden = false;
+    summary.textContent =
+      keys.length === 1
+        ? errors[keys[0]]
+        : `Revisa ${keys.length} campos antes de continuar.`;
+  }
+
+  keys.forEach((field) => {
+    const wrap = form.querySelector(`[data-field="${field}"]`);
+    if (!wrap) return;
+    wrap.classList.add('register-field--error');
+    const msg = wrap.querySelector('.register-error');
+    if (msg) {
+      msg.textContent = errors[field];
+      msg.hidden = false;
+    }
+  });
+}
+
+function clearFieldError(form, field) {
+  const wrap = form.querySelector(`[data-field="${field}"]`);
+  if (!wrap) return;
+  wrap.classList.remove('register-field--error');
+  const msg = wrap.querySelector('.register-error');
+  if (msg) {
+    msg.textContent = '';
+    msg.hidden = true;
+  }
+  updateErrorSummary(form);
+}
+
+function clearAllErrors(form) {
+  form.querySelectorAll('[data-field]').forEach((wrap) => {
+    wrap.classList.remove('register-field--error');
+    const msg = wrap.querySelector('.register-error');
+    if (msg) {
+      msg.textContent = '';
+      msg.hidden = true;
+    }
+  });
+  const summary = form.querySelector('#register-form-summary');
+  if (summary) {
+    summary.hidden = true;
+    summary.textContent = '';
+  }
+}
+
+function updateErrorSummary(form) {
+  const remaining = form.querySelectorAll('.register-error:not([hidden])');
+  const visible = [...remaining].filter((el) => el.textContent.trim());
+  const summary = form.querySelector('#register-form-summary');
+  if (!summary) return;
+  if (visible.length === 0) {
+    summary.hidden = true;
+    summary.textContent = '';
+  } else if (visible.length === 1) {
+    summary.textContent = visible[0].textContent;
+  } else {
+    summary.textContent = `Revisa ${visible.length} campos antes de continuar.`;
+  }
 }
 
 function renderForm() {
@@ -64,17 +178,21 @@ function renderForm() {
         </header>
 
         <form id="register-form" class="register-form" novalidate>
-          <label class="register-field">
+          <p id="register-form-summary" class="register-form-summary" role="alert" hidden></p>
+
+          <label class="register-field" data-field="name">
             <span>Nombre completo</span>
-            <input type="text" name="name" required autocomplete="name" placeholder="Tu nombre" />
+            <input type="text" name="name" autocomplete="name" placeholder="Tu nombre" aria-describedby="error-name" />
+            <span id="error-name" class="register-error" role="alert" hidden></span>
           </label>
 
-          <label class="register-field">
+          <label class="register-field" data-field="email">
             <span>Correo electrónico</span>
-            <input type="email" name="email" required autocomplete="email" placeholder="tu@email.com" />
+            <input type="email" name="email" autocomplete="email" placeholder="tu@email.com" aria-describedby="error-email" />
+            <span id="error-email" class="register-error" role="alert" hidden></span>
           </label>
 
-          <fieldset class="register-fieldset">
+          <fieldset class="register-fieldset" data-field="pass">
             <legend>Tipo de entrada</legend>
             <div class="register-pass-grid">
               ${passes
@@ -93,18 +211,21 @@ function renderForm() {
                 )
                 .join('')}
             </div>
+            <span id="error-pass" class="register-error" role="alert" hidden></span>
           </fieldset>
 
           <div id="stand-fields" class="register-stand-fields hidden">
-            <label class="register-field">
+            <label class="register-field" data-field="company">
               <span>Empresa / stand</span>
-              <input type="text" name="company" placeholder="Nombre del expositor o stand" />
+              <input type="text" name="company" placeholder="Nombre del expositor o stand" aria-describedby="error-company" />
+              <span id="error-company" class="register-error" role="alert" hidden></span>
             </label>
           </div>
 
-          <label class="register-field">
+          <label class="register-field" data-field="role">
             <span>Rol o cargo</span>
-            <input type="text" name="role" required placeholder="Ej. CEO, Developer, Estudiante…" />
+            <input type="text" name="role" placeholder="Ej. CEO, Developer, Estudiante…" aria-describedby="error-role" />
+            <span id="error-role" class="register-error" role="alert" hidden></span>
           </label>
 
           <div class="register-note">

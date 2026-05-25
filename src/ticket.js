@@ -11,6 +11,7 @@ import {
   downloadShareImage,
   nativeShare,
 } from './lib/ticket-share.js';
+import { shareIcon } from './lib/share-icons.js';
 
 const POINTS = 14;
 const GRAVITY = 0.95;
@@ -131,20 +132,19 @@ function renderTicket(ticketId, attendee) {
       </div>
 
       <aside class="ticket-share" id="ticket-share" aria-label="Compartir badge">
-        <p class="ticket-share-title">Compartir tu badge</p>
         <div class="ticket-share-actions">
-          <a class="ticket-share-btn" href="${links.x}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">X</a>
-          <a class="ticket-share-btn" href="${links.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn">LinkedIn</a>
-          <a class="ticket-share-btn" href="${links.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">Facebook</a>
-          <a class="ticket-share-btn" href="${links.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">WhatsApp</a>
-          <button type="button" class="ticket-share-btn" id="share-instagram" aria-label="Descargar imagen para Instagram">Instagram</button>
+          <a class="ticket-share-btn" href="${links.x}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">${shareIcon('x')}</a>
+          <a class="ticket-share-btn" href="${links.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn">${shareIcon('linkedin')}</a>
+          <a class="ticket-share-btn" href="${links.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">${shareIcon('facebook')}</a>
+          <a class="ticket-share-btn" href="${links.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">${shareIcon('whatsapp')}</a>
+          <button type="button" class="ticket-share-btn" id="share-instagram" aria-label="Descargar imagen para Instagram">${shareIcon('instagram')}</button>
         </div>
+        <div class="ticket-share-divider" aria-hidden="true"></div>
         <div class="ticket-share-tools">
-          <button type="button" class="ticket-share-tool" id="share-native">Compartir imagen</button>
-          <button type="button" class="ticket-share-tool" id="share-download">Descargar PNG</button>
-          <button type="button" class="ticket-share-tool" id="share-copy">Copiar enlace</button>
+          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-native" aria-label="Compartir imagen">${shareIcon('share')}</button>
+          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-download" aria-label="Descargar PNG">${shareIcon('download')}</button>
+          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-copy" aria-label="Copiar enlace">${shareIcon('link')}</button>
         </div>
-        <p class="ticket-share-tip">Para Instagram, usa <strong>Descargar PNG</strong> o <strong>Instagram</strong>. El enlace funciona en X y LinkedIn.</p>
       </aside>
     </div>
   `;
@@ -190,11 +190,9 @@ function initShare(attendee, pageUrl) {
       await navigator.clipboard.writeText(pageUrl);
       const btn = document.getElementById('share-copy');
       if (btn) {
-        const prev = btn.textContent;
-        btn.textContent = '¡Copiado!';
-        setTimeout(() => {
-          btn.textContent = prev;
-        }, 2000);
+        const prev = btn.getAttribute('aria-label');
+        btn.setAttribute('aria-label', 'Enlace copiado');
+        setTimeout(() => btn.setAttribute('aria-label', prev || 'Copiar enlace'), 2000);
       }
     } catch {
       /* ignore */

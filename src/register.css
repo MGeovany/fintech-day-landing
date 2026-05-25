@@ -125,6 +125,36 @@ body {
   box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
 }
 
+.register-form-summary {
+  margin: 0;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 80, 80, 0.35);
+  background: rgba(255, 60, 60, 0.08);
+  font-size: 13px;
+  line-height: 1.45;
+  color: #ff8a8a;
+}
+
+.register-field--error input {
+  border-color: rgba(255, 90, 90, 0.55);
+  box-shadow: 0 0 0 3px rgba(255, 60, 60, 0.1);
+}
+
+.register-field--error .register-pass-card {
+  border-color: rgba(255, 90, 90, 0.45);
+}
+
+.register-error {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #ff7b7b;
+}
+
+.register-error[hidden] {
+  display: none;
+}
+
 .register-pass-grid {
   display: flex;
   flex-direction: column;
