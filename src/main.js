@@ -3,13 +3,14 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { mountLayout } from './layout.js';
 import { initHeroScene } from './three/hero.js';
-import { initOrbScene } from './three/orb.js';
+import { initEcosystemScene } from './three/ecosystem.js';
 import {
   playHeroIntro,
   setupReveals,
   setupSplitHeadings,
   setupCounters,
   setupTilt,
+  setupCardGlow,
   setupActivitiesScroll,
   setupParallax,
   setupNav,
@@ -40,6 +41,7 @@ const boot = () => {
   setupSplitHeadings();
   setupCounters();
   setupTilt();
+  setupCardGlow();
   setupMagnetic();
   setupParallax();
   setupActivitiesScroll();
@@ -55,7 +57,7 @@ const boot = () => {
     const io = new IntersectionObserver((entries, obs) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
-          initOrbScene(sobreCanvas);
+          initEcosystemScene(sobreCanvas);
           obs.disconnect();
         }
       });

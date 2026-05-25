@@ -36,13 +36,19 @@ export function setupReveals() {
 /* ------------------------------------------------------------------ */
 export function setupSplitHeadings() {
   document.querySelectorAll('[data-split]').forEach((el) => {
-    const text = el.textContent.trim();
+    const words = el.textContent.trim().split(/\s+/);
     el.innerHTML = '';
-    [...text].forEach((char) => {
-      const span = document.createElement('span');
-      span.className = 'split-char';
-      span.textContent = char === ' ' ? ' ' : char;
-      el.appendChild(span);
+    words.forEach((word, wi) => {
+      const w = document.createElement('span');
+      w.className = 'split-word';
+      [...word].forEach((char) => {
+        const c = document.createElement('span');
+        c.className = 'split-char';
+        c.textContent = char;
+        w.appendChild(c);
+      });
+      el.appendChild(w);
+      if (wi < words.length - 1) el.appendChild(document.createTextNode(' '));
     });
 
     if (prefersReduce) {
@@ -95,6 +101,34 @@ export function setupCounters() {
 }
 
 /* ------------------------------------------------------------------ */
+/* Card hover glow (cursor-tracking light)                            */
+/* ------------------------------------------------------------------ */
+function trackCardGlow(card) {
+  let raf;
+  const onMove = (e) => {
+    const r = card.getBoundingClientRect();
+    const mx = ((e.clientX - r.left) / r.width) * 100;
+    const my = ((e.clientY - r.top) / r.height) * 100;
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      card.style.setProperty('--mx', `${mx}%`);
+      card.style.setProperty('--my', `${my}%`);
+    });
+  };
+  const onLeave = () => {
+    card.style.setProperty('--mx', '50%');
+    card.style.setProperty('--my', '50%');
+  };
+  card.addEventListener('pointermove', onMove);
+  card.addEventListener('pointerleave', onLeave);
+}
+
+export function setupCardGlow() {
+  if (prefersReduce) return;
+  document.querySelectorAll('[data-glow]').forEach(trackCardGlow);
+}
+
+/* ------------------------------------------------------------------ */
 /* Card 3D tilt                                                       */
 /* ------------------------------------------------------------------ */
 export function setupTilt() {
@@ -105,13 +139,19 @@ export function setupTilt() {
       const r = card.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
       const y = (e.clientY - r.top) / r.height - 0.5;
+      const mx = ((e.clientX - r.left) / r.width) * 100;
+      const my = ((e.clientY - r.top) / r.height) * 100;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         card.style.transform = `perspective(900px) rotateX(${-y * 6}deg) rotateY(${x * 6}deg) translateZ(0)`;
+        card.style.setProperty('--mx', `${mx}%`);
+        card.style.setProperty('--my', `${my}%`);
       });
     };
     const onLeave = () => {
       card.style.transform = '';
+      card.style.setProperty('--mx', '50%');
+      card.style.setProperty('--my', '50%');
     };
     card.addEventListener('pointermove', onMove);
     card.addEventListener('pointerleave', onLeave);
