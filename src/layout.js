@@ -4,7 +4,7 @@ import noise from './components/noise.html?raw';
 import nav from './components/nav.html?raw';
 import hero from './components/hero.html?raw';
 import stats from './components/stats.html?raw';
-import recap2025 from './components/recap-2025.html?raw';
+// import recap2025 from './components/recap-2025.html?raw';
 import sobre from './components/sobre.html?raw';
 import objectives from './components/objectives.html?raw';
 import audience from './components/audience.html?raw';
@@ -42,7 +42,7 @@ export function mountLayout(root = document.getElementById('app')) {
     nav,
     hero,
     stats,
-    recap2025,
+    // recap2025,  // Edición 2025 — comentado temporalmente
     // sobre,      // Objetivo general — comentado temporalmente
     // objectives, // Objetivos específicos — comentado temporalmente
     audience,
