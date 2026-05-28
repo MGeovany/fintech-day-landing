@@ -1,9 +1,9 @@
 @import 'tailwindcss';
 
 :root {
-  --r-bg: #050505;
+  --r-bg: #030d1f;
   --r-text: #f5f4f1;
-  --r-accent: #007aff;
+  --r-accent: #00c4f0;
 }
 
 html,
@@ -19,7 +19,7 @@ body {
   min-height: 100vh;
   padding: 24px 20px 48px;
   background:
-    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0, 122, 255, 0.14), transparent 55%),
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0, 196, 240, 0.14), transparent 55%),
     var(--r-bg);
 }
 
@@ -61,7 +61,7 @@ body {
   height: 6px;
   border-radius: 50%;
   background: var(--r-accent);
-  box-shadow: 0 0 10px rgba(0, 122, 255, 0.65);
+  box-shadow: 0 0 10px rgba(0, 196, 240, 0.65);
 }
 
 .register-title {
@@ -121,8 +121,8 @@ body {
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .register-field input:focus {
-  border-color: rgba(0, 122, 255, 0.55);
-  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.12);
+  border-color: rgba(0, 196, 240, 0.55);
+  box-shadow: 0 0 0 3px rgba(0, 196, 240, 0.12);
 }
 
 .register-form-summary {
@@ -182,8 +182,8 @@ body {
 }
 
 .register-pass input:checked + .register-pass-card {
-  border-color: rgba(0, 122, 255, 0.55);
-  background: rgba(0, 122, 255, 0.08);
+  border-color: rgba(0, 196, 240, 0.55);
+  background: rgba(0, 196, 240, 0.08);
 }
 
 .register-pass-top {
@@ -247,12 +247,12 @@ body {
   border: 0;
   border-radius: 999px;
   background: var(--r-accent);
-  color: #0a0a0a;
+  color: #030d1f;
   font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 8px 28px -8px rgba(0, 122, 255, 0.65);
+  box-shadow: 0 8px 28px -8px rgba(0, 196, 240, 0.65);
   transition: background 0.2s ease, transform 0.15s ease;
 }
 .register-submit:hover {

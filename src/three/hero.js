@@ -11,8 +11,8 @@ export function initHeroScene(canvas) {
 
   const CELL = 88;
   const BASE_LINE = 'rgba(255, 255, 255, 0.045)';
-  const PULSE_COLOR = '0, 122, 255';
-  const HEAD_COLOR  = '180, 220, 255';
+  const PULSE_COLOR = '0, 196, 240';
+  const HEAD_COLOR  = '160, 230, 255';
   const HOVER_RADIUS = 140;
   const HOVER_SEGMENT = 100;
   const HOVER_LERP = 8;
