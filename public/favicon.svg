@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Honduras Fintech Day">
+  <defs>
+    <linearGradient id="bg" x1="10" y1="8" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#071a2f"/>
+      <stop offset="1" stop-color="#020814"/>
+    </linearGradient>
+    <linearGradient id="line" x1="16" y1="18" x2="50" y2="46" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00c4f0"/>
+      <stop offset="1" stop-color="#00e5a0"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="18" fill="url(#bg)"/>
+  <path d="M15 39c7-18 28-21 39-7" fill="none" stroke="url(#line)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="47" cy="27" r="4" fill="#f4e1c1"/>
+  <path d="M17 20v24M17 32h15M32 20v24M40 20v24M40 20h8c5 0 8 3 8 7s-3 7-8 7h-8" fill="none" stroke="#f7f8fb" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

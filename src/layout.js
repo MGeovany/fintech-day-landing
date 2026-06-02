@@ -24,6 +24,8 @@ const ctaFinal = ctaFinalRaw
   .replace('__CTA_IMG__', ctaImg)
   .replaceAll('__CONTACT_EMAIL__', CONTACT_EMAIL);
 
+const sponsorshipSection = sponsorship.replaceAll('__CONTACT_EMAIL__', CONTACT_EMAIL);
+
 const activities = activitiesRaw
   .replace('__FERIA_IMG__', feriaImg)
   .replace('__CONFERENCIAS_IMG__', conferenciasImg)
@@ -46,7 +48,7 @@ export function mountLayout(root = document.getElementById('app')) {
     // objectives, // Objetivos específicos — comentado temporalmente
     audience,
     activities,
-    sponsorship,
+    sponsorshipSection,
     ctaFinal,
     '</main>',
     footer.replaceAll('__CONTACT_EMAIL__', CONTACT_EMAIL),

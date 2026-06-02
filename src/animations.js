@@ -310,8 +310,9 @@ export function setupAnchorScroll(lenis) {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
+      const duration = Number.parseFloat(a.dataset.scrollDuration) || 1.2;
       if (lenis) {
-        lenis.scrollTo(target, { offset: -40, duration: 1.2 });
+        lenis.scrollTo(target, { offset: -40, duration });
       } else {
         target.scrollIntoView({ behavior: 'smooth' });
       }
