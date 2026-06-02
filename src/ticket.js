@@ -19,9 +19,18 @@ const DAMPING = 0.985;
 const ITERATIONS = 20;
 const RIBBON_TEXT = 'HONDURAS FINTECH DAY 2026 · ';
 
-export function mountTicket(ticketId) {
-  const attendee =
+export async function mountTicket(ticketId) {
+  let attendee =
     decodeTicketId(ticketId) || loadTicket(ticketId);
+
+  if (!attendee) {
+    try {
+      const res = await fetch(`/api/attendee/${encodeURIComponent(ticketId)}`);
+      if (res.ok) attendee = await res.json();
+    } catch {
+      /* offline fallback */
+    }
+  }
 
   if (!attendee) {
     window.location.replace('/registro');
@@ -146,6 +155,15 @@ function renderTicket(ticketId, attendee) {
           <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-copy" aria-label="Copiar enlace">${shareIcon('link')}</button>
         </div>
       </aside>
+
+      ${attendee.pass === 'full' ? `
+        <div class="ticket-pay">
+          <a href="https://even2.app/fintechday2026/" target="_blank" rel="noopener noreferrer" class="ticket-pay-btn">
+            Pagar ahora — $65 USD →
+          </a>
+          <p class="ticket-pay-note">Tu badge ya está generado. El pago final se realiza en la plataforma de even2.app.</p>
+        </div>
+      ` : ''}
     </div>
   `;
 }

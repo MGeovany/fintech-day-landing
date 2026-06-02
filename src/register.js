@@ -54,9 +54,20 @@ export function mountRegister() {
     }
 
     clearAllErrors(form);
-    const id = encodeTicketId(data);
-    saveTicket(id, data);
-    window.location.href = `/ticket/${id}`;
+    const submitBtn = form.querySelector('.register-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Registrando…';
+
+    submitRegistration(form, data).then(({ ticketId }) => {
+      saveTicket(ticketId, data);
+      window.location.href = `/ticket/${ticketId}`;
+    }).catch(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Generar mi badge';
+      const id = encodeTicketId(data);
+      saveTicket(id, data);
+      window.location.href = `/ticket/${id}`;
+    });
   });
 }
 
@@ -92,6 +103,20 @@ function setCanonicalLink(href) {
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function submitRegistration(form, data) {
+  const res = await fetch('/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({ error: 'Error de conexión' }));
+    showFormErrors(form, { server: err.error || 'Error al registrar' });
+    throw new Error(err.error);
+  }
+  return res.json();
+}
 
 function validateRegisterData(data) {
   const errors = {};
@@ -263,7 +288,7 @@ function renderForm() {
 
           <div class="register-note">
             <p><strong>Importante:</strong> Full Pass incluye almuerzo (cupos limitados). Expo Pass es solo feria. Stand requiere paquete de patrocinio activo.</p>
-            <p>El pago de $65 se coordina con AFINH tras el registro. Este formulario genera tu badge de participación.</p>
+            <p>El pago del Full Pass ($65 USD) se realiza en el siguiente paso. Tu badge se genera al completar este registro.</p>
           </div>
 
           <button type="submit" class="register-submit">Generar mi badge</button>
