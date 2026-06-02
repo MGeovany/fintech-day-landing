@@ -8,7 +8,6 @@ import stats from './components/stats.html?raw';
 import sobre from './components/sobre.html?raw';
 import objectives from './components/objectives.html?raw';
 import audience from './components/audience.html?raw';
-import { buildAgendaSectionHtml } from './agenda-render.js';
 import activitiesRaw from './components/activities.html?raw';
 import feriaImg from './assets/afinh2025_image-275.jpg?url';
 import conferenciasImg from './assets/afinh2025_image-276.jpg?url';
@@ -46,7 +45,6 @@ export function mountLayout(root = document.getElementById('app')) {
     // sobre,      // Objetivo general — comentado temporalmente
     // objectives, // Objetivos específicos — comentado temporalmente
     audience,
-    buildAgendaSectionHtml(),
     activities,
     sponsorship,
     ctaFinal,
