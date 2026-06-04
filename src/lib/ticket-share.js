@@ -87,86 +87,110 @@ export function shareLinks(pageUrl) {
   };
 }
 
-/** Captura buckle + tab + badge-card con fondo transparente.
- *  Usa un wrapper offscreen y pasa el elemento interior a toPng (no el wrapper fixed). */
+/**
+ * Captura el badge card (que funciona de forma confiable) y luego dibuja
+ * el cordón y el buckle encima usando canvas 2D — evita los problemas de
+ * html-to-image con el DOM de width:0 y márgenes negativos del anchor.
+ */
 export async function captureBadgeWithLanyard() {
-  const card = document.getElementById('badge-card');
-  const anchor = document.getElementById('badge-anchor');
-  if (!card) return null;
+  const cardDataUrl = await captureBadgeFromDom();
+  if (!cardDataUrl) return null;
 
-  if (document.fonts?.ready) await document.fonts.ready;
+  const PR = EXPORT_PIXEL_RATIO;
 
-  // Wrapper offscreen — solo para insertar en el DOM sin que sea visible
-  const wrapper = document.createElement('div');
-  Object.assign(wrapper.style, {
-    position: 'fixed',
-    left: '-10000px',
-    top: '0',
-    pointerEvents: 'none',
-    zIndex: '-1',
-  });
+  // Dimensiones en px CSS → escalar por pixelRatio para canvas
+  const CORD_W   = 8;   // ancho del cordón
+  const CORD_H   = 64;  // altura visible del cordón encima del buckle
+  const BKL_W    = 26;  // buckle
+  const BKL_H    = 50;
+  const TAB_W    = 22;  // tab negro
+  const TAB_H    = 30;
+  const PAD_X    = 24;  // padding lateral
+  const CTR_W    = BADGE_W + PAD_X * 2;            // 308
+  const CTR_H    = CORD_H + BKL_H + 8 + TAB_H + 4 + BADGE_H + 16; // ~562
 
-  // Contenido real — este es el elemento que se le pasa a toPng
-  const content = document.createElement('div');
-  Object.assign(content.style, {
-    width: `${EXPORT_W}px`,
-    height: `${EXPORT_H}px`,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    paddingTop: '16px',
-    boxSizing: 'border-box',
-  });
+  const canvas = document.createElement('canvas');
+  canvas.width  = CTR_W * PR;
+  canvas.height = CTR_H * PR;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(PR, PR);
 
-  if (anchor) {
-    const buckle = anchor.querySelector('.lanyard-buckle');
-    const tab = anchor.querySelector('.lanyard-tab');
+  const cx = CTR_W / 2; // centro horizontal
 
-    if (buckle) {
-      const b = buckle.cloneNode(true);
-      // Resetear márgenes negativos del CSS original (margin-left:-13px, margin-top:-10px)
-      Object.assign(b.style, { position: 'relative', margin: '0', flexShrink: '0' });
-      content.appendChild(b);
-    }
-    if (tab) {
-      const t = tab.cloneNode(true);
-      // Resetear margin-left:-11px del CSS original
-      Object.assign(t.style, { position: 'relative', margin: '0', marginTop: '2px', flexShrink: '0' });
-      content.appendChild(t);
-    }
-  }
+  // ── Cordón (lanyard strap) ──────────────────────────────────────
+  const cordX = cx - CORD_W / 2;
+  ctx.fillStyle = '#111111';
+  ctx.fillRect(cordX, 0, CORD_W, CORD_H + BKL_H / 2); // llega hasta mitad del buckle
 
-  const cardClone = card.cloneNode(true);
-  cardClone.removeAttribute('id');
-  cardClone.classList.remove('is-dragging');
-  Object.assign(cardClone.style, {
-    position: 'relative',
-    margin: '0',
-    marginTop: '-4px',
-    width: `${BADGE_W}px`,
-    height: `${BADGE_H}px`,
-    cursor: 'default',
-    flexShrink: '0',
-  });
-  content.appendChild(cardClone);
+  // ── Buckle (naranja) ────────────────────────────────────────────
+  const bklX = cx - BKL_W / 2;
+  const bklY = CORD_H;
 
-  wrapper.appendChild(content);
-  document.body.appendChild(wrapper);
+  const bklGrad = ctx.createLinearGradient(bklX, bklY, bklX, bklY + BKL_H);
+  bklGrad.addColorStop(0,    '#ff5e2b');
+  bklGrad.addColorStop(0.38, '#ff5e2b');
+  bklGrad.addColorStop(0.49, 'rgba(0,0,0,0.55)');
+  bklGrad.addColorStop(0.51, 'rgba(0,0,0,0.55)');
+  bklGrad.addColorStop(0.62, '#ff5e2b');
+  bklGrad.addColorStop(1,    '#c5421a');
+  ctx.fillStyle = bklGrad;
+  roundRect(ctx, bklX, bklY, BKL_W, BKL_H, [4, 4, 5, 5]);
+  ctx.fill();
 
-  try {
-    // Pasar `content` (no `wrapper`) — igual que captureBadgeFromDom pasa el clone, no el stage
-    return await toPng(content, {
-      pixelRatio: EXPORT_PIXEL_RATIO,
-      width: EXPORT_W,
-      height: EXPORT_H,
-      cacheBust: true,
-      skipFonts: false,
-    });
-  } catch {
-    return captureBadgeFromDom();
-  } finally {
-    wrapper.remove();
-  }
+  // Línea central del buckle
+  ctx.fillStyle = 'rgba(0,0,0,0.3)';
+  ctx.fillRect(cx - 0.75, bklY + 6, 1.5, BKL_H - 12);
+
+  // Conector inferior del buckle
+  const conW = 14, conH = 8;
+  const conGrad = ctx.createLinearGradient(0, bklY + BKL_H, 0, bklY + BKL_H + conH);
+  conGrad.addColorStop(0, '#c5421a');
+  conGrad.addColorStop(1, '#9a3414');
+  ctx.fillStyle = conGrad;
+  roundRect(ctx, cx - conW / 2, bklY + BKL_H, conW, conH, [0, 0, 3, 3]);
+  ctx.fill();
+
+  // ── Tab negro ───────────────────────────────────────────────────
+  const tabX = cx - TAB_W / 2;
+  const tabY = bklY + BKL_H + conH + 2;
+  const tabGrad = ctx.createLinearGradient(tabX, tabY, tabX, tabY + TAB_H);
+  tabGrad.addColorStop(0, '#1a1a1a');
+  tabGrad.addColorStop(1, '#050505');
+  ctx.fillStyle = tabGrad;
+  ctx.fillRect(tabX, tabY, TAB_W, TAB_H);
+
+  // Punto cyan del tab
+  ctx.beginPath();
+  ctx.arc(cx, tabY + TAB_H / 2, 3, 0, Math.PI * 2);
+  ctx.fillStyle = '#00c4f0';
+  ctx.shadowColor = 'rgba(0,196,240,0.7)';
+  ctx.shadowBlur = 8 / PR;
+  ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // ── Badge card ──────────────────────────────────────────────────
+  const cardY = tabY + TAB_H - 4; // -4 = margin-top original del card
+  const img = new Image();
+  img.src = cardDataUrl;
+  await new Promise((res) => { img.onload = res; });
+  ctx.drawImage(img, PAD_X, cardY, BADGE_W, BADGE_H);
+
+  return canvas.toDataURL('image/png');
+}
+
+function roundRect(ctx, x, y, w, h, radii) {
+  const [tl = 0, tr = 0, br = 0, bl = 0] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
+  ctx.beginPath();
+  ctx.moveTo(x + tl, y);
+  ctx.lineTo(x + w - tr, y);
+  ctx.quadraticCurveTo(x + w, y, x + w, y + tr);
+  ctx.lineTo(x + w, y + h - br);
+  ctx.quadraticCurveTo(x + w, y + h, x + w - br, y + h);
+  ctx.lineTo(x + bl, y + h);
+  ctx.quadraticCurveTo(x, y + h, x, y + h - bl);
+  ctx.lineTo(x, y + tl);
+  ctx.quadraticCurveTo(x, y, x + tl, y);
+  ctx.closePath();
 }
 
 /** Captura solo el badge-card (para compatibilidad). */
