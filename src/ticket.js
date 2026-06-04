@@ -13,6 +13,7 @@ import {
   buildReferralUrl,
 } from './lib/ticket-share.js';
 import { shareIcon } from './lib/share-icons.js';
+import { toast } from './lib/toast.js';
 
 const POINTS = 14;
 const GRAVITY = 0.95;
@@ -189,7 +190,10 @@ function initShare(attendee, pageUrl) {
   };
 
   document.getElementById('share-x')?.addEventListener('click', withBusy(() => shareToSocial('x', attendee, pageUrl)));
-  document.getElementById('share-linkedin')?.addEventListener('click', withBusy(() => shareToSocial('linkedin', attendee, pageUrl)));
+  document.getElementById('share-linkedin')?.addEventListener('click', withBusy(async () => {
+    const { copied } = await shareToSocial('linkedin', attendee, pageUrl);
+    if (copied) toast('Texto copiado — pégalo en LinkedIn con Ctrl+V / ⌘V', { type: 'default', duration: 5000 });
+  }));
   document.getElementById('share-whatsapp')?.addEventListener('click', withBusy(() => shareToSocial('whatsapp', attendee, pageUrl)));
 
   document.getElementById('share-download')?.addEventListener('click', withBusy(() => downloadShareImage(attendee)));

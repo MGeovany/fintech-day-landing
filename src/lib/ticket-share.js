@@ -87,8 +87,8 @@ export function shareLinks(pageUrl) {
   };
 }
 
-/** Captura buckle + tab + badge-card con fondo transparente usando flex layout.
- *  Evita clonar #badge-anchor (width:0 con márgenes negativos) que html-to-image no renderiza. */
+/** Captura buckle + tab + badge-card con fondo transparente.
+ *  Usa un wrapper offscreen y pasa el elemento interior a toPng (no el wrapper fixed). */
 export async function captureBadgeWithLanyard() {
   const card = document.getElementById('badge-card');
   const anchor = document.getElementById('badge-anchor');
@@ -96,16 +96,21 @@ export async function captureBadgeWithLanyard() {
 
   if (document.fonts?.ready) await document.fonts.ready;
 
-  const stage = document.createElement('div');
-  stage.setAttribute('aria-hidden', 'true');
-  Object.assign(stage.style, {
+  // Wrapper offscreen — solo para insertar en el DOM sin que sea visible
+  const wrapper = document.createElement('div');
+  Object.assign(wrapper.style, {
     position: 'fixed',
     left: '-10000px',
     top: '0',
-    width: `${EXPORT_W}px`,
-    height: `${EXPORT_H}px`,
     pointerEvents: 'none',
     zIndex: '-1',
+  });
+
+  // Contenido real — este es el elemento que se le pasa a toPng
+  const content = document.createElement('div');
+  Object.assign(content.style, {
+    width: `${EXPORT_W}px`,
+    height: `${EXPORT_H}px`,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -113,24 +118,24 @@ export async function captureBadgeWithLanyard() {
     boxSizing: 'border-box',
   });
 
-  // Clonar buckle y tab individualmente (no el anchor con width:0)
   if (anchor) {
     const buckle = anchor.querySelector('.lanyard-buckle');
     const tab = anchor.querySelector('.lanyard-tab');
 
     if (buckle) {
       const b = buckle.cloneNode(true);
+      // Resetear márgenes negativos del CSS original (margin-left:-13px, margin-top:-10px)
       Object.assign(b.style, { position: 'relative', margin: '0', flexShrink: '0' });
-      stage.appendChild(b);
+      content.appendChild(b);
     }
     if (tab) {
       const t = tab.cloneNode(true);
+      // Resetear margin-left:-11px del CSS original
       Object.assign(t.style, { position: 'relative', margin: '0', marginTop: '2px', flexShrink: '0' });
-      stage.appendChild(t);
+      content.appendChild(t);
     }
   }
 
-  // Clonar el badge-card
   const cardClone = card.cloneNode(true);
   cardClone.removeAttribute('id');
   cardClone.classList.remove('is-dragging');
@@ -143,12 +148,14 @@ export async function captureBadgeWithLanyard() {
     cursor: 'default',
     flexShrink: '0',
   });
-  stage.appendChild(cardClone);
+  content.appendChild(cardClone);
 
-  document.body.appendChild(stage);
+  wrapper.appendChild(content);
+  document.body.appendChild(wrapper);
 
   try {
-    return await toPng(stage, {
+    // Pasar `content` (no `wrapper`) — igual que captureBadgeFromDom pasa el clone, no el stage
+    return await toPng(content, {
       pixelRatio: EXPORT_PIXEL_RATIO,
       width: EXPORT_W,
       height: EXPORT_H,
@@ -158,7 +165,7 @@ export async function captureBadgeWithLanyard() {
   } catch {
     return captureBadgeFromDom();
   } finally {
-    stage.remove();
+    wrapper.remove();
   }
 }
 
@@ -218,17 +225,26 @@ async function dataUrlToFile(dataUrl, filename) {
   return new File([blob], filename, { type: 'image/png' });
 }
 
-/** Abre la red social en nueva pestaña y descarga la imagen del badge para adjuntar. */
+/**
+ * Abre la red social en nueva pestaña y descarga la imagen del badge.
+ * LinkedIn no acepta texto pre-llenado vía URL — copia el texto al clipboard
+ * antes de abrir para que el usuario solo tenga que pegar.
+ * Devuelve { copied: boolean } para que el llamador muestre feedback.
+ */
 export async function shareToSocial(platform, attendee, pageUrl) {
   const links = shareLinks(pageUrl);
+  const text = buildShareText(attendee, pageUrl);
   const slug = attendee.name.replace(/\s+/g, '-').toLowerCase().slice(0, 24);
   const filename = `fintech-day-${slug}.png`;
 
-  // Abrir plataforma primero (evita bloqueo de popup si se demora la captura)
+  // LinkedIn no soporta texto pre-llenado — copiar al portapapeles primero
+  if (platform === 'linkedin') {
+    try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
+  }
+
   const url = links[platform];
   if (url) window.open(url, '_blank', 'noopener,noreferrer');
 
-  // Descargar imagen para que el usuario la adjunte
   const dataUrl = await captureBadgeWithLanyard();
   if (dataUrl) {
     const a = document.createElement('a');
@@ -237,7 +253,7 @@ export async function shareToSocial(platform, attendee, pageUrl) {
     a.click();
   }
 
-  return true;
+  return { copied: platform === 'linkedin' };
 }
 
 export async function downloadShareImage(attendee, filename) {
