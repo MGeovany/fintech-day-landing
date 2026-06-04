@@ -1,32 +1,9 @@
-# Honduras Fintech Day 2026 — Landing
+# Honduras Fintech Day 2026
 
-Landing oficial del Honduras Fintech Day 2026. Stack: Vite + Three.js + GSAP + Lenis.
+**20 de agosto · San Pedro Sula, Honduras**
 
-## Desarrollo
+El evento fintech más grande de Honduras. Conferencias, talleres, feria tecnológica y networking con líderes del sector financiero y tecnológico.
 
-```bash
-npm install
-npm run dev
-```
+---
 
-Abre `http://localhost:5173`.
-
-## Build
-
-```bash
-npm run build
-npm run preview
-```
-
-## Estructura
-
-- `index.html` — markup de todas las secciones
-- `src/main.js` — bootstrap (scroll, 3D, animaciones)
-- `src/style.css` — estilos basados en el sistema (dot)connect
-- `src/three/hero.js` — escena 3D del hero (icosaedro distorsionado + partículas)
-- `src/three/orb.js` — orbes decorativos secundarios
-- `src/animations.js` — scroll triggers, parallax, counters, tilt 3D
-
-## Diseño
-
-Sistema de tokens definido en `DESIGN.md`, `theme.css`, `tokens.json`, `variables.css`.
+**hondurasfintechday.com** · [direccionejecutiva@hondurasfintech.com](mailto:direccionejecutiva@hondurasfintech.com)
