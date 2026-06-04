@@ -11,7 +11,7 @@ import audience from './components/audience.html?raw';
 import activitiesRaw from './components/activities.html?raw';
 import feriaImg from './assets/afinh2025_image-275.jpg?url';
 import conferenciasImg from './assets/afinh2025_image-276.jpg?url';
-import talleresImg from './assets/afinh2025_image-232.jpg?url';
+import talleresImg from './assets/afinh2025_talleres-2025.png?url';
 import academiaImg from './assets/afinh2025_image-222.jpg?url';
 import coctelImg from './assets/afinh2025_image-274.jpg?url';
 import sponsorship from './components/sponsorship.html?raw';
