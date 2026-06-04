@@ -198,37 +198,18 @@ async function dataUrlToFile(dataUrl, filename) {
   return new File([blob], filename, { type: 'image/png' });
 }
 
-/** Comparte en la plataforma dada: intenta Web Share API con imagen; fallback a URL + descarga. */
+/** Abre la red social en nueva pestaña y descarga la imagen del badge para adjuntar. */
 export async function shareToSocial(platform, attendee, pageUrl) {
   const links = shareLinks(pageUrl);
-  const text = buildShareText(attendee, pageUrl);
   const slug = attendee.name.replace(/\s+/g, '-').toLowerCase().slice(0, 24);
   const filename = `fintech-day-${slug}.png`;
 
-  const dataUrl = await captureBadgeWithLanyard();
-
-  // Mobile / desktop con Web Share API + soporte de archivos
-  if (dataUrl && navigator.share) {
-    try {
-      const file = await dataUrlToFile(dataUrl, filename);
-      if (navigator.canShare?.({ files: [file] })) {
-        await navigator.share({
-          title: 'Honduras Fintech Day 2026',
-          text,
-          files: [file],
-        });
-        return true;
-      }
-    } catch (err) {
-      if (err?.name === 'AbortError') return true;
-      // fall through
-    }
-  }
-
-  // Fallback desktop: abrir URL de la plataforma + descargar imagen
+  // Abrir plataforma primero (evita bloqueo de popup si se demora la captura)
   const url = links[platform];
   if (url) window.open(url, '_blank', 'noopener,noreferrer');
 
+  // Descargar imagen para que el usuario la adjunte
+  const dataUrl = await captureBadgeWithLanyard();
   if (dataUrl) {
     const a = document.createElement('a');
     a.href = dataUrl;
