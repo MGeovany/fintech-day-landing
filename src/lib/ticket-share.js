@@ -85,10 +85,12 @@ export function shareLinks(pageUrl) {
   };
 }
 
-/** Captura badge-anchor (buckle + tab + card) con fondo transparente. */
+/** Captura buckle + tab + badge-card con fondo transparente usando flex layout.
+ *  Evita clonar #badge-anchor (width:0 con márgenes negativos) que html-to-image no renderiza. */
 export async function captureBadgeWithLanyard() {
+  const card = document.getElementById('badge-card');
   const anchor = document.getElementById('badge-anchor');
-  if (!anchor) return null;
+  if (!card) return null;
 
   if (document.fonts?.ready) await document.fonts.ready;
 
@@ -102,28 +104,45 @@ export async function captureBadgeWithLanyard() {
     height: `${EXPORT_H}px`,
     pointerEvents: 'none',
     zIndex: '-1',
-    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingTop: '16px',
+    boxSizing: 'border-box',
   });
 
-  const clone = anchor.cloneNode(true);
-  clone.removeAttribute('id');
-  Object.assign(clone.style, {
-    position: 'absolute',
-    top: '0',
-    left: '0',
-    transform: `translate3d(${EXPORT_W / 2}px, ${ANCHOR_Y}px, 0) rotate(0deg)`,
-    transformOrigin: '0 0',
-    willChange: 'auto',
-  });
+  // Clonar buckle y tab individualmente (no el anchor con width:0)
+  if (anchor) {
+    const buckle = anchor.querySelector('.lanyard-buckle');
+    const tab = anchor.querySelector('.lanyard-tab');
 
-  const cloneCard = clone.querySelector('.badge-card');
-  if (cloneCard) {
-    cloneCard.removeAttribute('id');
-    cloneCard.classList.remove('is-dragging');
-    cloneCard.style.cursor = 'default';
+    if (buckle) {
+      const b = buckle.cloneNode(true);
+      Object.assign(b.style, { position: 'relative', margin: '0', flexShrink: '0' });
+      stage.appendChild(b);
+    }
+    if (tab) {
+      const t = tab.cloneNode(true);
+      Object.assign(t.style, { position: 'relative', margin: '0', marginTop: '2px', flexShrink: '0' });
+      stage.appendChild(t);
+    }
   }
 
-  stage.appendChild(clone);
+  // Clonar el badge-card
+  const cardClone = card.cloneNode(true);
+  cardClone.removeAttribute('id');
+  cardClone.classList.remove('is-dragging');
+  Object.assign(cardClone.style, {
+    position: 'relative',
+    margin: '0',
+    marginTop: '-4px',
+    width: `${BADGE_W}px`,
+    height: `${BADGE_H}px`,
+    cursor: 'default',
+    flexShrink: '0',
+  });
+  stage.appendChild(cardClone);
+
   document.body.appendChild(stage);
 
   try {
@@ -131,12 +150,11 @@ export async function captureBadgeWithLanyard() {
       pixelRatio: EXPORT_PIXEL_RATIO,
       width: EXPORT_W,
       height: EXPORT_H,
-      // no backgroundColor → transparent
       cacheBust: true,
       skipFonts: false,
     });
   } catch {
-    return null;
+    return captureBadgeFromDom();
   } finally {
     stage.remove();
   }
