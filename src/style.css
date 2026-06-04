@@ -1672,3 +1672,16 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .toast--success { border-left: 3px solid #22c55e; }
 .toast--warning { border-left: 3px solid #f59e0b; }
 .toast--invite  { border-left: 3px solid #a78bfa; }
+.toast-message  { display: block; margin-bottom: 0.5rem; }
+.toast-action {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  background: #a78bfa;
+  color: #0d0d0f;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+.toast-action:hover { background: #c4b5fd; }

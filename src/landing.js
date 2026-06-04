@@ -87,7 +87,11 @@ function checkReferral() {
     history.replaceState(null, '', clean.pathname + (clean.search !== '?' ? clean.search : ''));
     // Show invite banner after short delay so landing animations don't conflict
     setTimeout(() => {
-      toast(`👋 ${name} te invitó al Honduras Fintech Day 2026`, { type: 'invite', duration: 8000 });
+      toast(`👋 ${name} te invitó al Honduras Fintech Day 2026`, {
+        type: 'invite',
+        duration: 12000,
+        action: { label: 'Obtener entradas →', href: '/registro' },
+      });
     }, 1200);
   } catch {
     // ignore malformed ref

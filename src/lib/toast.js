@@ -11,12 +11,25 @@ function getContainer() {
   return container;
 }
 
-export function toast(message, { type = 'default', duration = 4000 } = {}) {
+export function toast(message, { type = 'default', duration = 4000, action = null } = {}) {
   const c = getContainer();
   const li = document.createElement('li');
   li.className = `toast toast--${type}`;
   li.setAttribute('role', 'status');
-  li.textContent = message;
+
+  const text = document.createElement('span');
+  text.className = 'toast-message';
+  text.textContent = message;
+  li.appendChild(text);
+
+  if (action) {
+    const btn = document.createElement('a');
+    btn.className = 'toast-action';
+    btn.href = action.href;
+    btn.textContent = action.label;
+    li.appendChild(btn);
+  }
+
   c.appendChild(li);
 
   requestAnimationFrame(() => {
