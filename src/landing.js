@@ -1,4 +1,5 @@
 import Lenis from 'lenis';
+import { toast } from './lib/toast.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { mountLayout } from './layout.js';
@@ -74,8 +75,28 @@ const boot = () => {
   });
 };
 
+function checkReferral() {
+  try {
+    const ref = new URLSearchParams(window.location.search).get('ref');
+    if (!ref) return;
+    const name = decodeURIComponent(escape(atob(ref)));
+    if (!name) return;
+    // Remove ref from URL without reload
+    const clean = new URL(window.location.href);
+    clean.searchParams.delete('ref');
+    history.replaceState(null, '', clean.pathname + (clean.search !== '?' ? clean.search : ''));
+    // Show invite banner after short delay so landing animations don't conflict
+    setTimeout(() => {
+      toast(`👋 ${name} te invitó al Honduras Fintech Day 2026`, { type: 'invite', duration: 8000 });
+    }, 1200);
+  } catch {
+    // ignore malformed ref
+  }
+}
+
 export function bootLanding() {
   mountLayout();
+  checkReferral();
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

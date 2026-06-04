@@ -1668,6 +1668,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   opacity: 1;
   transform: translateY(0) scale(1);
 }
-.toast--error  { border-left: 3px solid #ef4444; }
+.toast--error   { border-left: 3px solid #ef4444; }
 .toast--success { border-left: 3px solid #22c55e; }
 .toast--warning { border-left: 3px solid #f59e0b; }
+.toast--invite  { border-left: 3px solid #a78bfa; }

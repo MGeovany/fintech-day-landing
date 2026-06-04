@@ -7,9 +7,10 @@ import {
 } from './lib/ticket-store.js';
 import {
   setPageShareMeta,
-  shareLinks,
   downloadShareImage,
   nativeShare,
+  shareToSocial,
+  buildReferralUrl,
 } from './lib/ticket-share.js';
 import { shareIcon } from './lib/share-icons.js';
 
@@ -56,7 +57,7 @@ function renderTicket(ticketId, attendee) {
   const ribbonText = RIBBON_TEXT.repeat(repeats);
   const subtitle = [attendee.role, attendee.company].filter(Boolean).join(' · ');
   const displayRole = subtitle || pass.label;
-  const links = shareLinks(`${window.location.origin}/ticket/${ticketId}`);
+  const referralUrl = buildReferralUrl(attendee);
   const displayId = formatDisplayTicketId(ticketId);
 
   return `
@@ -143,17 +144,18 @@ function renderTicket(ticketId, attendee) {
 
       <aside class="ticket-share" id="ticket-share" aria-label="Compartir badge">
         <div class="ticket-share-actions">
-          <a class="ticket-share-btn" href="${links.x}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en X">${shareIcon('x')}</a>
-          <a class="ticket-share-btn" href="${links.linkedin}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en LinkedIn">${shareIcon('linkedin')}</a>
-          <a class="ticket-share-btn" href="${links.facebook}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en Facebook">${shareIcon('facebook')}</a>
-          <a class="ticket-share-btn" href="${links.whatsapp}" target="_blank" rel="noopener noreferrer" aria-label="Compartir en WhatsApp">${shareIcon('whatsapp')}</a>
-          <button type="button" class="ticket-share-btn" id="share-instagram" aria-label="Descargar imagen para Instagram">${shareIcon('instagram')}</button>
+          <button type="button" class="ticket-share-btn" id="share-x" aria-label="Compartir en X">${shareIcon('x')}</button>
+          <button type="button" class="ticket-share-btn" id="share-linkedin" aria-label="Compartir en LinkedIn">${shareIcon('linkedin')}</button>
+          <button type="button" class="ticket-share-btn" id="share-whatsapp" aria-label="Compartir en WhatsApp">${shareIcon('whatsapp')}</button>
         </div>
         <div class="ticket-share-divider" aria-hidden="true"></div>
         <div class="ticket-share-tools">
           <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-native" aria-label="Compartir imagen">${shareIcon('share')}</button>
-          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-download" aria-label="Descargar PNG">${shareIcon('download')}</button>
-          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-copy" aria-label="Copiar enlace">${shareIcon('link')}</button>
+          <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-download" aria-label="Descargar badge">${shareIcon('download')}</button>
+          <div class="share-copy-wrap">
+            <button type="button" class="ticket-share-btn ticket-share-btn--tool" id="share-copy" aria-label="Copiar enlace de invitación">${shareIcon('link')}</button>
+            <div class="share-popover" id="share-popover" aria-hidden="true">¡Copiado!</div>
+          </div>
         </div>
       </aside>
 
@@ -170,10 +172,10 @@ function renderTicket(ticketId, attendee) {
 }
 
 function initShare(attendee, pageUrl) {
-  const shareBusyIds = ['share-download', 'share-instagram', 'share-native'];
+  const socialIds = ['share-x', 'share-linkedin', 'share-whatsapp', 'share-download', 'share-native'];
 
   const setShareBusy = (busy) => {
-    shareBusyIds.forEach((id) => {
+    socialIds.forEach((id) => {
       const el = document.getElementById(id);
       if (!el) return;
       el.disabled = busy;
@@ -181,42 +183,50 @@ function initShare(attendee, pageUrl) {
     });
   };
 
-  const downloadBadgeImage = async () => {
+  const withBusy = (fn) => async () => {
     setShareBusy(true);
-    try {
-      const slug = attendee.name.replace(/\s+/g, '-').toLowerCase().slice(0, 24);
-      await downloadShareImage(attendee, `fintech-day-${slug}.png`);
-    } finally {
-      setShareBusy(false);
-    }
+    try { await fn(); } finally { setShareBusy(false); }
   };
 
-  document.getElementById('share-download')?.addEventListener('click', downloadBadgeImage);
-  document.getElementById('share-instagram')?.addEventListener('click', downloadBadgeImage);
+  document.getElementById('share-x')?.addEventListener('click', withBusy(() => shareToSocial('x', attendee, pageUrl)));
+  document.getElementById('share-linkedin')?.addEventListener('click', withBusy(() => shareToSocial('linkedin', attendee, pageUrl)));
+  document.getElementById('share-whatsapp')?.addEventListener('click', withBusy(() => shareToSocial('whatsapp', attendee, pageUrl)));
 
-  document.getElementById('share-native')?.addEventListener('click', async () => {
-    setShareBusy(true);
-    try {
-      const ok = await nativeShare(attendee, pageUrl);
-      if (!ok) await downloadShareImage(attendee);
-    } finally {
-      setShareBusy(false);
-    }
-  });
+  document.getElementById('share-download')?.addEventListener('click', withBusy(() => downloadShareImage(attendee)));
+
+  document.getElementById('share-native')?.addEventListener('click', withBusy(async () => {
+    const ok = await nativeShare(attendee, pageUrl);
+    if (!ok) await downloadShareImage(attendee);
+  }));
 
   document.getElementById('share-copy')?.addEventListener('click', async () => {
+    const referral = buildReferralUrl(attendee);
     try {
-      await navigator.clipboard.writeText(pageUrl);
-      const btn = document.getElementById('share-copy');
-      if (btn) {
-        const prev = btn.getAttribute('aria-label');
-        btn.setAttribute('aria-label', 'Enlace copiado');
-        setTimeout(() => btn.setAttribute('aria-label', prev || 'Copiar enlace'), 2000);
-      }
+      await navigator.clipboard.writeText(referral);
     } catch {
-      /* ignore */
+      // fallback for browsers without clipboard API
+      const ta = document.createElement('textarea');
+      ta.value = referral;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
     }
+    showCopyPopover();
   });
+}
+
+function showCopyPopover() {
+  const popover = document.getElementById('share-popover');
+  if (!popover) return;
+  popover.removeAttribute('aria-hidden');
+  popover.classList.add('share-popover--visible');
+  setTimeout(() => {
+    popover.setAttribute('aria-hidden', 'true');
+    popover.classList.remove('share-popover--visible');
+  }, 2200);
 }
 
 function initPhysics() {
