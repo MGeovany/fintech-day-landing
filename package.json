@@ -10,13 +10,20 @@
     "postinstall": "prisma generate"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["@prisma/client", "@prisma/engines", "prisma", "esbuild"]
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild"
+    ]
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
+    "@supabase/supabase-js": "^2.107.0",
     "gsap": "^3.12.5",
     "html-to-image": "^1.11.13",
     "lenis": "^1.1.13",
+    "sonner": "^2.0.7",
     "three": "^0.169.0"
   },
   "devDependencies": {

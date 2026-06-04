@@ -222,6 +222,17 @@ body {
   display: none;
 }
 
+.register-field-optional {
+  opacity: 0.55;
+  font-size: 11px;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+#role-field.hidden {
+  display: none;
+}
+
 .register-note {
   padding: 14px 16px;
   border-radius: 12px;

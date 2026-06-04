@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' })
   }
 
-  const { name, email, pass, company, role } = req.body || {}
+  const { name, email, pass, company, role, team } = req.body || {}
 
   if (!name || typeof name !== 'string' || name.trim().length < 2) {
     return res.status(400).json({ error: 'Nombre inválido' })
@@ -19,7 +19,7 @@ export default async function handler(req, res) {
   if (pass === 'stand' && (!company || typeof company !== 'string' || !company.trim())) {
     return res.status(400).json({ error: 'Empresa requerida para stand' })
   }
-  if (!role || typeof role !== 'string' || role.trim().length < 2) {
+  if (pass !== 'stand' && (!role || typeof role !== 'string' || role.trim().length < 2)) {
     return res.status(400).json({ error: 'Rol inválido' })
   }
 
@@ -30,7 +30,8 @@ export default async function handler(req, res) {
         email: email.trim().toLowerCase(),
         pass,
         company: (company || '').trim(),
-        role: role.trim(),
+        role: (role || '').trim(),
+        team: (team || '').trim(),
       },
     })
 

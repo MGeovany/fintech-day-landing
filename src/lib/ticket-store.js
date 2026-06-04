@@ -13,7 +13,7 @@ export const PASS_TYPES = {
     label: 'Expo Pass',
     price: 'Gratis',
     pill: 'EXPO PASS',
-    hint: 'Acceso solo a la feria tecnológica (Napoleón VI).',
+    hint: 'Acceso a la feria tecnológica.',
   },
   stand: {
     id: 'stand',
@@ -31,6 +31,7 @@ export function encodeTicketId(data) {
     p: data.pass,
     c: (data.company || '').trim(),
     r: (data.role || '').trim(),
+    t: (data.team || '').trim(),
   };
   const json = JSON.stringify(payload);
   return btoa(unescape(encodeURIComponent(json)))
@@ -51,6 +52,7 @@ export function decodeTicketId(id) {
       pass: raw.p,
       company: raw.c || '',
       role: raw.r || '',
+      team: raw.t || '',
     };
   } catch {
     return null;

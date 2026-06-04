@@ -26,6 +26,7 @@ export default async function handler(req, res) {
       pass: attendee.pass,
       company: attendee.company,
       role: attendee.role,
+      team: attendee.team || '',
       paid: attendee.paid,
     })
   } catch (err) {

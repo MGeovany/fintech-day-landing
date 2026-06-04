@@ -5,6 +5,8 @@ import {
   saveTicket,
 } from './lib/ticket-store.js';
 import { SITE_NAME, absoluteUrl } from './lib/site.js';
+import { toastError } from './lib/toast.js';
+import { supabase } from './lib/supabase.js';
 
 export function mountRegister() {
   document.title = `Registro — ${SITE_NAME}`;
@@ -18,29 +20,44 @@ export function mountRegister() {
   const form = document.getElementById('register-form');
   const passInputs = form.querySelectorAll('input[name="pass"]');
   const standFields = document.getElementById('stand-fields');
+  const fullFields = document.getElementById('full-fields');
+  const roleField = document.getElementById('role-field');
+
+  const updateFieldVisibility = (pass) => {
+    standFields?.classList.toggle('hidden', pass !== 'stand');
+    fullFields?.classList.toggle('hidden', pass !== 'full');
+    roleField?.classList.toggle('hidden', pass === 'stand');
+  };
+
+  // Set initial visibility for the default selected pass
+  const initialPass = form.querySelector('input[name="pass"]:checked')?.value || 'full';
+  updateFieldVisibility(initialPass);
 
   passInputs.forEach((input) => {
     input.addEventListener('change', () => {
-      const isStand = form.querySelector('input[name="pass"]:checked')?.value === 'stand';
-      standFields?.classList.toggle('hidden', !isStand);
+      const pass = form.querySelector('input[name="pass"]:checked')?.value;
+      updateFieldVisibility(pass);
       clearFieldError(form, 'pass');
-      if (!isStand) clearFieldError(form, 'company');
+      if (pass !== 'stand') clearFieldError(form, 'company');
+      if (pass !== 'full') clearFieldError(form, 'team');
     });
   });
 
-  form.querySelectorAll('input[name="name"], input[name="email"], input[name="company"], input[name="role"]').forEach((input) => {
+  form.querySelectorAll('input[name="name"], input[name="email"], input[name="company"], input[name="role"], input[name="team"]').forEach((input) => {
     input.addEventListener('input', () => clearFieldError(form, input.name));
   });
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const fd = new FormData(form);
+    const pass = fd.get('pass');
     const data = {
       name: String(fd.get('name') || '').trim(),
       email: String(fd.get('email') || '').trim(),
-      pass: fd.get('pass'),
+      pass,
       company: String(fd.get('company') || '').trim(),
       role: String(fd.get('role') || '').trim(),
+      team: String(fd.get('team') || '').trim(),
     };
 
     const errors = validateRegisterData(data);
@@ -58,16 +75,51 @@ export function mountRegister() {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Registrando…';
 
-    submitRegistration(form, data).then(({ ticketId }) => {
-      saveTicket(ticketId, data);
-      window.location.href = `/ticket/${ticketId}`;
-    }).catch(() => {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Generar mi badge';
-      const id = encodeTicketId(data);
-      saveTicket(id, data);
-      window.location.href = `/ticket/${id}`;
-    });
+    submitRegistration(data)
+      .then(({ ticketId }) => {
+        saveTicket(ticketId, data);
+        window.location.href = `/ticket/${ticketId}`;
+      })
+      .catch(async (err) => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Generar mi badge';
+
+        if (err.code === 409) {
+          toastError('Este correo ya ha sido registrado. Revisa tu badge anterior.');
+          return;
+        }
+
+        // Fallback: try Supabase client directly if configured
+        if (supabase) {
+          try {
+            const { data: reg, error } = await supabase
+              .from('registrations')
+              .insert([{
+                name: data.name,
+                email: data.email.toLowerCase(),
+                pass: data.pass,
+                company: data.company,
+                role: data.role,
+                team: data.team,
+              }])
+              .select('id')
+              .single();
+
+            if (!error && reg?.id) {
+              saveTicket(reg.id, data);
+              window.location.href = `/ticket/${reg.id}`;
+              return;
+            }
+          } catch {
+            // fall through to local badge
+          }
+        }
+
+        // Last resort: local-only badge
+        const id = encodeTicketId(data);
+        saveTicket(id, data);
+        window.location.href = `/ticket/${id}`;
+      });
   });
 }
 
@@ -104,7 +156,14 @@ function setCanonicalLink(href) {
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-async function submitRegistration(form, data) {
+class RegistrationError extends Error {
+  constructor(message, code) {
+    super(message);
+    this.code = code;
+  }
+}
+
+async function submitRegistration(data) {
   const res = await fetch('/api/register', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -112,8 +171,7 @@ async function submitRegistration(form, data) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: 'Error de conexión' }));
-    showFormErrors(form, { server: err.error || 'Error al registrar' });
-    throw new Error(err.error);
+    throw new RegistrationError(err.error || 'Error al registrar', res.status);
   }
   return res.json();
 }
@@ -141,10 +199,12 @@ function validateRegisterData(data) {
     errors.company = 'Indica el nombre de la empresa o stand.';
   }
 
-  if (!data.role) {
-    errors.role = 'Indica tu rol o cargo.';
-  } else if (data.role.length < 2) {
-    errors.role = 'El rol debe tener al menos 2 caracteres.';
+  if (data.pass !== 'stand') {
+    if (!data.role) {
+      errors.role = 'Indica tu rol o cargo.';
+    } else if (data.role.length < 2) {
+      errors.role = 'El rol debe tener al menos 2 caracteres.';
+    }
   }
 
   return errors;
@@ -272,6 +332,14 @@ function renderForm() {
             <span id="error-pass" class="register-error" role="alert" hidden></span>
           </fieldset>
 
+          <div id="full-fields" class="register-stand-fields hidden">
+            <label class="register-field" data-field="team">
+              <span>Nombre del equipo <span class="register-field-optional">(opcional)</span></span>
+              <input type="text" name="team" placeholder="Ej. Equipo Innovación, Startup HN…" aria-describedby="error-team" />
+              <span id="error-team" class="register-error" role="alert" hidden></span>
+            </label>
+          </div>
+
           <div id="stand-fields" class="register-stand-fields hidden">
             <label class="register-field" data-field="company">
               <span>Empresa / stand</span>
@@ -280,18 +348,20 @@ function renderForm() {
             </label>
           </div>
 
-          <label class="register-field" data-field="role">
-            <span>Rol o cargo</span>
-            <input type="text" name="role" placeholder="Ej. CEO, Developer, Estudiante…" aria-describedby="error-role" />
-            <span id="error-role" class="register-error" role="alert" hidden></span>
-          </label>
-
-          <div class="register-note">
-            <p><strong>Importante:</strong> Full Pass incluye almuerzo (cupos limitados). Expo Pass es solo feria. Stand requiere paquete de patrocinio activo.</p>
-            <p>El pago del Full Pass ($65 USD) se realiza en el siguiente paso. Tu badge se genera al completar este registro.</p>
+          <div id="role-field">
+            <label class="register-field" data-field="role">
+              <span>Rol o cargo</span>
+              <input type="text" name="role" placeholder="Ej. CEO, Developer, Estudiante…" aria-describedby="error-role" />
+              <span id="error-role" class="register-error" role="alert" hidden></span>
+            </label>
           </div>
 
-          <button type="submit" class="register-submit">Generar mi badge</button>
+          <div class="register-note">
+            <p><strong>Importante:</strong> Este badge es solo ilustrativo. Para adquirir tu entrada oficial y garantizar tu lugar deberás completar el pago en el siguiente paso.</p>
+            <p>Full Pass ($65 USD) incluye charlas, workshop y almuerzo. Expo Pass es gratuito. Stand requiere paquete de patrocinio activo.</p>
+          </div>
+
+          <button type="submit" class="register-submit">Generar mi badge →</button>
         </form>
       </div>
     </div>

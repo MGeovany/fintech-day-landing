@@ -14,6 +14,7 @@ model Registration {
   pass      String   @db.VarChar(20)
   company   String   @default("") @db.VarChar(255)
   role      String   @default("") @db.VarChar(255)
+  team      String   @default("") @db.VarChar(255)
   paid      Boolean  @default(false)
   createdAt DateTime @default(now()) @map("created_at")
 

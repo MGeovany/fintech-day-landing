@@ -98,7 +98,7 @@ function renderTicket(ticketId, attendee) {
 
             <div class="badge-inner">
               <div class="badge-header">
-                <div class="badge-url">afinh2026.hn</div>
+                <div class="badge-url">hondurasfintechday.com</div>
               </div>
 
               <h1 class="badge-title">
