@@ -15,12 +15,14 @@ const ANCHOR_Y = 52;
 // Approx total height: ANCHOR_Y + buckle(58) + tab(32) + card(380) + bottom pad
 const EXPORT_H = 540;
 
-export function setPageShareMeta(attendee, pageUrl) {
+export function setPageShareMeta(attendee, pageUrl, ticketId) {
   const pass = getPassInfo(attendee.pass);
   const title = `${attendee.name} — ${SITE_NAME}`;
   const description = `${pass.label} · 20 ago 2026 · San Pedro Sula, Honduras`;
   const canonicalUrl = pageUrl || absoluteUrl('/');
-  const ogImage = absoluteUrl('/og-share.svg');
+  const ogImage = ticketId
+    ? absoluteUrl(`/api/og/${encodeURIComponent(ticketId)}`)
+    : absoluteUrl('/og-share.svg');
 
   document.title = title;
   setMeta('description', description);

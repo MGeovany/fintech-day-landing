@@ -39,7 +39,7 @@ export async function mountTicket(ticketId) {
   }
 
   const pageUrl = `${window.location.origin}/ticket/${ticketId}`;
-  setPageShareMeta(attendee, pageUrl);
+  setPageShareMeta(attendee, pageUrl, ticketId);
 
   const app = document.getElementById('app');
   if (!app) return;
