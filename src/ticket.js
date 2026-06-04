@@ -113,6 +113,7 @@ function renderTicket(ticketId, attendee) {
                 <div class="badge-label">Nombre</div>
                 <div class="badge-name">${escapeHtml(attendee.name)}</div>
                 <div class="badge-role">${escapeHtml(displayRole)}</div>
+                ${attendee.team ? `<div class="badge-team">${escapeHtml(attendee.team)}</div>` : ''}
               </div>
 
               <div class="badge-spacer"></div>
