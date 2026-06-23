@@ -23,11 +23,26 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Rol inválido' })
   }
 
+  const normalizedEmail = email.trim().toLowerCase()
+
   try {
+    // No hay constraint unique en email, así que evitamos el duplicado a mano:
+    // si el correo ya existe, devolvemos su ticket en vez de crear otro.
+    const existing = await prisma.registration.findFirst({
+      where: { email: normalizedEmail },
+      select: { id: true },
+    })
+    if (existing) {
+      return res.status(409).json({
+        error: 'Este usuario ya tiene un ticket asignado',
+        ticketId: existing.id,
+      })
+    }
+
     const reg = await prisma.registration.create({
       data: {
         name: name.trim(),
-        email: email.trim().toLowerCase(),
+        email: normalizedEmail,
         pass,
         company: (company || '').trim(),
         role: (role || '').trim(),
@@ -38,7 +53,15 @@ export default async function handler(req, res) {
     res.status(201).json({ ticketId: reg.id })
   } catch (err) {
     if (err?.code === 'P2002') {
-      return res.status(409).json({ error: 'Este correo ya está registrado' })
+      // Carrera entre el check y el create (si llegara a existir el unique).
+      const existing = await prisma.registration.findFirst({
+        where: { email: normalizedEmail },
+        select: { id: true },
+      })
+      return res.status(409).json({
+        error: 'Este usuario ya tiene un ticket asignado',
+        ticketId: existing?.id,
+      })
     }
     console.error('register error:', err)
     res.status(500).json({ error: 'Error al registrar' })

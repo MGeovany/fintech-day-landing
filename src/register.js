@@ -5,7 +5,7 @@ import {
   saveTicket,
 } from './lib/ticket-store.js';
 import { SITE_NAME, absoluteUrl } from './lib/site.js';
-import { toastError } from './lib/toast.js';
+import { toast, toastError } from './lib/toast.js';
 import { supabase } from './lib/supabase.js';
 
 export function mountRegister() {
@@ -85,7 +85,15 @@ export function mountRegister() {
         submitBtn.textContent = 'Generar mi badge';
 
         if (err.code === 409) {
-          toastError('Este correo ya ha sido registrado. Revisa tu badge anterior.');
+          toast('Este usuario ya tiene un ticket asignado. Te llevamos a tu badge…', {
+            type: 'warning',
+            duration: 2500,
+          });
+          if (err.ticketId) {
+            setTimeout(() => {
+              window.location.href = `/ticket/${err.ticketId}`;
+            }, 1500);
+          }
           return;
         }
 
@@ -157,9 +165,10 @@ function setCanonicalLink(href) {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 class RegistrationError extends Error {
-  constructor(message, code) {
+  constructor(message, code, ticketId) {
     super(message);
     this.code = code;
+    this.ticketId = ticketId;
   }
 }
 
@@ -171,7 +180,7 @@ async function submitRegistration(data) {
   });
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: 'Error de conexión' }));
-    throw new RegistrationError(err.error || 'Error al registrar', res.status);
+    throw new RegistrationError(err.error || 'Error al registrar', res.status, err.ticketId);
   }
   return res.json();
 }
