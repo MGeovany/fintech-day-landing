@@ -564,14 +564,18 @@ body {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(14px) saturate(120%);
-  -webkit-backdrop-filter: blur(14px) saturate(120%);
-  opacity: 0;
-  transition: opacity 0.45s ease;
+  background: rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px) saturate(100%);
+  -webkit-backdrop-filter: blur(0px) saturate(100%);
+  /* Animate the blur itself, not opacity — opacity on the same element
+     suppresses backdrop-filter in Chrome/Safari. */
+  transition: background 0.5s ease, backdrop-filter 0.5s ease,
+    -webkit-backdrop-filter 0.5s ease;
 }
 .pay-dialog-overlay.is-visible {
-  opacity: 1;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(22px) saturate(130%);
+  -webkit-backdrop-filter: blur(22px) saturate(130%);
 }
 
 .pay-dialog {
@@ -592,27 +596,6 @@ body {
 .pay-dialog-overlay.is-visible .pay-dialog {
   transform: translateY(0) scale(1);
   opacity: 1;
-}
-
-.pay-dialog-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  display: grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.55);
-  cursor: pointer;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-.pay-dialog-close:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: var(--t-text);
 }
 
 .pay-dialog-badge {
