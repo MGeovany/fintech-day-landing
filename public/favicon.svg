@@ -1,8 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Honduras Fintech Day">
   <defs>
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Syne:wght@700&amp;display=swap");
-    </style>
     <pattern id="grid" width="4" height="4" patternUnits="userSpaceOnUse">
       <circle cx="4" cy="4" r="0.35" fill="#ffffff" opacity="0.055"/>
     </pattern>
@@ -33,14 +30,10 @@
   <circle cx="9" cy="6" r="0.85" fill="#ffffff" opacity="0.1"/>
   <circle cx="12" cy="6" r="0.85" fill="#ffffff" opacity="0.06"/>
 
-  <text
-    x="16"
-    y="21.5"
+  <!-- HFD — Press Start 2P, outlined for favicon rendering -->
+  <path
     fill="#ffffff"
-    font-family="'Syne', ui-sans-serif, system-ui, sans-serif"
-    font-size="10.5"
-    font-weight="700"
-    letter-spacing="-0.05em"
-    text-anchor="middle"
-  >HFD</text>
+    transform="translate(8.09 19.89)"
+    d="M1.38-0.69L0-0.69L0-5.50L1.38-5.50L1.38-3.44L3.44-3.44L3.44-5.50L4.81-5.50L4.81-0.69L3.44-0.69L3.44-2.75L1.38-2.75L1.38-0.69M6.88-0.69L5.50-0.69L5.50-5.50L10.31-5.50L10.31-4.81L6.88-4.81L6.88-3.44L9.63-3.44L9.63-2.75L6.88-2.75L6.88-0.69M14.44-0.69L11-0.69L11-5.50L14.44-5.50L14.44-4.81L15.13-4.81L15.13-4.12L15.81-4.12L15.81-2.06L15.13-2.06L15.13-1.37L14.44-1.37L14.44-0.69M12.38-4.81L12.38-1.37L13.75-1.37L13.75-2.06L14.44-2.06L14.44-4.12L13.75-4.12L13.75-4.81"
+  />
 </svg>
