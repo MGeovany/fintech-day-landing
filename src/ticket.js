@@ -50,6 +50,110 @@ export async function mountTicket(ticketId) {
 
   initPhysics();
   initShare(attendee, pageUrl);
+
+  if (attendee.pass === 'full') {
+    setTimeout(() => showPaymentDialog(), 1200);
+  }
+}
+
+const PAY_URL = 'https://even2.app/fintechday2026/';
+const PAY_DIALOG_DURATION = 12000;
+
+function showPaymentDialog() {
+  if (document.querySelector('.pay-dialog-overlay')) return;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'pay-dialog-overlay';
+  overlay.innerHTML = `
+    <div class="pay-dialog" role="alertdialog" aria-modal="true" aria-labelledby="pay-dialog-title" aria-describedby="pay-dialog-text">
+      <button type="button" class="pay-dialog-close" aria-label="Cerrar aviso">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+
+      <div class="pay-dialog-badge" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="9"/><path d="M12 7v6"/><circle cx="12" cy="16.5" r="0.6" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+
+      <h2 class="pay-dialog-title" id="pay-dialog-title">Aún falta el pago de tu entrada</h2>
+      <p class="pay-dialog-text" id="pay-dialog-text">
+        Este gafete es <strong>ilustrativo</strong> y no representa tu acceso al evento.
+        El recibo válido para ingresar se genera en <strong>even2.app</strong> una vez completes tu pago.
+      </p>
+
+      <a href="${PAY_URL}" target="_blank" rel="noopener noreferrer" class="pay-dialog-btn">
+        Pagar ahora — $65 USD
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <div class="pay-dialog-timer" aria-hidden="true">
+        <div class="pay-dialog-timer-bar"></div>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const dialog = overlay.querySelector('.pay-dialog');
+  const bar = overlay.querySelector('.pay-dialog-timer-bar');
+
+  let dismissed = false;
+  let remaining = PAY_DIALOG_DURATION;
+  let startedAt = 0;
+  let raf = 0;
+  let timer = 0;
+
+  const close = () => {
+    if (dismissed) return;
+    dismissed = true;
+    cancelAnimationFrame(raf);
+    clearTimeout(timer);
+    overlay.classList.remove('is-visible');
+    overlay.addEventListener('transitionend', () => overlay.remove(), { once: true });
+    document.removeEventListener('keydown', onKey);
+  };
+
+  const onKey = (e) => {
+    if (e.key === 'Escape') close();
+  };
+
+  const runTimer = () => {
+    startedAt = performance.now();
+    clearTimeout(timer);
+    timer = setTimeout(close, remaining);
+
+    const step = (now) => {
+      const elapsed = now - startedAt;
+      const pct = Math.max(0, (remaining - elapsed) / PAY_DIALOG_DURATION);
+      bar.style.transform = `scaleX(${pct})`;
+      if (pct > 0 && !dismissed) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+  };
+
+  const pauseTimer = () => {
+    cancelAnimationFrame(raf);
+    clearTimeout(timer);
+    remaining = Math.max(0, remaining - (performance.now() - startedAt));
+  };
+
+  // Pause countdown while the user is reading / hovering.
+  dialog.addEventListener('mouseenter', pauseTimer);
+  dialog.addEventListener('mouseleave', () => { if (!dismissed) runTimer(); });
+
+  overlay.querySelector('.pay-dialog-close')?.addEventListener('click', close);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', onKey);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      overlay.classList.add('is-visible');
+      runTimer();
+    });
+  });
 }
 
 function renderTicket(ticketId, attendee) {
