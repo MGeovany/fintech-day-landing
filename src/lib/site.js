@@ -10,7 +10,7 @@ export const SITE_LANG = 'es';
 
 export const EVENT_NAME = 'Honduras Fintech Day 2026';
 export const EVENT_START_ISO = '2026-08-20T08:00:00-06:00';
-/** Apertura de puertas / registro — cuenta regresiva del hero */
+/** Apertura de puertas / registro - cuenta regresiva del hero */
 export const EVENT_COUNTDOWN_ISO = '2026-08-20T07:00:00-06:00';
 export const EVENT_END_ISO = '2026-08-20T18:00:00-06:00';
 export const EVENT_DATE_DISPLAY = '20 de agosto, 2026';

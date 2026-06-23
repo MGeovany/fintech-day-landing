@@ -1,4 +1,4 @@
-/** Tipos de entrada — Nota Conceptual Fintech Day 2026 */
+/** Tipos de entrada - Nota Conceptual Fintech Day 2026 */
 
 export const PASS_TYPES = {
   full: {

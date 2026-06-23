@@ -34,7 +34,7 @@ export function updateNavAuthCta() {
     const ticketNo = `#${formatDisplayTicketId(ticketId)}`;
 
     cta.href = `/ticket/${ticketId}`;
-    cta.setAttribute('aria-label', `Ver tu pase — ${attendee.name}, ${ticketNo}`);
+    cta.setAttribute('aria-label', `Ver tu pase - ${attendee.name}, ${ticketNo}`);
     label.innerHTML = `<span class="nav-auth-user"><span class="nav-auth-name">${escapeHtml(name)}</span><span class="nav-auth-ticket">${escapeHtml(ticketNo)}</span></span>`;
     cta.classList.add('nav-cta--profile');
     cta.dataset.authState = 'profile';
@@ -42,7 +42,7 @@ export function updateNavAuthCta() {
   }
 
   cta.href = '/registro';
-  cta.setAttribute('aria-label', 'Registrarse — obtener tu pase');
+  cta.setAttribute('aria-label', 'Registrarse - obtener tu pase');
   label.textContent = 'Sign up';
   cta.classList.remove('nav-cta--profile');
   cta.dataset.authState = 'signup';

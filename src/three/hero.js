@@ -3,7 +3,7 @@
  *
  * Draws a faint grid of vertical/horizontal lines and, on top, periodic
  * "pulses" that travel along random grid segments leaving a glowing trail.
- * The corner light cones are CSS — this canvas only handles the grid.
+ * The corner light cones are CSS - this canvas only handles the grid.
  */
 export function initHeroScene(canvas) {
   const ctx = canvas.getContext('2d');

@@ -79,7 +79,7 @@ function showPaymentDialog() {
       </p>
 
       <a href="${PAY_URL}" target="_blank" rel="noopener noreferrer" class="pay-dialog-btn">
-        Pagar ahora — $65 USD
+        Pagar ahora - $65 USD
         <span aria-hidden="true">→</span>
       </a>
 
@@ -228,7 +228,7 @@ function renderTicket(ticketId, attendee) {
       ${attendee.pass === 'full' ? `
         <div class="ticket-pay">
           <a href="https://even2.app/fintechday2026/" target="_blank" rel="noopener noreferrer" class="ticket-pay-btn">
-            Pagar ahora — $65 USD →
+            Pagar ahora - $65 USD →
           </a>
           <p class="ticket-pay-note">Tu badge ya está generado. El pago final se realiza en la plataforma de even2.app.</p>
         </div>
@@ -257,7 +257,7 @@ function initShare(attendee, pageUrl) {
   document.getElementById('share-x')?.addEventListener('click', withBusy(() => shareToSocial('x', attendee, pageUrl)));
   document.getElementById('share-linkedin')?.addEventListener('click', withBusy(async () => {
     const { copied } = await shareToSocial('linkedin', attendee, pageUrl);
-    if (copied) toast('Texto copiado — pégalo en LinkedIn con Ctrl+V / ⌘V', { type: 'default', duration: 5000 });
+    if (copied) toast('Texto copiado - pégalo en LinkedIn con Ctrl+V / ⌘V', { type: 'default', duration: 5000 });
   }));
   document.getElementById('share-whatsapp')?.addEventListener('click', withBusy(() => shareToSocial('whatsapp', attendee, pageUrl)));
 

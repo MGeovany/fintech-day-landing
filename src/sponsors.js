@@ -1,5 +1,5 @@
 /**
- * Sponsor logos marquee — primera imagen de cada par (325, 327, …).
+ * Sponsor logos marquee - primera imagen de cada par (325, 327, …).
  */
 const assets = import.meta.glob('./assets/sponsors/afinh2025_image-*', {
   eager: true,

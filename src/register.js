@@ -9,7 +9,7 @@ import { toast, toastError } from './lib/toast.js';
 import { supabase } from './lib/supabase.js';
 
 export function mountRegister() {
-  document.title = `Registro — ${SITE_NAME}`;
+  document.title = `Registro - ${SITE_NAME}`;
   setRegisterMeta();
   const app = document.getElementById('app');
   if (!app) return;
@@ -135,7 +135,7 @@ function setRegisterMeta() {
   const description = `Regístrate al ${SITE_NAME}: 20 de agosto en San Pedro Sula. Expo Pass gratuito o Full Pass con acceso a charlas, workshop y almuerzo.`;
   setMetaTag('description', description);
   setMetaTag('robots', 'noindex, follow');
-  setMetaTag('og:title', `Registro — ${SITE_NAME}`, true);
+  setMetaTag('og:title', `Registro - ${SITE_NAME}`, true);
   setMetaTag('og:description', description, true);
   setMetaTag('og:url', absoluteUrl('/registro'), true);
   setCanonicalLink(absoluteUrl('/registro'));

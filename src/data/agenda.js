@@ -1,9 +1,9 @@
-/** Programa detallado — Honduras Fintech Day 2026 · Hotel Copantl */
+/** Programa detallado - Honduras Fintech Day 2026 · Hotel Copantl */
 
 export const agendaMeta = {
   line: "20 de agosto 2026 · Hotel Copantl, San Pedro Sula · 7:00 – 16:00 + cocktail",
   hint: "Cada bloque muestra qué ocurre en paralelo por salón.",
-  venue: "Hotel Copantl — San Pedro Sula",
+  venue: "Hotel Copantl - San Pedro Sula",
 };
 
 /**
@@ -40,7 +40,7 @@ export const agendaMilestones = [
         text: "Ceremonia de apertura y keynote",
         details: [
           "Bienvenida AFINH y autoridades",
-          "Keynote de apertura — visión fintech HN",
+          "Keynote de apertura - visión fintech HN",
           "Presentación de agenda y salones",
         ],
       },
@@ -60,17 +60,17 @@ export const agendaMilestones = [
           "Coffee break patrocinado",
         ],
       },
-      { venue: "Napoleón V", text: "Transición — asistentes hacia feria" },
+      { venue: "Napoleón V", text: "Transición - asistentes hacia feria" },
     ],
   },
   {
     time: "10:00 – 10:45",
     title: "Sesión 1",
-    note: "Programa en paralelo — bloque 1",
+    note: "Programa en paralelo - bloque 1",
     parallel: [
       {
         venue: "Napoleón V",
-        text: "Conferencias y paneles — sesión 1",
+        text: "Conferencias y paneles - sesión 1",
         details: [
           "Panel: regulación y sandbox",
           "Tendencias pagos digitales",
@@ -88,7 +88,7 @@ export const agendaMilestones = [
       },
       {
         venue: "Napoleón I",
-        text: "Academia — bloque universitario 1",
+        text: "Academia - bloque universitario 1",
         details: [
           "Talleres con universidades aliadas",
           "Introducción a fintech para estudiantes",
@@ -117,11 +117,11 @@ export const agendaMilestones = [
   {
     time: "11:00 – 11:45",
     title: "Sesión 2",
-    note: "Programa en paralelo — bloque 2",
+    note: "Programa en paralelo - bloque 2",
     parallel: [
       {
         venue: "Napoleón V",
-        text: "Conferencias y paneles — sesión 2",
+        text: "Conferencias y paneles - sesión 2",
         details: [
           "Panel: banca digital e inclusión",
           "Casos de éxito startups locales",
@@ -134,7 +134,7 @@ export const agendaMilestones = [
       },
       {
         venue: "Napoleón I",
-        text: "Academia — bloque 2",
+        text: "Academia - bloque 2",
         details: ["Competencias / retos estudiantiles", "Mentorías cortas"],
       },
       {
@@ -175,11 +175,11 @@ export const agendaMilestones = [
   {
     time: "13:30 – 14:15",
     title: "Sesión 3",
-    note: "Programa en paralelo — bloque 3",
+    note: "Programa en paralelo - bloque 3",
     parallel: [
       {
         venue: "Napoleón V",
-        text: "Conferencias — sesión 3",
+        text: "Conferencias - sesión 3",
         details: [
           "Panel: inversión y venture en la región",
           "Scale-ups y expansión regional",
@@ -192,7 +192,7 @@ export const agendaMilestones = [
       },
       {
         venue: "Napoleón I",
-        text: "Academia — bloque 3",
+        text: "Academia - bloque 3",
         details: ["Pitch estudiantil · premios academia"],
       },
       {
@@ -205,11 +205,11 @@ export const agendaMilestones = [
   {
     time: "14:30 – 15:15",
     title: "Sesión 4",
-    note: "Programa en paralelo — bloque 4",
+    note: "Programa en paralelo - bloque 4",
     parallel: [
       {
         venue: "Napoleón V",
-        text: "Conferencias — sesión 4",
+        text: "Conferencias - sesión 4",
         details: [
           "Panel: ciberseguridad y fraude",
           "IA aplicada a servicios financieros",

@@ -31,7 +31,7 @@
 }
 
 /* ======================================================================
-   Honduras Fintech Day 2026 — DARK redesign
+   Honduras Fintech Day 2026 - DARK redesign
    Inspirado en aesthetic Darken: deep space, horizonte planetario glow,
    pill badges, tipografía centrada.
    Conservamos los tokens del sistema (variables.css) y los re-mapeamos
@@ -692,7 +692,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   line-height: 1.5;
 }
 
-/* ====== Sobre (visual only — copy uses Tailwind) ====== */
+/* ====== Sobre (visual only - copy uses Tailwind) ====== */
 .sobre-visual {
   position: relative;
   aspect-ratio: 1 / 1;
@@ -1165,7 +1165,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 .net-node--4 { top: 85%; left: 20%; }
 .net-node--5 { top: 90%; left: 70%; }
 
-/* ====== Stands (visuals only — layout uses Tailwind) ====== */
+/* ====== Stands (visuals only - layout uses Tailwind) ====== */
 .stand-visual {
   position: relative;
   aspect-ratio: 4 / 3;
@@ -1398,7 +1398,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 
 /* =========================================================
-   RESPONSIVE — global tablet + mobile refinements
+   RESPONSIVE - global tablet + mobile refinements
    ========================================================= */
 
 /* ===== Tablet (≤ 920px) ===== */
@@ -1609,7 +1609,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   .hero-pill { font-size: 10px; padding: 4px 11px; }
 }
 
-/* ====== Stand visual — update dark tones to navy ====== */
+/* ====== Stand visual - update dark tones to navy ====== */
 .stand-visual {
   background:
     radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0, 196, 240, .12), transparent 70%),

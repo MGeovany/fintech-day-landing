@@ -43,9 +43,9 @@ export function mountLayout(root = document.getElementById('app')) {
     nav,
     hero,
     stats,
-    // recap2025,  // Edición 2025 — comentado temporalmente
-    // sobre,      // Objetivo general — comentado temporalmente
-    // objectives, // Objetivos específicos — comentado temporalmente
+    // recap2025,  // Edición 2025 - comentado temporalmente
+    // sobre,      // Objetivo general - comentado temporalmente
+    // objectives, // Objetivos específicos - comentado temporalmente
     audience,
     activities,
     sponsorshipSection,

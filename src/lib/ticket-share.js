@@ -17,7 +17,7 @@ const EXPORT_H = 540;
 
 export function setPageShareMeta(attendee, pageUrl, ticketId) {
   const pass = getPassInfo(attendee.pass);
-  const title = `${attendee.name} — ${SITE_NAME}`;
+  const title = `${attendee.name} - ${SITE_NAME}`;
   const description = `${pass.label} · 20 ago 2026 · San Pedro Sula, Honduras`;
   const canonicalUrl = pageUrl || absoluteUrl('/');
   const ogImage = ticketId
@@ -35,14 +35,14 @@ export function setPageShareMeta(attendee, pageUrl, ticketId) {
   setMeta('og:url', canonicalUrl, true);
   setMeta('og:site_name', SITE_NAME, true);
   setMeta('og:image', ogImage, true);
-  setMeta('og:image:alt', `Badge ${SITE_NAME} — ${attendee.name}`, true);
+  setMeta('og:image:alt', `Badge ${SITE_NAME} - ${attendee.name}`, true);
 
   setMeta('twitter:card', 'summary_large_image');
   setMeta('twitter:url', canonicalUrl);
   setMeta('twitter:title', title);
   setMeta('twitter:description', description);
   setMeta('twitter:image', ogImage);
-  setMeta('twitter:image:alt', `Badge ${SITE_NAME} — ${attendee.name}`);
+  setMeta('twitter:image:alt', `Badge ${SITE_NAME} - ${attendee.name}`);
 }
 
 function setCanonical(href) {
@@ -89,7 +89,7 @@ export function shareLinks(pageUrl) {
 
 /**
  * Captura el badge card (que funciona de forma confiable) y luego dibuja
- * el cordón y el buckle encima usando canvas 2D — evita los problemas de
+ * el cordón y el buckle encima usando canvas 2D - evita los problemas de
  * html-to-image con el DOM de width:0 y márgenes negativos del anchor.
  */
 export async function captureBadgeWithLanyard() {
@@ -251,7 +251,7 @@ async function dataUrlToFile(dataUrl, filename) {
 
 /**
  * Abre la red social en nueva pestaña y descarga la imagen del badge.
- * LinkedIn no acepta texto pre-llenado vía URL — copia el texto al clipboard
+ * LinkedIn no acepta texto pre-llenado vía URL - copia el texto al clipboard
  * antes de abrir para que el usuario solo tenga que pegar.
  * Devuelve { copied: boolean } para que el llamador muestre feedback.
  */
@@ -261,7 +261,7 @@ export async function shareToSocial(platform, attendee, pageUrl) {
   const slug = attendee.name.replace(/\s+/g, '-').toLowerCase().slice(0, 24);
   const filename = `fintech-day-${slug}.png`;
 
-  // LinkedIn no soporta texto pre-llenado — copiar al portapapeles primero
+  // LinkedIn no soporta texto pre-llenado - copiar al portapapeles primero
   if (platform === 'linkedin') {
     try { await navigator.clipboard.writeText(text); } catch { /* ignore */ }
   }

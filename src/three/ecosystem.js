@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
 /**
- * "Sobre" scene — 3D fintech ecosystem.
+ * "Sobre" scene - 3D fintech ecosystem.
  *
  *   ▸ Faceted icosahedron core = Honduras as the structured hub.
  *   ▸ 4 satellite nodes orbiting in different planes = the 4 stakeholder
