@@ -258,6 +258,7 @@ body {
 }
 .badge-title span {
   display: block;
+  white-space: nowrap;
 }
 .badge-title-year {
   color: rgba(255, 255, 255, 0.42);
@@ -267,6 +268,7 @@ body {
 .badge-role-pill {
   align-self: flex-start;
   display: inline-block;
+  white-space: nowrap;
   padding: 6px 12px 5px;
   background: var(--t-text);
   color: #000;
