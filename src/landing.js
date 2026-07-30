@@ -90,7 +90,7 @@ function checkReferral() {
       toast(`👋 ${name} te invitó al Honduras Fintech Day 2026`, {
         type: 'invite',
         duration: 12000,
-        action: { label: 'Obtener entradas →', href: '/registro' },
+        action: { label: 'Obtener entradas →', href: 'https://even2.app/fintechday2026/' },
       });
     }, 1200);
   } catch {

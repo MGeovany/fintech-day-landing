@@ -26,6 +26,10 @@ export function toast(message, { type = 'default', duration = 4000, action = nul
     const btn = document.createElement('a');
     btn.className = 'toast-action';
     btn.href = action.href;
+    if (/^https?:\/\//i.test(action.href)) {
+      btn.target = '_blank';
+      btn.rel = 'noopener noreferrer';
+    }
     btn.textContent = action.label;
     li.appendChild(btn);
   }

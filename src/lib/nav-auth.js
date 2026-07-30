@@ -34,6 +34,8 @@ export function updateNavAuthCta() {
     const ticketNo = `#${formatDisplayTicketId(ticketId)}`;
 
     cta.href = `/ticket/${ticketId}`;
+    cta.removeAttribute('target');
+    cta.removeAttribute('rel');
     cta.setAttribute('aria-label', `Ver tu pase - ${attendee.name}, ${ticketNo}`);
     label.innerHTML = `<span class="nav-auth-user"><span class="nav-auth-name">${escapeHtml(name)}</span><span class="nav-auth-ticket">${escapeHtml(ticketNo)}</span></span>`;
     cta.classList.add('nav-cta--profile');
@@ -41,8 +43,10 @@ export function updateNavAuthCta() {
     return;
   }
 
-  cta.href = '/registro';
-  cta.setAttribute('aria-label', 'Registrarse - obtener tu pase');
+  cta.href = 'https://even2.app/fintechday2026/';
+  cta.setAttribute('target', '_blank');
+  cta.setAttribute('rel', 'noopener noreferrer');
+  cta.setAttribute('aria-label', 'Obtener tu pase');
   label.textContent = 'Sign up';
   cta.classList.remove('nav-cta--profile');
   cta.dataset.authState = 'signup';
