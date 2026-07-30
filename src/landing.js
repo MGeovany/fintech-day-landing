@@ -3,7 +3,6 @@ import { toast } from './lib/toast.js';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { mountLayout } from './layout.js';
-import { updateNavAuthCta } from './lib/nav-auth.js';
 import { initEventCountdown } from './countdown.js';
 import { initHeroScene } from './three/hero.js';
 import { initEcosystemScene } from './three/ecosystem.js';
@@ -37,7 +36,6 @@ const boot = () => {
   gsap.ticker.lagSmoothing(0);
 
   setupNav();
-  updateNavAuthCta();
   initEventCountdown();
   setupCursor();
   setupReveals();
