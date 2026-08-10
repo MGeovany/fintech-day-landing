@@ -2,16 +2,37 @@
  *
  * Fuente: PROGRAMA_AGENDA HFD26 - actualizado 10 agosto 2026.xlsx
  * Los salones marcados CERRADO en la fuente se omiten en el render.
+ *
+ * `track` define el color y la columna del bloque. Los tres tracks principales
+ * (conectado / conocimiento / academia) ocupan una columna fija en desktop, de
+ * modo que lo que ocurre en paralelo queda alineado verticalmente. El resto
+ * (feria, salon4, networking, general) se muestra como actividad de apoyo.
  */
 
 export const agendaMeta = {
   line: "20 de agosto 2026 · Hotel Copantl, San Pedro Sula · 7:00 - 16:35 + cocktail",
-  hint: "Cada bloque muestra qué ocurre en paralelo por salón. El área de Conexiones está disponible todo el día para reuniones 1 a 1. Programa sujeto a cambios.",
+  hint: "Las columnas son salones simultáneos: en un mismo horario podés elegir una sola. Programa sujeto a cambios.",
   venue: "Hotel Copantl - San Pedro Sula",
 };
 
+/** Tracks principales: una columna fija cada uno en desktop. */
+export const agendaTracks = {
+  conectado: { venue: "Napoleón V · Conectado", col: 1 },
+  conocimiento: { venue: "Napoleón II · Conocimiento", col: 2 },
+  academia: { venue: "Academia", col: 3 },
+};
+
+/** Actividades de apoyo: no compiten por la atención en un solo salón. */
+const asideTracks = {
+  feria: { venue: "Napoleón VI · Feria" },
+  salon4: { venue: "Napoleón IV" },
+  networking: { venue: "Conexiones · Networking" },
+  general: { venue: "Plenaria" },
+};
+
 /**
- * @typedef {{ venue: string, text: string, details?: string[] }} AgendaParallel
+ * @typedef {"conectado"|"conocimiento"|"academia"|"feria"|"salon4"|"networking"|"general"} AgendaTrack
+ * @typedef {{ track: AgendaTrack, text: string, venue?: string, details?: string[] }} AgendaParallel
  * @typedef {{ time: string, title: string, note: string, accent?: boolean, parallel?: AgendaParallel[] }} AgendaMilestone
  */
 
@@ -22,9 +43,13 @@ export const agendaMilestones = [
     title: "Registro y bienvenida",
     note: "Lobby · app del evento activa",
     parallel: [
-      { venue: "Lobby / Registro", text: "Lobby / Registro. App activa." },
       {
-        venue: "Conexiones (Networking)",
+        track: "general",
+        venue: "Lobby / Registro",
+        text: "Lobby / Registro. App activa.",
+      },
+      {
+        track: "networking",
         text: "Disponible todo el día - reuniones 1 a 1",
       },
     ],
@@ -32,11 +57,11 @@ export const agendaMilestones = [
   {
     time: "8:00 - 8:15",
     title: "Bienvenida",
-    note: "Palabras de inicio · Napoleón V",
+    note: "Palabras de inicio",
     accent: true,
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Bienvenida. Palabras de inicio.",
         details: [
           "Julia Johannsen, representante Grupo BID, Honduras",
@@ -49,10 +74,10 @@ export const agendaMilestones = [
   {
     time: "8:15 - 8:30",
     title: "Estado Fintech HN",
-    note: "Agenda AFINH · Napoleón V",
+    note: "Agenda AFINH",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Estado Fintech HN - Agenda AFINH.",
         details: [
           "Oliver Arévalo, Gerente Regional, Vana. Miembro de Junta Directiva AFINH",
@@ -64,10 +89,10 @@ export const agendaMilestones = [
   {
     time: "8:30 - 9:00",
     title: "Infraestructura financiera digital 2030",
-    note: "Keynote · Napoleón V",
+    note: "Keynote de apertura",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Infraestructura Financiera digital 2030: El Futuro del Sistema Financiero en Mercados Emergentes.",
         details: [
           "Nayam Hanashiro, Director de Producto, Integraciones y Ecosistema, Clara",
@@ -80,26 +105,30 @@ export const agendaMilestones = [
     title: "Inauguración de la feria",
     note: "Coffee break",
     parallel: [
-      { venue: "Napoleón V · VI", text: "Inauguración feria y coffee break" },
+      {
+        track: "general",
+        venue: "Napoleón V · VI",
+        text: "Inauguración feria y coffee break",
+      },
     ],
   },
   {
     time: "9:30 - 10:00",
-    title: "Inclusión financiera y pagos internacionales",
-    note: "Conectado · Conocimiento · Feria",
+    title: "Impacto social y pagos internacionales",
+    note: "Abre la feria con +25 stands",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Fintech con impacto social: el modelo de AAvance y lo que Honduras puede replicar para acelerar la inclusión financiera femenina.",
         details: ["Magreth Gutiérrez, CEO, Aavance"],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Mastercard Move: Nuevas oportunidades para los pagos internacionales de personas y PyMEs en Honduras.",
         details: ["Gonzalo González, Senior Sales Representative, Mastercard"],
       },
       {
-        venue: "Napoleón VI (Feria)",
+        track: "feria",
         text: "Feria abierta. +25 stands.",
         details: [
           "Speed mentoring. Impact Hub.",
@@ -111,10 +140,10 @@ export const agendaMilestones = [
   {
     time: "10:00 - 10:30",
     title: "Sistemas de pago y adquirencia",
-    note: "Conectado · Conocimiento",
+    note: "Panel principal + experiencia fullstack",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Panel: Innovación y tendencias en sistemas de pago.",
         details: [
           "Miguel Sarti, Business Development Manager, Visa",
@@ -124,7 +153,7 @@ export const agendaMilestones = [
         ],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Expertos en Adquirencia: La experiencia Fullstack de SERFINSA.",
         details: [
           "Javier Mayorga, Director de Negocios",
@@ -137,15 +166,15 @@ export const agendaMilestones = [
   {
     time: "10:30 - 11:00",
     title: "Tokenización y crédito retail",
-    note: "Conectado · Conocimiento",
+    note: "Remesas tokenizadas · experiencia de crédito",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "De Remesas a Activos Tokenizados: La Nueva Arquitectura Financiera de Centroamérica.",
         details: ["Juan Diego Sol, Gerente Regional, IBEX"],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Transformando la Experiencia del Crédito Retail",
         details: [
           "Edwin Flores, Gerente General",
@@ -159,10 +188,10 @@ export const agendaMilestones = [
   {
     time: "11:00 - 11:30",
     title: "Ciberfraude e inteligencia artificial",
-    note: "Conectado · Conocimiento",
+    note: "Defensa contra fraude · IA empresarial",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Ciber fraude en la era de la IA, ¿cómo nos protegemos?",
         details: [
           "Luis Alejandro Anderson Rivera, Senior Management Consultant para Mastercard en la región",
@@ -170,7 +199,7 @@ export const agendaMilestones = [
         ],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Conversemos sobre Inteligencia Artificial Empresarial",
         details: [
           "Stanley Marrder, CEO, Eniver",
@@ -181,18 +210,18 @@ export const agendaMilestones = [
   },
   {
     time: "11:30 - 12:00",
-    title: "Jóvenes y crédito con QR",
-    note: "Conectado · Conocimiento",
+    title: "Talento joven y crédito en el punto de venta",
+    note: "Transformación digital · QR con crédito",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "\"El rol de los jóvenes en la transformación digital\"",
         details: [
           "Mario René Guevara Galeano, Especialista en Transformación Digital, Innovación y Desarrollo de Negocios, DIGER",
         ],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "CrediQR: El QR que convierte cada compra en una oportunidad de crédito.",
         details: ["Gustavo Defilpo, CEO, BeClever"],
       },
@@ -203,17 +232,21 @@ export const agendaMilestones = [
     title: "Almuerzo",
     note: "Receso general",
     parallel: [
-      { venue: "Napoleón V · II", text: "Almuerzo / Receso" },
-      { venue: "Napoleón IV", text: "Almuerzo formal 250 pax" },
+      {
+        track: "general",
+        venue: "Napoleón V · II",
+        text: "Almuerzo / Receso",
+      },
+      { track: "salon4", text: "Almuerzo formal 250 pax" },
     ],
   },
   {
     time: "13:30 - 14:00",
     title: "Regulación, cobranza y Academia",
-    note: "Conectado · Conocimiento · Academia",
+    note: "Panel del regulador · taller de IA para jóvenes",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Panel: Inclusión Financiera desde la perspectiva del regulador.",
         details: [
           "Carlos Andino, Subgerente de Operaciones, BCH",
@@ -223,12 +256,12 @@ export const agendaMilestones = [
         ],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Cobranza Inteligente: de la mora a la acción.",
         details: ["Lisseth Leal, CEO, D2i"],
       },
       {
-        venue: "Academia",
+        track: "academia",
         text: "Taller Academia 1: \"Jóvenes que construyen con AI\"",
         details: [
           "Cesar Alejandro Maldonado, Gerente de Proyectos Digitales, DIGER · Consultor en Transformación Digital y Ciberseguridad",
@@ -238,21 +271,21 @@ export const agendaMilestones = [
   },
   {
     time: "14:00 - 14:30",
-    title: "Sistema financiero digital y tokenización",
-    note: "Conectado · Conocimiento · Academia",
+    title: "Banca digital, crédito y tokenización",
+    note: "Evolución del sistema · taller de tokenización",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Evolución del sistema financiero digital.",
         details: ["Juan Carlos Garavito, CEO, WAU"],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "PreCredit",
         details: ["Cassandra Escobar, Gerente de Producto, PreCredit"],
       },
       {
-        venue: "Academia",
+        track: "academia",
         text: "Taller Academia 2. ¿Qué es tokenización?",
         details: ["Juan Diego Sol y Carlos Alfaro, IBEX"],
       },
@@ -261,20 +294,20 @@ export const agendaMilestones = [
   {
     time: "14:30 - 15:00",
     title: "IA en crédito y orquestación de pagos",
-    note: "Conectado · Conocimiento · Academia",
+    note: "Crédito digital · orquestación · casos de inclusión",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "De años a semanas: cómo las plataformas impulsadas por IA democratizan el crédito digital.",
         details: ["Erick González, Gerente de Tecnología, BOWPI"],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "Pagos: Orquestación para ganar",
         details: ["Jimmy Amador, CEO, Clinpays"],
       },
       {
-        venue: "Academia",
+        track: "academia",
         text: "Taller Academia 3. Inclusión Financiera, casos de éxito.",
         details: ["Magreth Gutiérrez, Aavance"],
       },
@@ -283,15 +316,15 @@ export const agendaMilestones = [
   {
     time: "15:00 - 15:30",
     title: "Open Finance y transformación digital",
-    note: "Conectado · Conocimiento · Academia",
+    note: "Riesgo sistémico · workshop · IA técnica",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Open Finance en Economías Emergentes: ¿Oportunidad o Riesgo Sistémico?",
         details: ["Edwin Zancipa, LATAM Fintech Hub"],
       },
       {
-        venue: "Napoleón II (Conocimiento)",
+        track: "conocimiento",
         text: "¿Qué Está Frenando tu Transformación Digital? Un workshop donde convertimos los retos de tu institución en soluciones reales.",
         details: [
           "Erick González, Gerente de Tecnología",
@@ -300,7 +333,7 @@ export const agendaMilestones = [
         ],
       },
       {
-        venue: "Academia",
+        track: "academia",
         text: "Taller Academia 4. Inteligencia Artificial, un enfoque técnico",
         details: ["Stanley Marrder"],
       },
@@ -309,10 +342,10 @@ export const agendaMilestones = [
   {
     time: "15:30 - 16:00",
     title: "Democratizando los pagos",
-    note: "Napoleón V",
+    note: "El acceso como motor de crecimiento",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Democratizando los pagos: el acceso como motor de crecimiento",
         details: [
           "Ricardo Rodríguez Campollo, Director de Account Executive (Guatemala, El Salvador y Honduras), Visa",
@@ -323,10 +356,10 @@ export const agendaMilestones = [
   {
     time: "16:00 - 16:30",
     title: "Firechat: Venture Capital",
-    note: "Napoleón V",
+    note: "Financiamiento como aliado para crecer",
     parallel: [
       {
-        venue: "Napoleón V (Conectado)",
+        track: "conectado",
         text: "Firechat. Venture Capital, más que un financiamiento un aliado para crecer.",
         details: [
           "Allan Boruchowicz, Fundador y Socio Director, Carao Ventures",
@@ -341,10 +374,7 @@ export const agendaMilestones = [
     note: "Palabras de cierre y agradecimientos",
     accent: true,
     parallel: [
-      {
-        venue: "Napoleón V (Conectado)",
-        text: "Palabras de cierre y agradecimientos.",
-      },
+      { track: "conectado", text: "Palabras de cierre y agradecimientos." },
     ],
   },
   {
@@ -363,32 +393,106 @@ function escapeHtml(s) {
     .replace(/"/g, "&quot;");
 }
 
+function venueOf(item) {
+  return item.venue || agendaTracks[item.track]?.venue || asideTracks[item.track]?.venue || "";
+}
+
+function isMainTrack(item) {
+  return Boolean(agendaTracks[item.track]);
+}
+
 function buildDetailsHtml(details) {
   if (!details?.length) return "";
   const items = details.map((d) => `<li>${escapeHtml(d)}</li>`).join("");
   return `<ul class="agenda-parallel-details" role="list">${items}</ul>`;
 }
 
-function buildParallelHtml(parallel) {
-  const active = (parallel || []).filter((p) => !p.closed);
-  if (!active.length) return "";
+/** Tarjeta de salón: hereda su color y su columna del track. */
+function buildTrackCardHtml(item) {
+  const col = agendaTracks[item.track]?.col;
+  const colClass = col ? ` agenda-col-${col}` : "";
 
-  const items = active
+  return `
+          <li class="agenda-track agenda-track--${escapeHtml(item.track)}${colClass}">
+            <span class="agenda-track-venue">${escapeHtml(venueOf(item))}</span>
+            <p class="agenda-track-text">${escapeHtml(item.text)}</p>
+            ${buildDetailsHtml(item.details)}
+          </li>`;
+}
+
+/** Actividades de apoyo: chips discretos, sin columna asignada. */
+function buildAsideHtml(items) {
+  if (!items.length) return "";
+
+  const chips = items
+    .map((item) => {
+      const extra = item.details?.length
+        ? ` <span class="agenda-aside-extra">${escapeHtml(item.details.join(" · "))}</span>`
+        : "";
+      return `
+            <li class="agenda-aside-item agenda-track--${escapeHtml(item.track)}">
+              <span class="agenda-aside-venue">${escapeHtml(venueOf(item))}</span>
+              <span class="agenda-aside-text">${escapeHtml(item.text)}${extra}</span>
+            </li>`;
+    })
+    .join("");
+
+  return `
+        <ul class="agenda-aside" role="list">${chips}
+        </ul>`;
+}
+
+function buildParallelHtml(parallel) {
+  const items = parallel || [];
+  const main = items.filter(isMainTrack);
+  const aside = items.filter((item) => !isMainTrack(item));
+  if (!main.length && !aside.length) return "";
+
+  const soloClass = main.length > 1 ? "" : " agenda-tracks--solo";
+  const grid = main.length
+    ? `
+        <ul class="agenda-tracks${soloClass}" role="list">${main.map(buildTrackCardHtml).join("")}
+        </ul>`
+    : "";
+
+  return `
+      <div class="agenda-parallel-wrap">${grid}${buildAsideHtml(aside)}
+      </div>`;
+}
+
+/** Cuántas sesiones compiten en el mismo horario (la feria cuenta, el lobby no). */
+function concurrentCount(parallel) {
+  return (parallel || []).filter(
+    (item) => item.track !== "general" && item.track !== "networking",
+  ).length;
+}
+
+function buildBadgeHtml(count) {
+  if (count < 2) return "";
+  return `
+              <span class="agenda-badge">
+                <svg viewBox="0 0 12 12" width="10" height="10" aria-hidden="true">
+                  <rect x="0.5" y="2" width="2.4" height="8" rx="1.2" fill="currentColor" />
+                  <rect x="4.8" y="0.5" width="2.4" height="11" rx="1.2" fill="currentColor" />
+                  <rect x="9.1" y="3.5" width="2.4" height="5" rx="1.2" fill="currentColor" />
+                </svg>
+                ${count} en paralelo
+              </span>`;
+}
+
+/** Encabezado de columnas: sólo visible cuando la grilla es de 3 columnas. */
+export function buildAgendaTracksHeadHtml() {
+  const cells = Object.entries(agendaTracks)
     .map(
-      (p) => `
-          <li class="rounded-xl border border-white/5 bg-black/25 px-4 py-3.5 sm:px-5 sm:py-4">
-            <span class="block font-display text-[10px] font-medium uppercase tracking-[0.14em] text-accent">${escapeHtml(p.venue)}</span>
-            <p class="mt-2 text-xs leading-relaxed sm:text-[13px] text-text-mute">${escapeHtml(p.text)}</p>
-            ${buildDetailsHtml(p.details)}
-          </li>`,
+      ([key, track]) => `
+          <li class="agenda-head-item agenda-track--${key} agenda-col-${track.col}">${escapeHtml(track.venue)}</li>`,
     )
     .join("");
 
   return `
-      <div class="agenda-parallel-wrap mt-5 border-t border-white/10 pt-5 sm:mt-6 sm:pt-6">
-        <p class="mb-3 font-display text-[10px] uppercase tracking-[0.14em] text-text-dim">Por salón</p>
-        <ul class="grid gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-2 xl:grid-cols-3" role="list">
-          ${items}
+      <div class="agenda-head">
+        <p class="agenda-head-label">Salones simultáneos</p>
+        <ul class="agenda-tracks" role="list">${cells}
         </ul>
       </div>`;
 }
@@ -400,13 +504,13 @@ export function buildAgendaListHtml() {
       const timeColor = item.accent ? "text-accent" : "text-text-mute";
 
       return `
-        <li class="px-6 py-5 sm:px-8 sm:py-7 ${rowBg}" tabindex="0">
-          <div class="flex items-start gap-5 sm:gap-6">
+        <li class="agenda-row px-6 py-5 sm:px-8 sm:py-7 ${rowBg}" tabindex="0">
+          <div class="agenda-row-head flex items-start gap-5 sm:gap-6">
             <time class="w-[5.5rem] shrink-0 font-display text-xs font-medium tracking-wide ${timeColor} sm:w-28 sm:text-sm">${escapeHtml(item.time)}</time>
             <div class="min-w-0 flex-1">
               <p class="font-display text-sm font-medium tracking-[-0.01em] text-text sm:text-base">${escapeHtml(item.title)}</p>
               <p class="mt-1 text-xs leading-relaxed text-text-mute sm:text-[13px]">${escapeHtml(item.note)}</p>
-            </div>
+            </div>${buildBadgeHtml(concurrentCount(item.parallel))}
           </div>
           ${buildParallelHtml(item.parallel)}
         </li>`;

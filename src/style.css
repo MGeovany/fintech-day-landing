@@ -569,8 +569,72 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   margin-top: 20px;
 }
 
+/* === Agenda: salones simultáneos ===
+   Cada track tiene un color y, en desktop, una columna fija. Al compartir la
+   misma grilla, el encabezado y todas las filas quedan alineados: lo que está
+   en paralelo se lee en vertical. */
+.agenda-tracks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.agenda-parallel-wrap {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.agenda-track {
+  --track-color: var(--line-strong);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--track-color);
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 13px 15px;
+}
+.agenda-track--conectado { --track-color: var(--accent); }
+.agenda-track--conocimiento { --track-color: var(--accent-2); }
+.agenda-track--academia { --track-color: #8fa4ff; }
+.agenda-track--feria { --track-color: #ffb457; }
+
+.agenda-track-venue,
+.agenda-aside-venue,
+.agenda-head-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: 'Space Grotesk', var(--font-aeonikpro);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--track-color);
+}
+.agenda-track-venue::before,
+.agenda-aside-venue::before,
+.agenda-head-item::before {
+  content: "";
+  flex: none;
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: var(--track-color);
+  box-shadow: 0 0 8px var(--track-color);
+}
+
+.agenda-track-text {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-mute);
+}
+
 .agenda-parallel-details {
-  margin: 10px 0 0;
+  margin: 9px 0 0;
   padding-left: 1.1rem;
   list-style: disc;
   font-size: 11px;
@@ -579,6 +643,104 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 .agenda-parallel-details li + li {
   margin-top: 4px;
+}
+
+/* Contador de simultaneidad, junto al título del bloque. */
+.agenda-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+  align-self: flex-start;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  font-family: 'Space Grotesk', var(--font-aeonikpro);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+
+/* En móvil el badge baja bajo el título en vez de comprimirlo. */
+@media (max-width: 639px) {
+  .agenda-row-head {
+    display: grid;
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    column-gap: 1.25rem;
+  }
+  .agenda-badge {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: 10px;
+  }
+}
+
+/* Actividades de apoyo (feria, almuerzo, networking): no compiten por atención. */
+.agenda-aside {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.agenda-tracks + .agenda-aside {
+  margin-top: 10px;
+}
+.agenda-aside-item {
+  --track-color: var(--line-strong);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  padding: 7px 13px;
+  border: 1px dashed rgba(255, 255, 255, 0.13);
+  border-radius: 10px;
+  font-size: 12px;
+  color: var(--text-dim);
+}
+.agenda-aside-item.agenda-track--feria { --track-color: #ffb457; }
+.agenda-aside-extra {
+  color: rgba(255, 255, 255, 0.32);
+}
+
+/* Encabezado de columnas: sólo cuando hay 3 columnas reales. */
+.agenda-head {
+  display: none;
+}
+.agenda-head-label {
+  margin: 0 0 10px;
+  font-family: 'Space Grotesk', var(--font-aeonikpro);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+@media (min-width: 900px) {
+  .agenda-head {
+    display: block;
+    padding: 18px 32px 16px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .agenda-tracks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .agenda-col-1 { grid-column: 1; }
+  .agenda-col-2 { grid-column: 2; }
+  .agenda-col-3 { grid-column: 3; }
+  /* Un solo salón: la tarjeta ocupa el ancho completo en lugar de dejar huecos. */
+  .agenda-tracks--solo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .agenda-tracks--solo .agenda-track {
+    grid-column: 1 / -1;
+  }
 }
 
 /* === Pill CTA buttons (Cryptum-style) === */
