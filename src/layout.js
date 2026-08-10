@@ -14,6 +14,7 @@ import conferenciasImg from './assets/afinh2025_image-276.jpg?url';
 import talleresImg from './assets/afinh2025_talleres-2025.png?url';
 import academiaImg from './assets/afinh2025_image-222.jpg?url';
 import coctelImg from './assets/afinh2025_image-274.jpg?url';
+import { buildAgendaSectionHtml } from './agenda-render.js';
 import sponsorship from './components/sponsorship.html?raw';
 import ctaFinalRaw from './components/cta-final.html?raw';
 import ctaImg from './assets/afinh2025_image-277.jpg?url';
@@ -48,6 +49,7 @@ export function mountLayout(root = document.getElementById('app')) {
     // objectives, // Objetivos específicos - comentado temporalmente
     audience,
     activities,
+    buildAgendaSectionHtml(),
     sponsorshipSection,
     ctaFinal,
     '</main>',

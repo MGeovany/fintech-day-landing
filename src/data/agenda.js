@@ -1,8 +1,12 @@
-/** Programa detallado - Honduras Fintech Day 2026 · Hotel Copantl */
+/** Programa detallado - Honduras Fintech Day 2026 · Hotel Copantl
+ *
+ * Fuente: PROGRAMA_AGENDA HFD26 - actualizado 10 agosto 2026.xlsx
+ * Los salones marcados CERRADO en la fuente se omiten en el render.
+ */
 
 export const agendaMeta = {
-  line: "20 de agosto 2026 · Hotel Copantl, San Pedro Sula · 7:00 – 16:00 + cocktail",
-  hint: "Cada bloque muestra qué ocurre en paralelo por salón.",
+  line: "20 de agosto 2026 · Hotel Copantl, San Pedro Sula · 7:00 - 16:35 + cocktail",
+  hint: "Cada bloque muestra qué ocurre en paralelo por salón. El área de Conexiones está disponible todo el día para reuniones 1 a 1. Programa sujeto a cambios.",
   venue: "Hotel Copantl - San Pedro Sula",
 };
 
@@ -14,255 +18,340 @@ export const agendaMeta = {
 /** @type {AgendaMilestone[]} */
 export const agendaMilestones = [
   {
-    time: "7:00 – 7:55",
+    time: "7:00 - 8:00",
     title: "Registro y bienvenida",
-    note: "Lobby · credenciales · app del evento",
+    note: "Lobby · app del evento activa",
     parallel: [
+      { venue: "Lobby / Registro", text: "Lobby / Registro. App activa." },
       {
-        venue: "Lobby principal",
-        text: "Check-in · entrega de gafete · activación app",
-        details: [
-          "Registro Full Pass y Expo Pass",
-          "Mesa de información AFINH",
-          "Soporte técnico app / networking",
-        ],
+        venue: "Conexiones (Networking)",
+        text: "Disponible todo el día - reuniones 1 a 1",
       },
     ],
   },
   {
-    time: "8:00 – 8:45",
-    title: "Apertura oficial",
-    note: "Keynote e inauguración del evento",
+    time: "8:00 - 8:15",
+    title: "Bienvenida",
+    note: "Palabras de inicio · Napoleón V",
     accent: true,
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Ceremonia de apertura y keynote",
+        venue: "Napoleón V (Conectado)",
+        text: "Bienvenida. Palabras de inicio.",
         details: [
-          "Bienvenida AFINH y autoridades",
-          "Keynote de apertura - visión fintech HN",
-          "Presentación de agenda y salones",
+          "Julia Johannsen, representante Grupo BID, Honduras",
+          "Carlos Roberto Andino Zuniga, Subgerente de Operaciones, BCH",
+          "Mauricio Escalante, Presidente Asociación Fintech de Honduras",
         ],
       },
     ],
   },
   {
-    time: "9:00 – 9:45",
+    time: "8:15 - 8:30",
+    title: "Estado Fintech HN",
+    note: "Agenda AFINH · Napoleón V",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Estado Fintech HN - Agenda AFINH.",
+        details: [
+          "Oliver Arévalo, Gerente Regional, Vana. Miembro de Junta Directiva AFINH",
+          "David Ortíz, Sub Gerente General de Zafra Cloud | CTO Grupo Pentos, Miembro Junta Directiva AFINH",
+        ],
+      },
+    ],
+  },
+  {
+    time: "8:30 - 9:00",
+    title: "Infraestructura financiera digital 2030",
+    note: "Keynote · Napoleón V",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Infraestructura Financiera digital 2030: El Futuro del Sistema Financiero en Mercados Emergentes.",
+        details: [
+          "Nayam Hanashiro, Director de Producto, Integraciones y Ecosistema, Clara",
+        ],
+      },
+    ],
+  },
+  {
+    time: "9:00 - 9:30",
     title: "Inauguración de la feria",
-    note: "Napoleón VI · coffee break",
+    note: "Coffee break",
     parallel: [
-      {
-        venue: "Napoleón VI",
-        text: "Apertura oficial de la feria tecnológica",
-        details: [
-          "Recorrido inaugural por pasillos de expo",
-          "Charla especial en escenario expo",
-          "Coffee break patrocinado",
-        ],
-      },
-      { venue: "Napoleón V", text: "Transición - asistentes hacia feria" },
+      { venue: "Napoleón V · VI", text: "Inauguración feria y coffee break" },
     ],
   },
   {
-    time: "10:00 – 10:45",
-    title: "Sesión 1",
-    note: "Programa en paralelo - bloque 1",
+    time: "9:30 - 10:00",
+    title: "Inclusión financiera y pagos internacionales",
+    note: "Conectado · Conocimiento · Feria",
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Conferencias y paneles - sesión 1",
-        details: [
-          "Panel: regulación y sandbox",
-          "Tendencias pagos digitales",
-          "Q&A con reguladores e industria",
-        ],
+        venue: "Napoleón V (Conectado)",
+        text: "Fintech con impacto social: el modelo de AAvance y lo que Honduras puede replicar para acelerar la inclusión financiera femenina.",
+        details: ["Magreth Gutiérrez, CEO, Aavance"],
       },
       {
-        venue: "Napoleón II y III",
-        text: "Taller 1 (cupos limitados)",
-        details: [
-          "Hasta 25 participantes",
-          "Registro previo obligatorio",
-          "Enfoque hands-on producto / tech",
-        ],
+        venue: "Napoleón II (Conocimiento)",
+        text: "Mastercard Move: Nuevas oportunidades para los pagos internacionales de personas y PyMEs en Honduras.",
+        details: ["Gonzalo González, Senior Sales Representative, Mastercard"],
       },
       {
-        venue: "Napoleón I",
-        text: "Academia - bloque universitario 1",
+        venue: "Napoleón VI (Feria)",
+        text: "Feria abierta. +25 stands.",
         details: [
-          "Talleres con universidades aliadas",
-          "Introducción a fintech para estudiantes",
-        ],
-      },
-      {
-        venue: "Napoleón VI",
-        text: "Feria en operación plena",
-        details: [
-          "40–50 stands activos",
-          "Demos en vivo",
-          "Primeras rondas speed mentoring",
+          "Speed mentoring. Impact Hub.",
+          "Túnel del desarrollo del dinero, BCH.",
         ],
       },
     ],
   },
   {
-    time: "10:45 – 11:00",
-    title: "Coffee break",
-    note: "Networking entre sesiones",
-    parallel: [
-      { venue: "Napoleón V · VI", text: "Pausa · networking en pasillos y feria" },
-      { venue: "Talleres II/III", text: "Intermedio taller 1" },
-    ],
-  },
-  {
-    time: "11:00 – 11:45",
-    title: "Sesión 2",
-    note: "Programa en paralelo - bloque 2",
+    time: "10:00 - 10:30",
+    title: "Sistemas de pago y adquirencia",
+    note: "Conectado · Conocimiento",
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Conferencias y paneles - sesión 2",
+        venue: "Napoleón V (Conectado)",
+        text: "Panel: Innovación y tendencias en sistemas de pago.",
         details: [
-          "Panel: banca digital e inclusión",
-          "Casos de éxito startups locales",
+          "Miguel Sarti, Business Development Manager, Visa",
+          "José Herrera, Regional Manager Central America, Caribbean, Colombia & Ecuador, DLocal",
+          "Darwin Gabourel, Director Regional, n1co Business",
+          "Moderador: Jimmy Amador, CEO, Clinpays",
         ],
       },
       {
-        venue: "Napoleón II y III",
-        text: "Taller 2",
-        details: ["Segundo bloque cerrado", "Continúa registro previo"],
-      },
-      {
-        venue: "Napoleón I",
-        text: "Academia - bloque 2",
-        details: ["Competencias / retos estudiantiles", "Mentorías cortas"],
-      },
-      {
-        venue: "Napoleón VI",
-        text: "Feria + mentoring",
-        details: ["Stands · DJ ambiente · rondas 1:1"],
-      },
-    ],
-  },
-  {
-    time: "12:00 – 13:30",
-    title: "Receso y almuerzo",
-    note: "Food court · almuerzo formal",
-    parallel: [
-      {
-        venue: "Napoleón V · II/III · I",
-        text: "Receso de conferencias y talleres",
-        details: ["Pausa para almuerzo libre o networking"],
-      },
-      {
-        venue: "Napoleón VI",
-        text: "Feria en modo reducido",
+        venue: "Napoleón II (Conocimiento)",
+        text: "Expertos en Adquirencia: La experiencia Fullstack de SERFINSA.",
         details: [
-          "Food court digital / patrocinadores",
-          "Stands con operación ligera",
-        ],
-      },
-      {
-        venue: "Napoleón IV",
-        text: "Almuerzo formal",
-        details: [
-          "200–250 personas · invitación",
-          "Patrocinadores y VIPs",
+          "Javier Mayorga, Director de Negocios",
+          "Milagro Mena, Gerente de Mercadeo y Desarrollo de Productos",
+          "SERFINSA",
         ],
       },
     ],
   },
   {
-    time: "13:30 – 14:15",
-    title: "Sesión 3",
-    note: "Programa en paralelo - bloque 3",
+    time: "10:30 - 11:00",
+    title: "Tokenización y crédito retail",
+    note: "Conectado · Conocimiento",
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Conferencias - sesión 3",
+        venue: "Napoleón V (Conectado)",
+        text: "De Remesas a Activos Tokenizados: La Nueva Arquitectura Financiera de Centroamérica.",
+        details: ["Juan Diego Sol, Gerente Regional, IBEX"],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "Transformando la Experiencia del Crédito Retail",
         details: [
-          "Panel: inversión y venture en la región",
-          "Scale-ups y expansión regional",
+          "Edwin Flores, Gerente General",
+          "Irene Sinclair, Coordinadora BI",
+          "Dennis Gradiz, Gerente de IT",
+          "CREDIDEMO",
         ],
-      },
-      {
-        venue: "Napoleón II y III",
-        text: "Taller 3",
-        details: ["Último bloque de talleres cerrados"],
-      },
-      {
-        venue: "Napoleón I",
-        text: "Academia - bloque 3",
-        details: ["Pitch estudiantil · premios academia"],
-      },
-      {
-        venue: "Napoleón VI",
-        text: "Feria plena post-almuerzo",
-        details: ["Mayor afluencia de público expo"],
       },
     ],
   },
   {
-    time: "14:30 – 15:15",
-    title: "Sesión 4",
-    note: "Programa en paralelo - bloque 4",
+    time: "11:00 - 11:30",
+    title: "Ciberfraude e inteligencia artificial",
+    note: "Conectado · Conocimiento",
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Conferencias - sesión 4",
+        venue: "Napoleón V (Conectado)",
+        text: "Ciber fraude en la era de la IA, ¿cómo nos protegemos?",
         details: [
-          "Panel: ciberseguridad y fraude",
-          "IA aplicada a servicios financieros",
+          "Luis Alejandro Anderson Rivera, Senior Management Consultant para Mastercard en la región",
+          "Mastercard",
         ],
       },
       {
-        venue: "Napoleón VI",
-        text: "Feria · últimas demos",
-        details: ["Rondas finales de mentoring", "Premios en stands (según patrocinio)"],
+        venue: "Napoleón II (Conocimiento)",
+        text: "Conversemos sobre Inteligencia Artificial Empresarial",
+        details: [
+          "Stanley Marrder, CEO, Eniver",
+          "Moderadora: Erica Jensen, Directora Ejecutiva, Asociación Fintech de Honduras",
+        ],
       },
     ],
   },
   {
-    time: "15:45 – 16:00",
+    time: "11:30 - 12:00",
+    title: "Jóvenes y crédito con QR",
+    note: "Conectado · Conocimiento",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "\"El rol de los jóvenes en la transformación digital\"",
+        details: [
+          "Mario René Guevara Galeano, Especialista en Transformación Digital, Innovación y Desarrollo de Negocios, DIGER",
+        ],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "CrediQR: El QR que convierte cada compra en una oportunidad de crédito.",
+        details: ["Gustavo Defilpo, CEO, BeClever"],
+      },
+    ],
+  },
+  {
+    time: "12:00 - 13:30",
+    title: "Almuerzo",
+    note: "Receso general",
+    parallel: [
+      { venue: "Napoleón V · II", text: "Almuerzo / Receso" },
+      { venue: "Napoleón IV", text: "Almuerzo formal 250 pax" },
+    ],
+  },
+  {
+    time: "13:30 - 14:00",
+    title: "Regulación, cobranza y Academia",
+    note: "Conectado · Conocimiento · Academia",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Panel: Inclusión Financiera desde la perspectiva del regulador.",
+        details: [
+          "Carlos Andino, Subgerente de Operaciones, BCH",
+          "Sidia Gómez, Especialista del HUB de Innovación Financiera, CNBS",
+          "José Andonis Lavaire, Director Ejecutivo, Consuccop",
+          "Moderador: Ricardo Irias, CEO, SUBE",
+        ],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "Cobranza Inteligente: de la mora a la acción.",
+        details: ["Lisseth Leal, CEO, D2i"],
+      },
+      {
+        venue: "Academia",
+        text: "Taller Academia 1: \"Jóvenes que construyen con AI\"",
+        details: [
+          "Cesar Alejandro Maldonado, Gerente de Proyectos Digitales, DIGER · Consultor en Transformación Digital y Ciberseguridad",
+        ],
+      },
+    ],
+  },
+  {
+    time: "14:00 - 14:30",
+    title: "Sistema financiero digital y tokenización",
+    note: "Conectado · Conocimiento · Academia",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Evolución del sistema financiero digital.",
+        details: ["Juan Carlos Garavito, CEO, WAU"],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "PreCredit",
+        details: ["Cassandra Escobar, Gerente de Producto, PreCredit"],
+      },
+      {
+        venue: "Academia",
+        text: "Taller Academia 2. ¿Qué es tokenización?",
+        details: ["Juan Diego Sol y Carlos Alfaro, IBEX"],
+      },
+    ],
+  },
+  {
+    time: "14:30 - 15:00",
+    title: "IA en crédito y orquestación de pagos",
+    note: "Conectado · Conocimiento · Academia",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "De años a semanas: cómo las plataformas impulsadas por IA democratizan el crédito digital.",
+        details: ["Erick González, Gerente de Tecnología, BOWPI"],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "Pagos: Orquestación para ganar",
+        details: ["Jimmy Amador, CEO, Clinpays"],
+      },
+      {
+        venue: "Academia",
+        text: "Taller Academia 3. Inclusión Financiera, casos de éxito.",
+        details: ["Magreth Gutiérrez, Aavance"],
+      },
+    ],
+  },
+  {
+    time: "15:00 - 15:30",
+    title: "Open Finance y transformación digital",
+    note: "Conectado · Conocimiento · Academia",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Open Finance en Economías Emergentes: ¿Oportunidad o Riesgo Sistémico?",
+        details: ["Edwin Zancipa, LATAM Fintech Hub"],
+      },
+      {
+        venue: "Napoleón II (Conocimiento)",
+        text: "¿Qué Está Frenando tu Transformación Digital? Un workshop donde convertimos los retos de tu institución en soluciones reales.",
+        details: [
+          "Erick González, Gerente de Tecnología",
+          "Raquel Andrade, Business Development Manager",
+          "BOWPI",
+        ],
+      },
+      {
+        venue: "Academia",
+        text: "Taller Academia 4. Inteligencia Artificial, un enfoque técnico",
+        details: ["Stanley Marrder"],
+      },
+    ],
+  },
+  {
+    time: "15:30 - 16:00",
+    title: "Democratizando los pagos",
+    note: "Napoleón V",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Democratizando los pagos: el acceso como motor de crecimiento",
+        details: [
+          "Ricardo Rodríguez Campollo, Director de Account Executive (Guatemala, El Salvador y Honduras), Visa",
+        ],
+      },
+    ],
+  },
+  {
+    time: "16:00 - 16:30",
+    title: "Firechat: Venture Capital",
+    note: "Napoleón V",
+    parallel: [
+      {
+        venue: "Napoleón V (Conectado)",
+        text: "Firechat. Venture Capital, más que un financiamiento un aliado para crecer.",
+        details: [
+          "Allan Boruchowicz, Fundador y Socio Director, Carao Ventures",
+          "Moderadora: Gladys Morena, Grupo BID",
+        ],
+      },
+    ],
+  },
+  {
+    time: "16:30 - 16:35",
     title: "Cierre oficial",
-    note: "Reconocimientos y agradecimientos",
+    note: "Palabras de cierre y agradecimientos",
     accent: true,
     parallel: [
       {
-        venue: "Napoleón V",
-        text: "Ceremonia de clausura",
-        details: [
-          "Resumen del día · métricas del evento",
-          "Reconocimientos a patrocinadores y aliados",
-          "Anuncios y próximos pasos AFINH",
-        ],
+        venue: "Napoleón V (Conectado)",
+        text: "Palabras de cierre y agradecimientos.",
       },
     ],
   },
   {
-    time: "16:00 en adelante",
-    title: "Cocktail de networking",
-    note: "Bar externo · música en vivo / DJ",
+    time: "16:35 +",
+    title: "Cocktail de cierre",
+    note: "Networking de cierre",
     accent: true,
-    parallel: [
-      {
-        venue: "Sector externo (La20)",
-        text: "Cocktail 100+ personas",
-        details: [
-          "Networking informal post-evento",
-          "Música en vivo o DJ",
-          "Bebidas y finger food",
-        ],
-      },
-      {
-        venue: "App del evento",
-        text: "Networking digital activo",
-        details: [
-          "Match por intereses y rol",
-          "Continuidad de contactos del día",
-        ],
-      },
-    ],
   },
 ];
 
