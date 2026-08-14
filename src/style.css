@@ -295,6 +295,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   position: fixed;
   top: 16px;
   left: 0; right: 0;
+  padding: 0 32px;
   z-index: 100;
   transition: transform .35s var(--ease-out);
 }
@@ -1576,7 +1577,7 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   .container { padding: 0 20px; }
 
   /* Nav becomes compact pill */
-  .nav { top: 10px; }
+  .nav { top: 10px; padding: 0 20px; }
   .nav-inner {
     padding: 8px 8px 8px 16px;
     gap: 10px;
@@ -1675,10 +1676,11 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 @media (max-width: 480px) {
   .container { padding: 0 16px; }
 
-  .nav { top: 8px; }
+  .nav { top: 8px; padding: 0 16px; }
   .nav-inner { padding: 6px 6px 6px 14px; gap: 8px; }
-  .nav-brand { font-size: 13px; }
-  .nav-brand-label { display: none; }
+  /* La marca es el único contenido del pill a la izquierda: ocultar el label
+     dejaba el header en blanco. Se encoge en vez de esconderse. */
+  .nav-brand { font-size: 12.5px; }
   .nav-cta { padding: 6px 12px; font-size: 11.5px; }
   .nav-auth-name { max-width: 64px; }
 
