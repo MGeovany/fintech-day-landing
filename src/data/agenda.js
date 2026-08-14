@@ -1,6 +1,7 @@
 /** Programa detallado - Honduras Fintech Day 2026 · Hotel Copantl
  *
  * Fuente: PROGRAMA_AGENDA HFD26 - actualizado 10 agosto 2026.xlsx
+ * Salón Conectado actualizado con "Programa Conferencias y Paneles HFD26.pdf" (14 agosto 2026).
  * Los salones marcados CERRADO en la fuente se omiten en el render.
  *
  * `track` define el color y la columna del bloque. Los tres tracks principales
@@ -210,12 +211,12 @@ export const agendaMilestones = [
   },
   {
     time: "11:30 - 12:00",
-    title: "Talento joven y crédito en el punto de venta",
-    note: "Transformación digital · QR con crédito",
+    title: "Billetera electrónica nacional y crédito en el punto de venta",
+    note: "Billetera Electrónica Nacional · QR con crédito",
     parallel: [
       {
         track: "conectado",
-        text: "\"El rol de los jóvenes en la transformación digital\"",
+        text: "Billetera Electrónica Nacional.",
         details: [
           "Mario René Guevara Galeano, Especialista en Transformación Digital, Innovación y Desarrollo de Negocios, DIGER",
         ],
@@ -250,9 +251,9 @@ export const agendaMilestones = [
         text: "Panel: Inclusión Financiera desde la perspectiva del regulador.",
         details: [
           "Carlos Andino, Subgerente de Operaciones, BCH",
-          "Sidia Gómez, Especialista del HUB de Innovación Financiera, CNBS",
-          "José Andonis Lavaire, Director Ejecutivo, Consuccop",
-          "Moderador: Ricardo Irias, CEO, SUBE",
+          "Sidia Gómez, Especialista del Hub de Innovación Financiera, CNBS",
+          "Mario Morazán, Gerente Tecnología, Consuccop",
+          "Moderador: Ricardo Irias, CEO, Sube",
         ],
       },
       {
@@ -281,8 +282,10 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "PreCredit",
-        details: ["Cassandra Escobar, Gerente de Producto, PreCredit"],
+        text: "Automatiza tu originación. Acelera tu crecimiento.",
+        details: [
+          "Cassandra Escobar, Gerente de Producto, PreCredit Advanced",
+        ],
       },
       {
         track: "academia",
@@ -321,7 +324,7 @@ export const agendaMilestones = [
       {
         track: "conectado",
         text: "Open Finance en Economías Emergentes: ¿Oportunidad o Riesgo Sistémico?",
-        details: ["Edwin Zancipa, LATAM Fintech Hub"],
+        details: ["Edwin Zacipa, Latam Fintech Hub"],
       },
       {
         track: "conocimiento",
