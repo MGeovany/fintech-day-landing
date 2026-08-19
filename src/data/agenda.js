@@ -2,6 +2,7 @@
  *
  * Fuente: PROGRAMA_AGENDA HFD26 - actualizado 10 agosto 2026.xlsx
  * Salón Conectado actualizado con "Programa Conferencias y Paneles HFD26.pdf" (14 agosto 2026).
+ * Salón Conocimiento actualizado con "Programa_Workshops_SalonConocimiento_HFD26_actualizado.pdf".
  * Los salones marcados CERRADO en la fuente se omiten en el render.
  *
  * `track` define el color y la columna del bloque. Los tres tracks principales
@@ -125,7 +126,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Mastercard Move: Nuevas oportunidades para los pagos internacionales de personas y PyMEs en Honduras.",
+        text: "Mastercard Move: nuevas oportunidades para los pagos internacionales de personas y PyMEs en Honduras.",
         details: ["Gonzalo González, Senior Sales Representative, Mastercard"],
       },
       {
@@ -155,7 +156,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Expertos en Adquirencia: La experiencia Fullstack de SERFINSA.",
+        text: "Expertos en adquirencia: la experiencia fullstack de Serfinsa.",
         details: [
           "Javier Mayorga, Director de Negocios",
           "Milagro Mena, Gerente de Mercadeo y Desarrollo de Productos",
@@ -176,7 +177,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Transformando la Experiencia del Crédito Retail",
+        text: "Transformando la experiencia del crédito retail",
         details: [
           "Edwin Flores, Gerente General",
           "Irene Sinclair, Coordinadora BI",
@@ -201,7 +202,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Conversemos sobre Inteligencia Artificial Empresarial",
+        text: "Conversemos sobre inteligencia artificial empresarial",
         details: [
           "Stanley Marrder, CEO, Eniver",
           "Moderadora: Erica Jensen, Directora Ejecutiva, Asociación Fintech de Honduras",
@@ -223,7 +224,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "CrediQR: El QR que convierte cada compra en una oportunidad de crédito.",
+        text: "CrediQR: BNPL sobre QR para Fintech, bancos, cooperativas, utilities y retails. Cada pago, una oportunidad de crédito e inclusión financiera.",
         details: ["Gustavo Defilpo, CEO, BeClever"],
       },
     ],
@@ -258,7 +259,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Cobranza Inteligente: de la mora a la acción.",
+        text: "Cobranza inteligente: de la mora a la acción.",
         details: ["Lisseth Leal, CEO, D2i"],
       },
       {
@@ -306,7 +307,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "Pagos: Orquestación para ganar",
+        text: "Pagos: orquestación para ganar",
         details: ["Jimmy Amador, CEO, Clinpays"],
       },
       {
@@ -328,7 +329,7 @@ export const agendaMilestones = [
       },
       {
         track: "conocimiento",
-        text: "¿Qué Está Frenando tu Transformación Digital? Un workshop donde convertimos los retos de tu institución en soluciones reales.",
+        text: "¿Qué está frenando tu transformación digital?",
         details: [
           "Erick González, Gerente de Tecnología",
           "Raquel Andrade, Business Development Manager",
@@ -344,14 +345,22 @@ export const agendaMilestones = [
   },
   {
     time: "15:30 - 16:00",
-    title: "Democratizando los pagos",
-    note: "El acceso como motor de crecimiento",
+    title: "Democratizando los pagos y tokenización",
+    note: "El acceso como motor de crecimiento · seguridad de tarjetas",
     parallel: [
       {
         track: "conectado",
         text: "Democratizando los pagos: el acceso como motor de crecimiento",
         details: [
           "Ricardo Rodríguez Campollo, Director de Account Executive (Guatemala, El Salvador y Honduras), Visa",
+        ],
+      },
+      {
+        track: "conocimiento",
+        text: "Tokenización de Pagos: Redefiniendo la Seguridad, la Experiencia y el Futuro de las Tarjetas",
+        details: [
+          "Rodolfo Vesely, Chief Information Officer, Tecnología Transaccional",
+          "ProcessusNet",
         ],
       },
     ],
