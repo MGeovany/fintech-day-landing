@@ -59,7 +59,10 @@ export function setupSplitHeadings() {
       return;
     }
 
-    gsap.to(el.querySelectorAll('.split-char'), {
+    const chars = el.querySelectorAll('.split-char');
+    gsap.set(chars, { yPercent: 110, y: 0, opacity: 0 });
+
+    gsap.to(chars, {
       scrollTrigger: {
         trigger: el,
         start: 'top 85%',

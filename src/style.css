@@ -1445,12 +1445,6 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   color: var(--text);
   font-size: 14px;
 }
-.footer-mark {
-  width: 10px; height: 10px;
-  border-radius: 99px;
-  background: var(--accent);
-  box-shadow: 0 0 12px var(--accent-glow);
-}
 .footer-links { display: inline-flex; gap: 16px; }
 .footer-links a {
   font-size: 13px;
