@@ -24,13 +24,20 @@ export function initEventCountdown(root = document.getElementById('event-countdo
     });
   };
 
+  const randomEndedValues = () => ({
+    days: Math.floor(Math.random() * 100),
+    hours: Math.floor(Math.random() * 24),
+    minutes: Math.floor(Math.random() * 60),
+    seconds: Math.floor(Math.random() * 60),
+  });
+
   const tick = () => {
     const diff = target - Date.now();
 
     if (diff <= 0) {
       root.classList.add('is-live');
-      if (labelEl) labelEl.textContent = '¡Hoy es el día!';
-      render({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      if (labelEl) labelEl.textContent = 'Gracias por habernos acompañado';
+      render(randomEndedValues());
       return;
     }
 

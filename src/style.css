@@ -1021,9 +1021,11 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
   overflow: hidden;
 }
 .acts-track {
+  --acts-gap: 16px;
+  --acts-padding: 32px;
   display: flex;
-  gap: 16px;
-  padding: 0 32px;
+  gap: var(--acts-gap);
+  padding: 0 var(--acts-padding);
   will-change: transform;
 }
 .act-card {
@@ -1138,6 +1140,24 @@ button { font: inherit; cursor: pointer; border: 0; background: 0; color: inheri
 }
 @media (max-width: 680px) {
   .act-card { flex-basis: 84vw; min-height: 420px; }
+}
+
+@media (min-width: 920px) and (max-width: 1199px) {
+  .act-card {
+    flex-basis: calc((100vw - (var(--acts-padding) * 2) - var(--acts-gap)) / 2);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .act-card {
+    flex-basis: calc((100vw - (var(--acts-padding) * 2) - (var(--acts-gap) * 2)) / 3);
+  }
+}
+
+@media (min-width: 1600px) {
+  .act-card {
+    flex-basis: calc((100vw - (var(--acts-padding) * 2) - (var(--acts-gap) * 3)) / 4);
+  }
 }
 
 /* ====== Digital strategy ====== */

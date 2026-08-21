@@ -167,19 +167,37 @@ export function setupTilt() {
 export function setupActivitiesScroll() {
   const track = document.querySelector('#acts-track');
   if (!track) return;
+  const rail = track.parentElement;
+  const getScrollDistance = () => Math.max(0, track.scrollWidth - rail.clientWidth);
+  const snapToCard = (progress) => {
+    const firstCard = track.querySelector('.act-card');
+    if (!firstCard) return progress;
+
+    const styles = window.getComputedStyle(track);
+    const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+    const cardStep = firstCard.getBoundingClientRect().width + gap;
+    const steps = Math.max(1, Math.round(getScrollDistance() / cardStep));
+
+    return Math.round(progress * steps) / steps;
+  };
+
   // Only horizontal-pin on wide screens to keep behavior predictable on mobile.
   ScrollTrigger.matchMedia({
     '(min-width: 920px)': () => {
-      const total = track.scrollWidth - window.innerWidth + 64;
       gsap.to(track, {
-        x: -total,
+        x: () => -getScrollDistance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: track.parentElement,
+          trigger: rail,
           start: 'top 10%',
-          end: () => `+=${total}`,
+          end: () => `+=${getScrollDistance()}`,
           pin: true,
           scrub: 1,
+          snap: {
+            snapTo: snapToCard,
+            duration: 0.18,
+            ease: 'power1.out',
+          },
           invalidateOnRefresh: true,
         },
       });
