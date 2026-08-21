@@ -7,6 +7,8 @@ const LABELS = [
   { key: 'seconds', label: 'seg' },
 ];
 
+const TICK_INTERVAL_MS = 150;
+
 export function initEventCountdown(root = document.getElementById('event-countdown')) {
   if (!root) return;
 
@@ -53,5 +55,5 @@ export function initEventCountdown(root = document.getElementById('event-countdo
   };
 
   tick();
-  window.setInterval(tick, 1000);
+  window.setInterval(tick, TICK_INTERVAL_MS);
 }
